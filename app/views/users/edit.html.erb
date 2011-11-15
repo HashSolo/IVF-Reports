@@ -1,0 +1,76 @@
+<div class="settings grid_12 centered-shadow">
+	<div class="grid_12 alpha omega">
+	<div class="top-profile-section">
+		<div class="grid_6 alpha">
+		<div class="gravatar-and-name">
+			<h1>
+				Account Settings
+			</h1>
+		</div>
+		</div>
+			
+		<div class="grid_6 omega">
+		<div class="view-profile-link">
+			<div class="link"><%= link_to 'View Your Profile', current_user, :class => "view-button" %></div>
+		</div>
+		</div>
+	</div>
+	</div>
+
+	<hr>
+
+	
+	<div class="grid_12 alpha omega">
+		<div class="middle-settings-section">
+			<div class="grid_6 alpha">
+				<div class="user-settings-table">
+				<%= form_for(@user) do |f| %>
+					<%= render 'shared/error_messages', :object => f.object %>
+				<table>
+	
+				<tr><div class="field">
+					<td><%= f.label :name %></td>
+					<td><%= f.text_field :name %></td>
+				</div></tr>
+				<tr><div class="field">
+					<td><%= f.label :email %></td>
+					<td><%= f.text_field :email %></td>
+				</div></tr>
+				<tr class="password-division-bottom"><div class="field">
+					<td><%= f.label :password %></td>
+					<td><%= f.password_field :password %></td>
+				</div></tr>
+				<tr><div class="field">
+					<td><%= f.label :password_confirmation, "Confirmation" %></td>
+					<td><%= f.password_field :password_confirmation %></td>
+				</div></tr>
+				
+				</table>
+				<div class="actions">
+					<%= f.submit "Update", :class => "styled-button green-gradient" %>
+				</div>
+				<% end %>
+				</div>
+			</div>
+			
+			<div class="grid_6 omega">
+				<div class="change-gravatar">
+					<div class="image-capsule dark-gray-gradient">
+					<%= gravatar_for @user %>
+					<a href="http://gravatar.com/emails" target="_blank">Change image at Gravatar.com!</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+<hr>
+	<div class="grid_12 alpha omega">
+	<div class="bottom-settings-section">
+			
+			
+			
+	</div>
+	</div>
+	
+</div>

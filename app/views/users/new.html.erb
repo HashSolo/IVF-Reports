@@ -1,0 +1,34 @@
+<div class="grid_12 register-content">
+<h1 class="pirulen">Register</h1>
+
+<div class="grid_6 alpha push_3 suffix_3">
+<div class="register-bg round shadow">
+<h2>Register for access to The Geno.me.</h2>
+<%= form_for(@user) do |f| %>
+	<%= render 'shared/error_messages', :object => f.object %>
+	<table>
+	<tr><div class="field">
+		<td><strong><%= f.label :name %></strong></td>
+		<td><%= f.text_field :name %></td>
+	</div></tr>
+	<tr><div class="field">
+		<td><strong><%= f.label :email %></strong></td>
+		<td><%= f.text_field :email %></td>
+	</div></tr>
+	<tr><div class="field">
+		<td><strong><%= f.label :password %></strong></td>
+		<td><%= f.password_field :password %></strong></td>
+	</div></tr>
+	<tr><div class="field">
+		<td><strong><%= f.label :password_confirmation, "Confirmation" %></td>
+		<td><%= f.password_field :password_confirmation %></td>
+	</div></tr>
+	</table>
+	<div class="actions">
+		<%= f.submit "Register", :class=>"register-button green-gradient round shadow" %>
+	</div>
+
+<% end %>
+</div>
+</div>
+</div>

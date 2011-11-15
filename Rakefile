@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-IVFReports::Application.load_tasks
+Transit::Application.load_tasks

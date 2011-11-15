@@ -1,14 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>IVFReports</title>
+  <title><%= title %></title>
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+	<div class="container">
+		<%= render 'layouts/header' %>
+		
+		<section class="container_12 page-body-content">
+		
+		<% unless is_active?('pages#home')=="active" %>
+		<% flash.each do |key, value| %>
+			<div class="grid_6 suffix_6"><div class="flash <%= key %>"><%= value %></div>			</div>
+		<% end %>
+		<% end %>
+			<%= yield %>
+			
+		</section>
+		
+		<%= render 'layouts/footer' %>
+	</div>
 
-<%= yield %>
-
+<%= debug(params) if Rails.env.development? %>
 </body>
 </html>

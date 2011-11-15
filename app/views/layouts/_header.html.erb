@@ -1,0 +1,15 @@
+<header>
+	<h1><%= link_to "Transit", root_path %></h1>
+		<nav>
+			<ul>				
+				<% if signed_in? %>
+					<li><%= link_to "Sign Out", signout_path %></li>
+					<li><%= link_to "Settings", edit_user_path(current_user), :class => is_active?("users#edit") %></li>
+					<li><%= link_to "Profile", user_path(current_user), :class=> is_active?("users#show") %></li>
+					
+				<% else %>
+					<li><%= link_to "Sign In", signin_path, :class => is_active?("sessions#new") %></li>
+				<% end %>
+			</ul>
+		</nav>
+</header>

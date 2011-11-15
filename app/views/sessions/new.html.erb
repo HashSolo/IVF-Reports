@@ -1,0 +1,24 @@
+<div class="grid_12 sign-in-content page-content">
+<h1 class="pirulen">Sign In</h1>
+
+<div class="grid_6 push_3 alpha">
+<div class="sign-in-bg">
+
+<div class="half-page">
+<h2 class="pirulen">Sign In</h2>
+<%= form_for(:session, :url => sessions_path) do |f| %>
+	<div class="field">
+		<%= f.label :email %><br />
+		<%= f.text_field :email %>
+	</div>
+	<div class="field">
+		<%= f.label :password %><br/>
+		<%= f.password_field :password %>	
+	</div>
+	<div class="actions">
+		<%= f.submit "Sign in", :class => "styled-button green-gradient sign-in-button" %>
+	</div>
+<% end %>
+</div>
+
+</div>

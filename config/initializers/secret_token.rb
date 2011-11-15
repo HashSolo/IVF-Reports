@@ -4,4 +4,4 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-IVFReports::Application.config.secret_token = '8904ec31aecabaca6232e1645addff2d0b9a0321b04f3a449b825fcec95fb794ef59a069fc561cf9da9cec966b3fde428213b19900dabbd5e1bf0fa4cbea3f3c'
+Transit::Application.config.secret_token = '10e4409220ee6db4dfa0017910484145b10cba5739986fc722f21855818a5e35872796738b6c9062e67e240efc2c94e896e366d6d57382c9dbf8a296f4d26fe8'
