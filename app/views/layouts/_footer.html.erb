@@ -1,24 +1,18 @@
-
-<% if signed_in? %>
-<footer class="loggedin">
-	<div class="border">
-	<div class="container_12">
-	<nav class="grid_12 round">
-		<ul>
-			<li><%= link_to "Help", help_path %></li>
-			<li><%= link_to "Contact", contact_path %></li>
-		</ul>
-	</nav>	
-	<div class="grid_12">
-		<div class="footer-text">
+<footer>
+<div class="container_12">
+	<div class="grid_12 footer_border">
+		<nav class="footer_nav">
+			<ul>
+				<li><%= link_to "About Us", about_path %></li>
+				<li><%= link_to "Terms and Conditions", {:controller => 'pages', :action => 'terms' } %></li>
+				<li><%= link_to "Privacy Policy", {:controller => 'pages', :action => 'privacy'} %></li>
+				<li><%= link_to "Clinicians", clinicians_path %></li>
+				<li><%= link_to "Contact", contact_path %></li>
+			</ul>
+		</nav>
+		<div class="footer_text">
 			Transit. An <a href="#" target="_blank">Althea</a> creation.
 		</div>
 	</div>
-	</div>
-	</div>
+</div>
 </footer>
-<% else %>
-<footer class="home">
-Transit. An <a href="http://alx.bz" target="_blank">Althea</a> creation.
-</footer>
-<% end %>

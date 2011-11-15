@@ -1,15 +1,48 @@
 <header>
-	<h1><%= link_to "Transit", root_path %></h1>
-		<nav>
-			<ul>				
+<div class="container_12">
+	<div class="grid_12">
+		
+	<div class="grid_12 alpha omega">
+	<h1 class="hidden">IVF Reports</h1>
+	<div class="header_top">
+		<span class="logo"><%= link_to root_path do %><span></span><% end %>
+		</span>
+		<span class="authentication">
+			<ul>
 				<% if signed_in? %>
 					<li><%= link_to "Sign Out", signout_path %></li>
 					<li><%= link_to "Settings", edit_user_path(current_user), :class => is_active?("users#edit") %></li>
 					<li><%= link_to "Profile", user_path(current_user), :class=> is_active?("users#show") %></li>
-					
-				<% else %>
+				<% else %>	
+					<li><%= link_to "Register", register_path, :class => is_active?("users#new") %></li>
+					|
 					<li><%= link_to "Sign In", signin_path, :class => is_active?("sessions#new") %></li>
 				<% end %>
 			</ul>
+		</span>
+	</div>
+	</div>
+	
+	<div class="grid_12 alpha omega">
+	<div class="header_nav">
+		<nav class="header">
+			<ul>				
+				<li><%= link_to "Home", root_path %></li>
+				<li><%= link_to "Find a Clinic", {:controller => 'pages', :action => 'clinicfind'} %></li>
+				<li><%= link_to "Ranking", ranking_path %></li>
+				<li><%= link_to "Our System", {:controller => 'pages', :action => 'system'} %>
+				<li><%= link_to "Faqs", faqs_path %></li>
+				<li class="search">Search: <input type="text"/></li>
+			</ul>
 		</nav>
+	</div>
+	</div>
+	
+	<div class="grid_12 alpha omega">
+	<div class="header_pic">	
+	</div>
+	</div>
+	
+	</div>
+</div>
 </header>

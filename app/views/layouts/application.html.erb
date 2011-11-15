@@ -10,18 +10,34 @@
 	<div class="container">
 		<%= render 'layouts/header' %>
 		
-		<section class="container_12 page-body-content">
 		
-		<% unless is_active?('pages#home')=="active" %>
-		<% flash.each do |key, value| %>
-			<div class="grid_6 suffix_6"><div class="flash <%= key %>"><%= value %></div>			</div>
-		<% end %>
-		<% end %>
-			<%= yield %>
+	<section class="page-body-content">
+		<div class="container_12">
+		<div class="grid_12 body_content">
 			
-		</section>
+			<div class="grid_3 alpha">
+				<%= render 'layouts/left_sidebar' %>
+			</div>
+			<div class="grid_6">
+				<div class="middle_content">
+					<% flash.each do |key, value| %>
+						<div class="grid_6 alpha">	<div class="flash <%= key %>"><%= value %></div>			</div>
+					<% end %>
+		
+					<%= yield %>
+				</div>
+			</div>
+			<div class="grid_3 omega">
+				<%= render 'layouts/right_sidebar' %>
+			</div>
+			
+
+		</div>
+		</div>
+	</section>
 		
 		<%= render 'layouts/footer' %>
+		
 	</div>
 
 <%= debug(params) if Rails.env.development? %>

@@ -7,9 +7,22 @@ Transit::Application.routes.draw do
 	match '/signout', :to => 'sessions#destroy'
 
   root :to => "pages#home"
-
+  
+  match "/find-a-clinic", :to => "pages#clinicfind"
+  match "/ranking", :to => "pages#ranking"
+  match "/our-system", :to => "pages#system"
+  match "/faqs", :to => "pages#faqs"
   match "/about", :to => "pages#about"
   match "/contact", :to => "pages#contact"
+  match "/terms-and-conditions", :to => "pages#terms"
+  match "/privacy-policy", :to => "pages#privacy"
+  match "/clinicians", :to => "pages#clinicians"
+  
+  match "/reports/the-ivf-process", :to => "reports#the_ivf_process"
+  match "/reports/cdc-vs-sart", :to => "reports#cdc_vs_sart"
+  match "/fertility-news", :to => "reports#fertility_news"
+  match "/other-technologies", :to => "reports#other_technologies"
+  match "/clinics-by-region", :to => "reports#clinics_by_region"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
