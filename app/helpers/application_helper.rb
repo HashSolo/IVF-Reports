@@ -1,6 +1,6 @@
 module ApplicationHelper
   def title
-		base_title = "Transit"
+		base_title = "IVF Reports"
 		if @title.nil?
 			base_title
 		else
