@@ -24,7 +24,7 @@ gem 'jquery-rails'
 group :production do #comment all these out for development locally with sqlite3, etc
   gem 'rails',     :git => 'git://github.com/rails/rails.git', :branch => '3-1-stable' #comment out for development
   gem "therubyracer-heroku", "0.8.1.pre3" #comment out for development
-#  gem "pg"
+  gem "pg"
 end
 
 group :development do
