@@ -27,11 +27,11 @@
 	<div class="header_nav">
 		<nav class="header">
 			<ul>				
-				<li><%= link_to "Home", root_path %></li>
-				<li><%= link_to "Find a Clinic", {:controller => 'pages', :action => 'clinicfind'} %></li>
-				<li><%= link_to "Ranking", ranking_path %></li>
-				<li><%= link_to "Our System", {:controller => 'pages', :action => 'system'} %>
-				<li><%= link_to "Faqs", faqs_path %></li>
+				<li class="<%= is_active?("pages#home") %>"><%= link_to "Home", root_path %></li>
+				<li class="<%= is_active?("pages#clinicfind") %>"><%= link_to "Find a Clinic", {:controller => 'pages', :action => 'clinicfind'} %></li>
+				<li class="<%= is_active?("pages#ranking") %>"><%= link_to "Ranking", ranking_path %></li>
+				<li class="<%= is_active?("pages#system") %>"><%= link_to "Our System", {:controller => 'pages', :action => 'system'} %>
+				<li class="<%= is_active?("pages#faqs") %>"><%= link_to "Faqs", faqs_path %></li>
 				<li class="search">Search: <input type="text"/></li>
 			</ul>
 		</nav>
