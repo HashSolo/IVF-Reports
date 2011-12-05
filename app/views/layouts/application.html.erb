@@ -14,7 +14,15 @@
 	<section class="page-body-content">
 		<div class="container_12">
 		<div class="grid_12 body_content">
-			
+			<% if is_clinic_index? %>
+				<div class="middle_content">
+				<% flash.each do |key, value| %>
+					<div class="grid_6 alpha"><div class="flash <%= key %>"><%= value %></div></div>
+				<% end %>
+
+				<%= yield %>			
+				</div>
+			<% else %>
 			<div class="grid_3 alpha">
 				<%= render 'layouts/left_sidebar' %>
 			</div>
@@ -30,6 +38,7 @@
 			<div class="grid_3 omega">
 				<%= render 'layouts/right_sidebar' %>
 			</div>
+			<% end %>
 			
 
 		</div>

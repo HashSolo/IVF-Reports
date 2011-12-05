@@ -9,4 +9,14 @@ module PagesHelper
 			""
 		end
 	end
+	
+	def is_clinic_index?()
+	  page_action = params[:action]
+	  page_controller = params[:controller]
+	  if(page_action=="index" && page_controller=="clinics")
+	    return true
+    else
+    end
+	end
+	
 end

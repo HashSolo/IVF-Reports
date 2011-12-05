@@ -17,7 +17,6 @@ class CreateClinics < ActiveRecord::Migration
       t.string :longitude
       t.string :info
       t.string :image
-
       t.timestamps
     end
   end
