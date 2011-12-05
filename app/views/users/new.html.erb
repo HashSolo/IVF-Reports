@@ -1,9 +1,4 @@
-<div class="grid_12 register-content">
-<h1 class="pirulen">Register</h1>
-
-<div class="grid_6 alpha push_3 suffix_3">
-<div class="register-bg round shadow">
-<h2>Register for access to The Geno.me.</h2>
+<h1>Register</h1>
 <%= form_for(@user) do |f| %>
 	<%= render 'shared/error_messages', :object => f.object %>
 	<table>
@@ -27,8 +22,4 @@
 	<div class="actions">
 		<%= f.submit "Register", :class=>"register-button green-gradient round shadow" %>
 	</div>
-
 <% end %>
-</div>
-</div>
-</div>

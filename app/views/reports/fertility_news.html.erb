@@ -1,27 +1,16 @@
-<% require "feedzirra" %>
+<%
+
+require 'rss'
+
+%>
 
 <h1>Fertility News</h1>
 
 
+<% rss = RSS::Parser.parse('http://www.medicalnewstoday.com/rss/fertility.xml', false) %>
 
-<div id="parsedcontent">
-
-<% feed = Feedzirra::Feed.fetch_and_parse("http://www.medicalnewstoday.com/rss/fertility.xml") %>
-
-</div>
-
-
-
-<script type="text/javascript">
-
-		$(theXML).find('item').each(function() {
-			var link = $(this).find('guid').text();
-			var title = $(this).find('title').text();
-			var date = $(this).find('pubDate').text();
-			var desc = $(this).find('description').text();
-			$('#parsedcontent').append('<hr><h3><a style="text-decoration:none;color:#7895a3;" href="' + link + '" target="_blank">' + title + '</a></h3>');
-			$('#parsedcontent').append('<b>' + date + '</b><br/>');
-			$('#parsedcontent').append('<p>' + desc + '</p>');
-		});
-		
-</script>
+<% rss.items.first(10).each do |r| %>
+	<div class="rss_title"><h2><a href="<%= r.link %>" target="_blank"><%= r.title %></a></h2></div>
+	<div class="rss_byline"><%= r.pubDate %></div>
+	<p class="rss_feed"><%= r.description %></p>
+<% end %>
