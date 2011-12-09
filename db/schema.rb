@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111205084851) do
+ActiveRecord::Schema.define(:version => 20111209150653) do
 
   create_table "clinics", :force => true do |t|
     t.string   "clinic_name"
@@ -58,6 +58,15 @@ ActiveRecord::Schema.define(:version => 20111205084851) do
     t.float    "procedure_icsi_rate"
     t.float    "procedure_unstimulated_rate"
     t.float    "procedure_pgd_rate"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "states", :force => true do |t|
+    t.string   "abbrev"
+    t.string   "name"
+    t.integer  "population"
+    t.string   "capital"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

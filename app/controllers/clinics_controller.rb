@@ -4,6 +4,8 @@ class ClinicsController < ApplicationController
   def index
     @title = "All Clinics"
   	@clinics = Clinic.paginate(:page => params[:page])
+  	@all_clinics = Clinic.all
+  	@states = State.all
   end
   
   def show

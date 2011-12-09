@@ -145,6 +145,7 @@ $(document).ready(function(){
 
          state.setInfoBoxText(nameAndAbbrev);
          state.addInfoBoxText(""); // add a blank line
+		 state.addInfoBoxText("");
       }
 
       g_map_stateMap["AL"].addInfoBoxText("Population: 4,802,982");
@@ -199,6 +200,11 @@ $(document).ready(function(){
       g_map_stateMap["WI"].addInfoBoxText("Population: 5,698,230");
       g_map_stateMap["WY"].addInfoBoxText("Population: 568,300");
       
+		for ( var abbrev in g_map_stateMap ){
+         	var state = g_map_stateMap[abbrev];
+			state.addInfoBoxText("");
+		}
+
       g_map_stateMap["DC"].addInfoBoxText("Capital: National Capital");
       g_map_stateMap["AL"].addInfoBoxText("Capital: Montgomery");
       g_map_stateMap["AK"].addInfoBoxText("Capital: Juneau");
@@ -251,21 +257,72 @@ $(document).ready(function(){
       g_map_stateMap["WI"].addInfoBoxText("Capital: Madison");
       g_map_stateMap["WY"].addInfoBoxText("Capital: Cheyenne");
 
-
+		for ( var abbrev in g_map_stateMap ){
+       	var state = g_map_stateMap[abbrev];
+			state.addInfoBoxText("");
+		}
       //
       // Put some additional text into the info box. This example demonstrates 
       // how the addInfoBoxText() method automatically wraps the text according
       // to the size of the string you give it.
       //
-
-
-
+		  g_map_stateMap["DC"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'DC').count %> ");
+	      g_map_stateMap["AL"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'AL').count %>");
+	      g_map_stateMap["AK"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'AK').count %>");
+	      g_map_stateMap["AZ"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'AZ').count %>");
+	      g_map_stateMap["AR"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'AR').count %>");
+	      g_map_stateMap["CA"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'CA').count %>");
+	      g_map_stateMap["CO"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'CO').count %>");
+	      g_map_stateMap["CT"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'CT').count %>");
+	      g_map_stateMap["DE"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'DE').count %>");
+	      g_map_stateMap["FL"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'FL').count %>");
+	      g_map_stateMap["GA"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'GA').count %>");
+	      g_map_stateMap["HI"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'HI').count %>");
+	      g_map_stateMap["ID"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'ID').count %>");
+	      g_map_stateMap["IL"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'IL').count %>");
+	      g_map_stateMap["IN"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'IN').count %>");
+	      g_map_stateMap["IA"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'IA').count %>");
+	      g_map_stateMap["KS"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'KS').count %>");
+	      g_map_stateMap["KY"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'KY').count %>");
+	      g_map_stateMap["LA"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'LA').count %>");
+	      g_map_stateMap["ME"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'ME').count %>");
+	      g_map_stateMap["MD"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'MD').count %>");
+	      g_map_stateMap["MA"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'MA').count %>");
+	      g_map_stateMap["MI"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'MI').count %>");
+	      g_map_stateMap["MN"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'MN').count %>");
+	      g_map_stateMap["MS"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'MS').count %>");
+	      g_map_stateMap["MO"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'MO').count %>");
+	      g_map_stateMap["MT"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'MT').count %>");
+	      g_map_stateMap["NE"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'NE').count %>");
+	      g_map_stateMap["NV"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'NV').count %>");
+	      g_map_stateMap["NH"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'NH').count %>");
+	      g_map_stateMap["NJ"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'NJ').count %>");
+	      g_map_stateMap["NM"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'NM').count %>");
+	      g_map_stateMap["NY"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'NY').count %>");
+	      g_map_stateMap["NC"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'NC').count %>");
+	      g_map_stateMap["ND"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'ND').count %>");
+	      g_map_stateMap["OH"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'OH').count %>");
+	      g_map_stateMap["OK"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'OK').count %>");
+	      g_map_stateMap["OR"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'OR').count %>");
+	      g_map_stateMap["PA"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'PA').count %>");
+	      g_map_stateMap["RI"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'RI').count %>");
+	      g_map_stateMap["SC"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'SC').count %>");
+	      g_map_stateMap["SD"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'SD').count %>");
+	      g_map_stateMap["TN"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'TN').count %>");
+	      g_map_stateMap["TX"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'TX').count %>");
+	      g_map_stateMap["UT"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'UT').count %>");
+	      g_map_stateMap["VT"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'VT').count %>");
+	      g_map_stateMap["VA"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'VA').count %>");
+	      g_map_stateMap["WA"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'WA').count %>");
+	      g_map_stateMap["WV"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'WV').count %>");
+	      g_map_stateMap["WI"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'WI').count %>");
+	      g_map_stateMap["WY"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'WY').count %>");
+	
+	
       for ( var abbrev in g_map_stateMap )
       {
-         var state = g_map_stateMap[abbrev]; 
+         var state = g_map_stateMap[abbrev];
          state.addInfoBoxText("");
-         state.addInfoBoxText("");
-         state.addInfoBoxText("The text in this optional box is fully configurable on a state by state basis, as well as the size and position of this text box. All colors are fully configurable too!");
       }
 
       
