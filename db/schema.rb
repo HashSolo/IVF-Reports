@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111209150653) do
+ActiveRecord::Schema.define(:version => 20111212180634) do
 
   create_table "clinics", :force => true do |t|
     t.string   "clinic_name"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(:version => 20111209150653) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "old_clinic_id"
+    t.string   "permalink"
   end
 
   create_table "datapoints", :force => true do |t|

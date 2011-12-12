@@ -3,17 +3,41 @@
 
 <canvas id="map_canvas" width="800" height="480" style="position:relative;margin-left:70px;"></canvas>
 
+<div class="map_fade_screen hidden">Test
+	
+</div>
 
-<% @clinics.each do |c| %>
-	<%= link_to c.clinic_name, c %>
-	<br/>
-	<%= c.city %>, <%= c.state %>
-	<hr>
-<% end %>
+<div id="clinic_pop_up" class="hidden">
+<span id="close_button" class="icon">x</span>
+<div class="clinics_div">
+<ul class="clinic_list">
+	
+	
+</ul>
+</div>
+</div>
 
 
 
 <script type="text/javascript">
+
+function showStateClinics(clinic_json){
+	//Clear any old data
+	$('ul.clinic_list').html("");
+	
+	$('ul.clinic_list').append('<li class="title">IVF Clinics Located in '+clinic_json[0].state+'</li>');
+	
+	//Print the new clinic data
+	$.each(clinic_json, function(k){
+		$('ul.clinic_list').append('<li><a class="clinic_link" href="/clinics/'+clinic_json[k].permalink+'">'+clinic_json[k].clinic_name + '</a><span class="clinic_info">'+ clinic_json[k].city+ ', ' + clinic_json[k].state +'</span></li>');
+	});
+	
+	//Show the fade screen
+	$('div.map_fade_screen').show('slow');
+	
+	//Show the clinic data screen
+	$('div#clinic_pop_up').show('slow');
+}
 
 // -------------------------------------------------------------------------
    // SECTION 1:    COLORS
@@ -126,10 +150,17 @@
 
 $(document).ready(function(){
 	map_main();
+	
+	$('span#close_button').click(function(){
+			//Hide the fade screen
+			$('div.map_fade_screen').hide('slow');
+
+			//Hide the clinic data screen
+			$('div#clinic_pop_up').hide('slow');
+	});
 });
 
-   function map_userSetup()
-   {
+function map_userSetup(){
 
       //
       // EXAMPLE: SETTING THE INFO BOX TEXT
@@ -138,8 +169,7 @@ $(document).ready(function(){
       //          state object to set the text that appears in the info box
       //          when the user hovers the mouse over a state.
       //
-      for ( var abbrev in g_map_stateMap )
-      {
+      for ( var abbrev in g_map_stateMap ){
          var state = g_map_stateMap[abbrev]; 
          var nameAndAbbrev = state.myPrettyName + "  (" + state.myAbbrev + ")";
 
@@ -319,13 +349,12 @@ $(document).ready(function(){
 	      g_map_stateMap["WY"].addInfoBoxText("IVF Clinics: <%= Clinic.where(:state => 'WY').count %>");
 	
 	
-      for ( var abbrev in g_map_stateMap )
-      {
-         var state = g_map_stateMap[abbrev];
-         state.addInfoBoxText("");
-      }
+      	for ( var abbrev in g_map_stateMap ){
+         	var state = g_map_stateMap[abbrev];
+         	state.addInfoBoxText("");
+      	}
 
-      
+		
       return;
 }
 
@@ -641,12 +670,25 @@ function map_State(abbrev, capsName, prettyName)
 
 }
 
-map_State.prototype.mouseClick = function(x,y,state)
-{
-   if ( this.myClickCallback != null )
-   {
-      this.myClickCallback(x,y,state); 
-   }
+map_State.prototype.mouseClick = function(x,y,state){ //Behavior for when a state is clicked....
+	//known object properties: myAbbrev, myPrettyName, myCapsName.
+	var data = {
+		state: state.myAbbrev
+	}
+	//Need to make ajax call to server
+	$.ajax({
+		url: "<%= url_for(:action => 'find_clinics_in_state') %>",
+		dataType: 'json',
+		async: true,
+		data: data,
+		success: 	function(data){
+						showStateClinics(data);
+					}
+	});
+	//Need to render ajax retrieved content (JSON) onto hidden div
+	
+	//Need to show hidden div (with option for closing)
+	
 }
 
 map_State.prototype.draw = function()

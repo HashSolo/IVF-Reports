@@ -1,5 +1,28 @@
-// Place all the styles related to the Clinics controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+/*index styles for map etc*/
+div.map_fade_screen {position:fixed;background:#325d64;opacity:0.5;left:0px;right:0px;top:0px;bottom:0px;z-index:3;}
+#clinic_pop_up {position:absolute;width:100%;min-height:100%;left:0px;right:0px;top:0px;bottom:0px;z-index:4;}
+#close_button {position:fixed;right:10px;top:2px;font-size:30px;color:#d5d5d5;}
+#close_button:hover {color:#325d64;cursor:pointer;}
+div.clinics_div{min-width:960px;}
+ul.clinic_list {border:2px double #325d64;background:#7895a3;padding:0px;margin:0px;display:inline-block;width:70%;margin-left:15%;margin-right:15%;margin-top:400px;min-height:530px;}
+ul.clinic_list li {padding:0px;margin:0px;display:inline-block;list-style-type:none;width:80%;height:30px;line-height:30px;font-size:15px;padding-left:10%;padding-right:10%;}
+ul.clinic_list li.title {color:#325d64;font-size:18px;font-weight:bold;text-align:center;margin-top:10px;margin-bottom:10px;}
+ul.clinic_list li a.clinic_link{text-decoration:none;color:#325d64;float:left;}
+ul.clinic_list li a.clinic_link:hover{font-weight:bold;}
+ul.clinic_list li span.clinic_info{float:right;color:#325d64;}
 
-/*index styles for map, etc */
+
+/*clinic show page styles*/
+.middle_content h2 {font-family:'Trebuchet MS', Arial, sans-serif;font-size:17px;margin-top:20px;margin-bottom:20px;}
+ul.infobox_choices {display:inline-block;margin:0px;padding:0px;width:100%;float:left;height:30px;}
+ul.infobox_choices li {display:inline-block;float:left;margin:0px;padding:0px;width:22%;text-align:center;height:30px;line-height:30px;background:#7895A3;color:#ffffff;border:1px solid #ffffff;}
+ul.infobox_choices li:hover{cursor:pointer;}
+ul.infobox_choices li.selected {color:#325d64;background:#B6d1de;}
+div.infobox_content {border:1px solid #7895A3;float:left;margin-left:1px;margin-right:1px;width:100%;min-height:200px;}
+div.infobox_content div.infobox {padding:10px;}
+div.infobox_content div.infobox p {padding:5px;}
+div.infobox_content div.infobox h3 {font-size:17px;color:#325d64;margin-bottom:20px;margin-top:10px;font-weight:bold;border-bottom:1px dashed #c5c5c5;}
+div.infobox_content div.infobox h4 {font-size:16px;color:#325d64;margin-bottom:10px;margin-top:10px;}
+
+/*global stuff*/
+div.hidden {display:none;}

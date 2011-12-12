@@ -1,11 +1,26 @@
+require 'csv'
+require 'json'
+
 class ClinicsController < ApplicationController
-  before_filter :admin_user, 	:except => [:index, :show]
+  before_filter :admin_user, 	:except => [:index, :show, :find_clinics_in_state]
   
   def index
     @title = "All Clinics"
   	@clinics = Clinic.paginate(:page => params[:page])
   	@all_clinics = Clinic.all
   	@states = State.all
+  	respond_to do |format|
+  	  format.html {}
+  	  format.json { render :json => @all_clinics.to_json() }
+	  end
+  end
+  
+  def find_clinics_in_state
+    @state = params[:state]
+    @clinics = Clinic.where(:state => @state)
+    respond_to do |format|
+      format.json { render :json => @clinics.to_json() }
+    end
   end
   
   def show

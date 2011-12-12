@@ -1,4 +1,63 @@
 <h1><%= @clinic.clinic_name %></h1>
-<p>
-	<%= @clinic.address %> | <%= @clinic.city %> | <%= @clinic.state %>
-</p>
+
+
+
+<h2>Detailed Clinic Information</h2>
+
+<ul id="clinic_info" class="infobox_choices">
+<li id="description" class="selected">Description</li>
+<li id="statistics">Statistics</li>
+<li id="reviews">Reviews</li>
+<li id="contact">Contact</li>
+</ul>
+
+<div id="clinic_info_box" class="infobox_content">
+
+	<div id="description_box" class="infobox">
+		<h3>Clinic Description</h3>
+		<p><%= @clinic.info %><p>
+	</div>
+
+	<div id="statistics_box" class="infobox hidden">
+		<h3>Clinic Statistics</h3>	
+		<p>There are no statistics currently in the system.</p>
+	</div>
+
+	<div id="reviews_box" class="infobox hidden">
+		<h3>Clinic Reviews</h3>	
+		<p>There are no reviews currently in the system.</p>
+	</div>
+
+	<div id="contact_box" class="infobox hidden">
+		<h3>Clinic Contact Information</h3>
+		<hr>
+			<h4>Address</h4>
+			<p><%= @clinic.address %><br/>
+			<%= @clinic.city %>, <%= @clinic.state %></p>
+		<hr>
+			<h4>Staff</h4>
+			<p><b>Practice Director: </b><%= @clinic.practice_director %><br/>
+			<b>Medical Director: </b><%= @clinic.medical_director %><br/>
+			<b>Laboratory Director: </b><%= @clinic.laboratory_director %></p>
+		<hr>
+			<h4>Contact Info</h4>
+			<p><b>Phone: </b><%= @clinic.phone %><br/>
+			<b>Website: </b><%= @clinic.website %><br/>
+			<b>Email: </b><%= @clinic.email %></p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$('ul#clinic_info li').click(function(){
+		$(this).siblings().removeClass('selected');
+		$(this).addClass('selected');
+		var click_choice = $(this).attr('id');
+		
+		var dividtoopen = "div#clinic_info_box div#"+click_choice+"_box";
+		$(dividtoopen).siblings().addClass('hidden');
+		$(dividtoopen).removeClass('hidden');
+	});
+});
+</script>
