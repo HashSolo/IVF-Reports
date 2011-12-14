@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111212180634) do
+ActiveRecord::Schema.define(:version => 20111213162245) do
 
   create_table "clinics", :force => true do |t|
     t.string   "clinic_name"
@@ -44,7 +44,6 @@ ActiveRecord::Schema.define(:version => 20111212180634) do
     t.integer  "cycles"
     t.float    "implantation_rate"
     t.float    "avg_num_embs_transferred"
-    t.float    "birth_rate"
     t.float    "pregs_per_cycle"
     t.float    "births_per_cycle"
     t.float    "births_per_retrieval"

@@ -1,11 +1,11 @@
 require 'csv'
 
 namespace :db do
-  desc "Fill database with clinic data from 2007."
-  task :add_clinic_data_2007 => :environment do
+  desc "Fill database with clinic data from 2006."
+  task :add_clinic_data_2006 => :environment do
     #need to import the chromosome CSV file here...
-    #Will import the cliic data from 2007
-	  CSV.foreach("#{::Rails.root}/lib/tasks/data/clinic_data_2007.csv") do |row|
+    #Will import the cliic data from 2006
+	  CSV.foreach("#{::Rails.root}/lib/tasks/data/clinic_data_2006.csv") do |row|
 		  cur_clinic = Clinic.find_by_old_clinic_id("#{row[0]}")
       if(cur_clinic.nil?)
       
