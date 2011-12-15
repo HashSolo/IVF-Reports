@@ -1,0 +1,16 @@
+<%
+
+require 'rss'
+
+%>
+
+<h1>Fertility News</h1>
+
+
+<% rss = RSS::Parser.parse('http://www.medicalnewstoday.com/rss/fertility.xml', false) %>
+
+<% rss.items.first(10).each do |r| %>
+	<div class="rss_title"><h2><a href="<%= r.link %>" target="_blank"><%= r.title %></a></h2></div>
+	<div class="rss_byline"><%= r.pubDate %></div>
+	<p class="rss_feed"><%= r.description %></p>
+<% end %>
