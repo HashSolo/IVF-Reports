@@ -152,7 +152,12 @@
 		<hr>
 			<h4>Contact Info</h4>
 			<p><b>Phone: </b><%= @clinic.phone %><br/>
-			<b>Website: </b><%= @clinic.website %><br/>
+			<b>Website: </b>
+			<% if @clinic.website=="N/A" %><br/>
+			N/A
+			<% else %>
+			<a href="<%= @clinic.website %>" target="_blank"/><%= @clinic.website %></a><br/>
+			<% end %>
 			<b>Email: </b><%= @clinic.email %></p>
 	</div>
 
