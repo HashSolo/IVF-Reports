@@ -2,7 +2,7 @@ require 'csv'
 require 'json'
 
 class ClinicsController < ApplicationController
-  before_filter :admin_user, 	:except => [:index, :show, :find_clinics_in_state]
+  before_filter :admin_user, 	:except => [:index, :show, :find_clinics_in_state, :pull_clinic_data]
   
   def index
     @title = "All Clinics"
@@ -13,6 +13,18 @@ class ClinicsController < ApplicationController
   	  format.html {}
   	  format.json { render :json => @all_clinics.to_json() }
 	  end
+  end
+  
+  def pull_clinic_data    
+    @clinic = Clinic.find_by_id(params[:clinic_id])
+
+    year = params[:year]
+    diagnosis_group = params[:diagnosis]
+    
+    @datapull = @clinic.datapoints.where(:year => year, :diagnosis => diagnosis_group)
+    respond_to do |format|
+      format.json { render :json => @datapull.to_json() }
+    end
   end
   
   def find_clinics_in_state

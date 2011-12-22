@@ -1,6 +1,25 @@
 <h1><%= @clinic.clinic_name %></h1>
 
 
+<h2>Ranking Information</h2>
+<div id='tabs'>
+	<ul class="ranking_tabs">
+		<li><a href='#tabs-1'>Overall</a></li>
+		<li><a href='#tabs-2'><35</a></li>
+		<li><a href='#tabs-3'>35-37</a></li>
+		<li><a href='#tabs-4'>38-40</a></li>
+		<li><a href='#tabs-5'>41-42</a></li>
+		<li><a href='#tabs-6'>>42</a></li>
+		
+	</ul>
+	<div id='tabs-1' class="tab_content">Overall Ranking Data</div>
+	<div id='tabs-2' class="tab_content"><35 Ranking Data</div>
+	<div id='tabs-3' class="tab_content">35-37 Ranking Data</div>
+	<div id='tabs-4' class="tab_content">38-40 Ranking Data</div>
+	<div id='tabs-5' class="tab_content">41-42 Ranking Data</div>
+	<div id='tabs-6' class="tab_content">>42 Ranking Data</div>
+</div>
+
 
 <h2>Detailed Clinic Information</h2>
 
@@ -19,9 +38,100 @@
 	</div>
 
 	<div id="statistics_box" class="infobox hidden">
-		<h3>Clinic Statistics</h3>	
-		<p>There are no statistics currently in the system.</p>
+		<h3>Clinic Statistics</h3>
+		<div id="stat_graph">
+			<div id="stat_debug">
+			
+			</div>	
+			<canvas id="stat_canvas" width="410" height="300">[No canvas support]</canvas>
+		</div>	
 	</div>
+	
+	
+	<script type="text/javascript">
+	$(document).ready(function(){
+		LoadInitialStatsGraph();
+		
+		
+	})
+	
+	function LoadInitialStatsGraph(){
+		var data = {
+			year: 2009,
+			statistic: 'cycles',
+			cycle_type: 'fresh',
+			clinic_id: <%= @clinic.id %>,
+			diagnosis: 'All Diagnoses'
+		}
+		$.ajax({
+			url: "<%= url_for(:action => 'pull_clinic_data') %>",
+			dataType: 'json',
+			async: true,
+			data: data,
+			success: 	function(data){
+							var age_groups = ['<35', '35-37', '38-40', '41-42', '>42'];
+							
+							//This is the array data for the graph
+							var graph_data = [];
+							
+							var tooltips = [];
+							
+							var cur_age_index = 0;
+							
+							//Load the cycle data into the graph
+							$.each(data, function(k){
+								for(var i = 0; i < 5; i++){
+									if(data[k]['age_group']==age_groups[i]){
+										graph_data[i] = data[k]['cycles'];
+										tooltips[i] = "<b>"+age_groups[i]+"</b><br/>";
+										tooltips[i] = tooltips[i] + "Cycles: " + data[k]['cycles'] + "<br/>";
+										tooltips[i] = tooltips[i] + "Imp Rate: " + data[k]['implantation_rate'];
+									}
+								}
+							});
+							
+							//Instantiate the new graph
+							var cycles_bar_graph = new RGraph.Bar('stat_canvas', graph_data);
+							cycles_bar_graph.Set('chart.labels', age_groups);
+					        cycles_bar_graph.Set('chart.gutter.left', 45);
+					        cycles_bar_graph.Set('chart.background.barcolor1', 'white');
+					        cycles_bar_graph.Set('chart.background.barcolor2', 'white');
+					        cycles_bar_graph.Set('chart.background.grid', true);
+					        cycles_bar_graph.Set('chart.colors', ['#7895A3']);
+							cycles_bar_graph.Set('chart.shadow', true);
+							cycles_bar_graph.Set('chart.shadow.blur', 5);
+							cycles_bar_graph.Set('chart.shadow.offsetx', 2);
+							cycles_bar_graph.Set('chart.shadow.offsety', 0);
+							cycles_bar_graph.Set('chart.shadow.color', '#0F5151');
+							cycles_bar_graph.Set('chart.text.font', 'Trebuchet MS');
+							
+							//Render the graph
+
+							
+							var imprate_line_graph = new RGraph.Line('stat_canvas', graph_data);
+							imprate_line_graph.Set('chart.background.grid', false);
+							imprate_line_graph.Set('chart.linewidth', 2);
+							imprate_line_graph.Set('chart.colors', ['#0F5151']);
+							imprate_line_graph.Set('chart.tickmarks', 'circle');
+							imprate_line_graph.Set('chart.highlight.fill', 'black');
+							imprate_line_graph.Set('chart.noaxes', true);
+							imprate_line_graph.Set('chart.ylabels', false);
+							
+							imprate_line_graph.Set('chart.tooltips', tooltips);
+							
+							
+							cycles_bar_graph.Set('chart.line', imprate_line_graph);
+							
+							RGraph.Effects.Fade.In(cycles_bar_graph);
+							RGraph.Effects.Bar.Grow(cycles_bar_graph);
+							RGraph.Effects.Line.Unfold(cycles_bar_graph.Get('chart.imprate_line_graph'));
+							
+			}
+		});
+	}
+	
+	</script>
+	
 
 	<div id="reviews_box" class="infobox hidden">
 		<h3>Clinic Reviews</h3>	
@@ -48,8 +158,13 @@
 
 </div>
 
+
 <script type="text/javascript">
+
+
 $(document).ready(function(){
+	
+	$( "#tabs" ).tabs();
 	$('ul#clinic_info li').click(function(){
 		$(this).siblings().removeClass('selected');
 		$(this).addClass('selected');

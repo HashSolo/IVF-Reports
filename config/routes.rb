@@ -3,6 +3,7 @@ Transit::Application.routes.draw do
 	resources :sessions, :only => [:new, :create, :destroy]
 	resources :clinics do
 	  get 'find_clinics_in_state', :on => :collection
+	  get 'pull_clinic_data', :on => :collection
 	  resources :datapoints
   end
 	
