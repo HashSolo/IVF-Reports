@@ -168,7 +168,7 @@ function UpdateClinics(){
 						//This will have to update the html of the middle section with the new clinic info...
 						$('div#clinic_list').removeClass('ajax_loading');
 						$.each(data, function(k){
-							var clinic_html = "<ul><li class='clinic_name'><a href='/clinics/"+data[k]['permalink']+"'>"+ data[k]['clinic_name'] + "</a></li>";
+							var clinic_html = "<ul><li class='clinic_name'><a href='/clinics/"+data[k]['permalink']+"'>"+ (k+1) + ". " + data[k]['clinic_name'] + "</a></li>";
 							var clinic_html = clinic_html + "<li class='clinic_stats'>" + data[k]['city'] + ", " + data[k]['state'] + "</li></ul>";
 							$('div#clinic_list').append(clinic_html);
 						});
@@ -257,9 +257,9 @@ $(document).ready(function(){
 	//Governs the cycles slider
 	$('#cycles-slider').slider({
 		range: true,
-		min: 0,
+		min: 1,
 		max: 1400,
-		values: [ 0, 1400 ],
+		values: [ 1, 1400 ],
 		slide: function( event, ui ) {
 			$( "#cycles-value" ).html( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
 			$('div#clinic_list').html("");
