@@ -30,6 +30,7 @@ Transit::Application.routes.draw do
   match "/reports/fertility-news", :to => "reports#fertility_news"
   match "/reports/other-technologies", :to => "reports#other_technologies"
   match "/reports/clinics-by-region", :to => "reports#clinics_by_region"
+  match "/reports/clinic-explorer", :to => "reports#clinic_explorer"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
