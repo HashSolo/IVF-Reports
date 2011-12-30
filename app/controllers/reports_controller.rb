@@ -18,7 +18,7 @@ class ReportsController < ApplicationController
     #default diagnosis is all
     #default age group is <35
     #default year is 2009 (might not allow this to change)
-    query_year = 2009;
+    query_year = "2009";
     age = "<35";
     diagnosis = "All Diagnoses";
     cycles_lower = 0;
