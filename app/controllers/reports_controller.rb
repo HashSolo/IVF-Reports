@@ -22,7 +22,7 @@ class ReportsController < ApplicationController
     age = "<35";
     diagnosis = "All Diagnoses";
     cycles_lower = 0;
-    cycles_upper = 50;
+    cycles_upper = 25;
     avg_emb_trx_lower = 0;
     avg_emb_trx_upper = 7;
     imp_lower = 0;
