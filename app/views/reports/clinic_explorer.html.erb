@@ -4,7 +4,7 @@
 		<div class="left_sidebar">
 			<h2>Select an Age Group</h2>
 				<ul id="age-selectable">
-					<li>< 35</li>
+					<li class="ui-selected">< 35</li>
 					<li>35-37</li>
 					<li>38-40</li>
 					<li>41-42</li>
@@ -13,7 +13,7 @@
 			<hr>
 			<h2>Select a Diagnosis</h2>
 				<ul id="diagnosis-selectable">
-					<li>All Diagnoses</li>
+					<li class="ui-selected">All Diagnoses</li>
 					<li>Endometriosis</li>
 					<li>Diminished Ovarian Reserve</li>
 					<li>Multiple Female Factors</li>
@@ -43,19 +43,27 @@
 			<h2 style="margin-bottom:10px;">Select Parameters</h2>
 			<ul class="parameter">
 				<li class="label">Cycles</li>
-				<li id="cycles-value" class="value"></li>
-				<li class="slider"><div id="cycles-slider"></div></li>
+				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="x_small" checked />&nbsp;&nbsp;X-Small (0-25 Cycles)</li>
+				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="small" />&nbsp;&nbsp;Small (26-100 Cycles)</li>
+				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="medium" />&nbsp;&nbsp;Medium (101-200 Cycles)</li>
+				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="large" />&nbsp;&nbsp;Large (201-300 Cycles)</li>
+				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="x_large" />&nbsp;&nbsp;X-Large (>300 Cycles)</li>
+			</ul>
+			<ul class="parameter">
+				<li class="label">Single Embryo Transfer Rate</li>
+				<li id="set-value" class="value"></li>
+				<li class="slider"><div id="set-slider"></div></li>
+			</ul>
+			<ul class="parameter">
+				<li class="label">Implantation Rate</li>
+				<li id="implantation-value" class="value"></li>
+				<li class="slider"><div id="implantation-slider"></div></li>
 			</ul>
 			<ul class="parameter">
 				<li class="label">Avg. Number Embryos Transferred</li>
 				<li id="avg-emb-trx-value" class="value"></li>
 				<li class="slider"><div id="avg-emb-trx-slider"></div></li>
 			</ul>			
-			<ul class="parameter">
-				<li class="label">Implantation Rate</li>
-				<li id="implantation-value" class="value"></li>
-				<li class="slider"><div id="implantation-slider"></div></li>
-			</ul>
 			<ul class="parameter">
 				<li class="label">Pregnancy Rate per Cycle</li>
 				<li id="pregnancy-value" class="value"></li>
@@ -75,11 +83,6 @@
 				<li class="label">Birth Rate per Transfer</li>
 				<li id="birth-transfer-value" class="value"></li>
 				<li class="slider"><div id="birth-transfer-slider"></div></li>
-			</ul>
-			<ul class="parameter">
-				<li class="label">Single Embryo Transfer Rate</li>
-				<li id="set-value" class="value"></li>
-				<li class="slider"><div id="set-slider"></div></li>
 			</ul>
 			<ul class="parameter">
 				<li class="label">Cancellation Rate</li>
@@ -107,7 +110,7 @@ var year = 2009;
 var age_group = "<35";
 var diagnosis = "All Diagnoses";
 var cycles_lower = 0;
-var cycles_upper = 1400;
+var cycles_upper = 25;
 var emb_trx_lower = 0;
 var emb_trx_upper = 7;
 var implantation_lower = 0;
@@ -254,24 +257,34 @@ $(document).ready(function(){
 			UpdateClinics();
 		}
 	});
-	//Governs the cycles slider
-	$('#cycles-slider').slider({
-		range: true,
-		min: 1,
-		max: 1400,
-		values: [ 1, 1400 ],
-		slide: function( event, ui ) {
-			$( "#cycles-value" ).html( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-			$('div#clinic_list').html("");
-			$('div#clinic_list').addClass('ajax_loading');
-		},
-		stop: function(event, ui){
-			cycles_lower = ui.values[0];
-			cycles_upper = ui.values[1];
-			UpdateClinics();
+	//Governs the cycles radio buttons
+	$('input#cycles_radio_button').click(function(){
+		var radiovalue = $('input:radio[name=cycles_radio]:checked').val();
+		if(radiovalue=="x_small"){
+			cycles_lower=1;
+			cycles_upper=25;
 		}
+		else if(radiovalue=="small"){
+			cycles_lower=26;
+			cycles_upper=100;
+		}
+		else if(radiovalue=="medium"){
+			cycles_lower=101;
+			cycles_upper=200;
+		}
+		else if(radiovalue=="large"){
+			cycles_lower=201;
+			cycles_upper=300;
+		}
+		else if(radiovalue=="x_large"){			
+			cycles_lower=301;
+			cycles_upper=5000;
+		}
+		$('div#clinic_list').html("");
+		$('div#clinic_list').addClass('ajax_loading');
+		UpdateClinics();
 	});
-	$( "#cycles-value" ).html( $( "#cycles-slider" ).slider( "values", 0 ) + " - " + $( "#cycles-slider" ).slider( "values", 1 ) );
+	
 	//Governs the avg num embryos trx slider
 	$('#avg-emb-trx-slider').slider({
 		range: true,
