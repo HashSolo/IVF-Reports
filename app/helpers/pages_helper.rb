@@ -19,4 +19,13 @@ module PagesHelper
     end
 	end
 	
+	def is_clinic_explorer?()
+	  page_action = params[:action]
+	  page_controller = params[:controller]
+	  if(page_action=="clinic_explorer" && page_controller=="reports")
+	    return true
+    else
+    end
+  end
+	
 end

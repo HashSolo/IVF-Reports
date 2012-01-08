@@ -3,6 +3,7 @@ Transit::Application.routes.draw do
 	resources :sessions, :only => [:new, :create, :destroy]
 	resources :clinics do
 	  get 'find_clinics_in_state', :on => :collection
+	  get 'pull_clinic_data', :on => :collection
 	  resources :datapoints
   end
 	
@@ -29,6 +30,7 @@ Transit::Application.routes.draw do
   match "/reports/fertility-news", :to => "reports#fertility_news"
   match "/reports/other-technologies", :to => "reports#other_technologies"
   match "/reports/clinics-by-region", :to => "reports#clinics_by_region"
+  match "/reports/clinic-explorer", :to => "reports#clinic_explorer"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

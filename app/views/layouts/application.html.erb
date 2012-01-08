@@ -17,10 +17,18 @@
 			<% if is_clinic_index? %>
 				<div class="middle_content">
 				<% flash.each do |key, value| %>
-					<div class="grid_6 alpha"><div class="flash <%= key %>"><%= value %></div></div>
+					<div class="grid_12 alpha"><div class="flash <%= key %>"><%= value %></div></div>
 				<% end %>
 
 				<%= yield %>			
+				</div>
+			<% elsif is_clinic_explorer? %>
+				<div class="explorer_content">
+						<% flash.each do |key, value| %>
+							<div class="grid_9 alpha"><div class="flash <%= key %>"><%= value %></div></div>
+						<% end %>
+		
+						<%= yield %>
 				</div>
 			<% else %>
 			<div class="grid_3 alpha">

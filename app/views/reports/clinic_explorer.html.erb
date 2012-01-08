@@ -1,0 +1,470 @@
+
+	<h1>The IVF Reports Clinic Explorer</h1>
+	<div class="grid_3 alpha">
+		<div class="left_sidebar">
+			<h2>Select an Age Group</h2>
+				<ul id="age-selectable">
+					<li class="ui-selected">< 35</li>
+					<li>35-37</li>
+					<li>38-40</li>
+					<li>41-42</li>
+					<li>>42</li>
+				</ul>
+			<hr>
+			<h2>Select a Diagnosis</h2>
+				<ul id="diagnosis-selectable">
+					<li class="ui-selected">All Diagnoses</li>
+					<li>Endometriosis</li>
+					<li>Diminished Ovarian Reserve</li>
+					<li>Multiple Female Factors</li>
+					<li>Ovulatory Dysfunction</li>
+					<li>Tubal Factor</li>
+					<li>Female and Male Factors</li>
+					<li>Male Factor</li>
+					<li>Other Factor</li>
+					<li>Uterine Factor</li>
+					<li>Unknown Factor</li>
+				</ul>
+			<hr>
+		</div>
+	</div>
+	<div class="grid_6">
+		<div class="middle_content">
+		<div class="explorer_center">
+			<h2>Results</h2>
+			<div id="clinic_list">
+			</div>
+		</div>
+		</div>
+	</div>
+
+	<div class="grid_3 omega">
+		<div class="right_sidebar">
+			<h2 style="margin-bottom:10px;">Select Parameters</h2>
+			<ul class="parameter">
+				<li class="label">Cycles</li>
+				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="x_small" checked />&nbsp;&nbsp;X-Small (0-25 Cycles)</li>
+				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="small" />&nbsp;&nbsp;Small (26-100 Cycles)</li>
+				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="medium" />&nbsp;&nbsp;Medium (101-200 Cycles)</li>
+				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="large" />&nbsp;&nbsp;Large (201-300 Cycles)</li>
+				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="x_large" />&nbsp;&nbsp;X-Large (>300 Cycles)</li>
+			</ul>
+			<ul class="parameter">
+				<li class="label">Single Embryo Transfer Rate</li>
+				<li id="set-value" class="value"></li>
+				<li class="slider"><div id="set-slider"></div></li>
+			</ul>
+			<ul class="parameter">
+				<li class="label">Implantation Rate</li>
+				<li id="implantation-value" class="value"></li>
+				<li class="slider"><div id="implantation-slider"></div></li>
+			</ul>
+			<ul class="parameter">
+				<li class="label">Avg. Number Embryos Transferred</li>
+				<li id="avg-emb-trx-value" class="value"></li>
+				<li class="slider"><div id="avg-emb-trx-slider"></div></li>
+			</ul>			
+			<ul class="parameter">
+				<li class="label">Pregnancy Rate per Cycle</li>
+				<li id="pregnancy-value" class="value"></li>
+				<li class="slider"><div id="pregnancy-slider"></div></li>
+			</ul>
+			<ul class="parameter">
+				<li class="label">Birth Rate per Cycle</li>
+				<li id="birth-cycle-value" class="value"></li>
+				<li class="slider"><div id="birth-cycle-slider"></div></li>
+			</ul>
+			<ul class="parameter">
+				<li class="label">Birth Rate per Retrieval</li>
+				<li id="birth-retrieval-value" class="value"></li>
+				<li class="slider"><div id="birth-retrieval-slider"></div></li>
+			</ul>
+			<ul class="parameter">
+				<li class="label">Birth Rate per Transfer</li>
+				<li id="birth-transfer-value" class="value"></li>
+				<li class="slider"><div id="birth-transfer-slider"></div></li>
+			</ul>
+			<ul class="parameter">
+				<li class="label">Cancellation Rate</li>
+				<li id="cancellation-value" class="value"></li>
+				<li class="slider"><div id="cancellation-slider"></div></li>
+			</ul>
+			<ul class="parameter">
+				<li class="label">Twin Rate</li>
+				<li id="twin-value" class="value"></li>
+				<li class="slider"><div id="twin-slider"></div></li>
+			</ul>
+			
+			<ul class="parameter">
+				<li class="label">Triplet Rate</li>
+				<li id="triplet-value" class="value"></li>
+				<li class="slider"><div id="triplet-slider"></div></li>
+			</ul>
+		</div>
+	</div>
+
+
+<script type="text/javascript">
+//Global Variables
+var year = 2009;
+var age_group = "<35";
+var diagnosis = "All Diagnoses";
+var cycles_lower = 0;
+var cycles_upper = 25;
+var emb_trx_lower = 0;
+var emb_trx_upper = 7;
+var implantation_lower = 0;
+var implantation_upper = 100;
+var preg_lower = 0;
+var preg_upper = 100;
+var birth_cycle_lower = 0;
+var birth_cycle_upper = 100;
+var birth_retrieval_lower = 0;
+var birth_retrieval_upper = 100;
+var birth_trx_lower = 0;
+var birth_trx_upper = 100;
+var set_lower = 0;
+var set_upper = 100;
+var cancellation_lower = 0;
+var cancellation_upper = 100;
+var twin_lower = 0;
+var twin_upper = 100;
+var trip_lower = 0;
+var trip_upper = 100;
+
+function UpdateClinics(){
+	$('div#clinic_list').html("");
+	$('div#clinic_list').addClass('ajax_loading');
+	var data = {
+		year: year,
+		age: age_group,
+		diagnosis: diagnosis,
+		cycles_lower: cycles_lower,
+		cycles_upper: cycles_upper,
+		emb_trx_lower: emb_trx_lower,
+		emb_trx_upper: emb_trx_upper,
+		implantation_lower: implantation_lower,
+		implantation_upper: implantation_upper,
+		preg_lower: preg_lower,
+		preg_upper: preg_upper,
+		birth_cycle_lower: birth_cycle_lower,
+		birth_cycle_upper: birth_cycle_upper,
+		birth_retrieval_lower: birth_retrieval_lower,
+		birth_retrieval_upper: birth_retrieval_upper,
+		birth_trx_lower: birth_trx_lower,
+		birth_trx_upper: birth_trx_upper,
+		set_lower: set_lower,
+		set_upper: set_upper,
+		cancellation_lower: cancellation_lower,
+		cancellation_upper: cancellation_upper,
+		twin_lower: twin_lower,
+		twin_upper: twin_upper,
+		trip_lower: trip_lower,
+		trip_upper: trip_upper
+	}
+	$.ajax({
+		url: "<%= url_for(:action => 'clinic_explorer') %>",
+		dataType: 'json',
+		async: true,
+		data: data,
+		success: 	function(data){
+						//This will have to update the html of the middle section with the new clinic info...
+						$('div#clinic_list').removeClass('ajax_loading');
+						$.each(data, function(k){
+							var clinic_html = "<ul><li class='clinic_name'><a href='/clinics/"+data[k]['permalink']+"'>"+ (k+1) + ". " + data[k]['clinic_name'] + "</a></li>";
+							var clinic_html = clinic_html + "<li class='clinic_stats'>" + data[k]['city'] + ", " + data[k]['state'] + "</li></ul>";
+							$('div#clinic_list').append(clinic_html);
+						});
+					}
+	});
+}
+
+$(document).ready(function(){
+	UpdateClinics();
+	//Governs the age selectable
+	$('#age-selectable').selectable({
+		stop: function(){
+			$('div#clinic_list').html("");
+			$('div#clinic_list').addClass('ajax_loading');
+			$( ".ui-selected", this ).each(function() {
+				var index = $( "#age-selectable li" ).index( this );
+				if(index==0){
+					age_group="<35";
+				}
+				else if(index==1){
+					age_group="35-37";
+				}
+				else if(index==2){
+					age_group="38-40";
+				}
+				else if(index==3){
+					age_group="41-42";
+				}
+				else if(index==4){
+					age_group=">42";
+				}
+				else{
+					age_group="<35";
+				}
+			});
+			UpdateClinics();
+		}
+	});
+	//Governs the diagnosis selectable
+	$('#diagnosis-selectable').selectable({
+		stop: function(){
+			$('div#clinic_list').html("");
+			$('div#clinic_list').addClass('ajax_loading');
+			$( ".ui-selected", this ).each(function() {
+				var index = $( "#diagnosis-selectable li" ).index( this );
+				if(index==0){
+					diagnosis="All Diagnoses";
+				}
+				else if(index==1){
+					diagnosis="Endometriosis";
+				}
+				else if(index==2){
+					diagnosis="Diminished Ovarian Reserve";
+				}
+				else if(index==3){
+					diagnosis="Multiple Female Factors";
+				}
+				else if(index==4){
+					diagnosis="Ovulatory Dysfunction";
+				}
+				else if(index==5){
+					diagnosis="Tubal Factor";
+				}
+				else if(index==6){
+					diagnosis="Female and Male Factors";
+				}
+				else if(index==7){
+					diagnosis="Male Factor";
+				}
+				else if(index==8){
+					diagnosis="Other Factor";
+				}
+				else if(index==9){
+					diagnosis="Uterine Factor";
+				}
+				else if(index==10){
+					diagnosis="Unknown Factor";
+				}
+				else{
+					diagnosis="All Diagnoses";
+				}
+			});
+			UpdateClinics();
+		}
+	});
+	//Governs the cycles radio buttons
+	$('input#cycles_radio_button').click(function(){
+		var radiovalue = $('input:radio[name=cycles_radio]:checked').val();
+		if(radiovalue=="x_small"){
+			cycles_lower=1;
+			cycles_upper=25;
+		}
+		else if(radiovalue=="small"){
+			cycles_lower=26;
+			cycles_upper=100;
+		}
+		else if(radiovalue=="medium"){
+			cycles_lower=101;
+			cycles_upper=200;
+		}
+		else if(radiovalue=="large"){
+			cycles_lower=201;
+			cycles_upper=300;
+		}
+		else if(radiovalue=="x_large"){			
+			cycles_lower=301;
+			cycles_upper=5000;
+		}
+		$('div#clinic_list').html("");
+		$('div#clinic_list').addClass('ajax_loading');
+		UpdateClinics();
+	});
+	
+	//Governs the avg num embryos trx slider
+	$('#avg-emb-trx-slider').slider({
+		range: true,
+		min: 0,
+		max: 7,
+		step: .1,
+		values: [ 0, 7 ],
+		slide: function( event, ui ) {
+			$( "#avg-emb-trx-value" ).html( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+			$('div#clinic_list').html("");
+			$('div#clinic_list').addClass('ajax_loading');
+		},
+		stop: function(event, ui){
+			emb_trx_lower = ui.values[0];
+			emb_trx_upper = ui.values[1];
+			UpdateClinics();
+		}
+	});
+	$( "#avg-emb-trx-value" ).html( $( "#avg-emb-trx-slider" ).slider( "values", 0 ) + " - " + $( "#avg-emb-trx-slider" ).slider( "values", 1 ) );
+	//Governs the implantation rate slider
+	$('#implantation-slider').slider({
+		range: true,
+		min: 0,
+		max: 100,
+		values: [ 0, 100 ],
+		slide: function( event, ui ) {
+			$( "#implantation-value" ).html( ui.values[ 0 ] + "% - " + ui.values[ 1 ] + "%" );
+			$('div#clinic_list').html("");
+			$('div#clinic_list').addClass('ajax_loading');
+		},
+		stop: function(event, ui){
+			implantation_lower = ui.values[0];
+			implantation_upper = ui.values[1];
+			UpdateClinics();
+		}
+	});
+	$( "#implantation-value" ).html( $( "#implantation-slider" ).slider( "values", 0 ) + "% - " + $( "#implantation-slider" ).slider( "values", 1 ) + "%" );
+	//Governs the Pregnancy Per Cycle Slider
+	$('#pregnancy-slider').slider({
+		range: true,
+		min: 0,
+		max: 100,
+		values: [ 0, 100 ],
+		slide: function( event, ui ) {
+			$( "#pregnancy-value" ).html( ui.values[ 0 ] + "% - " + ui.values[ 1 ] + "%" );
+			$('div#clinic_list').html("");
+			$('div#clinic_list').addClass('ajax_loading');
+		},
+		stop: function(event, ui){
+			preg_lower = ui.values[0];
+			preg_upper = ui.values[1];
+			UpdateClinics();
+		}
+	});
+	$( "#pregnancy-value" ).html( $( "#pregnancy-slider" ).slider( "values", 0 ) + "% - " + $( "#pregnancy-slider" ).slider( "values", 1 ) + "%" );
+	//Governs the Birth Per Cycle Slider
+	$('#birth-cycle-slider').slider({
+		range: true,
+		min: 0,
+		max: 100,
+		values: [ 0, 100 ],
+		slide: function( event, ui ) {
+			$( "#birth-cycle-value" ).html( ui.values[ 0 ] + "% - " + ui.values[ 1 ] + "%" );
+			$('div#clinic_list').html("");
+			$('div#clinic_list').addClass('ajax_loading');
+		},
+		stop: function(event, ui){
+			birth_cycle_lower = ui.values[0];
+			birth_cycle_upper = ui.values[1];
+			UpdateClinics();
+		}
+	});
+	$( "#birth-cycle-value" ).html( $( "#birth-cycle-slider" ).slider( "values", 0 ) + "% - " + $( "#birth-cycle-slider" ).slider( "values", 1 ) + "%" );
+	//Governs the birth per retrieval slider
+	$('#birth-retrieval-slider').slider({
+		range: true,
+		min: 0,
+		max: 100,
+		values: [ 0, 100 ],
+		slide: function( event, ui ) {
+			$( "#birth-retrieval-value" ).html( ui.values[ 0 ] + "% - " + ui.values[ 1 ] + "%" );
+			$('div#clinic_list').html("");
+			$('div#clinic_list').addClass('ajax_loading');
+		},
+		stop: function(event, ui){
+			birth_retrieval_lower = ui.values[0];
+			birth_retrieval_upper = ui.values[1];
+			UpdateClinics();
+		}
+	});
+	$( "#birth-retrieval-value" ).html( $( "#birth-retrieval-slider" ).slider( "values", 0 ) + "% - " + $( "#birth-retrieval-slider" ).slider( "values", 1 ) + "%" );
+	//Governs the birth transfer slider
+	$('#birth-transfer-slider').slider({
+		range: true,
+		min: 0,
+		max: 100,
+		values: [ 0, 100 ],
+		slide: function( event, ui ) {
+			$( "#birth-transfer-value" ).html( ui.values[ 0 ] + "% - " + ui.values[ 1 ] + "%" );
+			$('div#clinic_list').html("");
+			$('div#clinic_list').addClass('ajax_loading');
+		},
+		stop: function(event, ui){
+			birth_trx_lower = ui.values[0];
+			birth_trx_upper = ui.values[1];
+			UpdateClinics();
+		}
+	});
+	$( "#birth-transfer-value" ).html( $( "#birth-transfer-slider" ).slider( "values", 0 ) + "% - " + $( "#birth-transfer-slider" ).slider( "values", 1 ) + "%" );
+	//Governs the SET slider
+	$('#set-slider').slider({
+		range: true,
+		min: 0,
+		max: 100,
+		values: [ 0, 100 ],
+		slide: function( event, ui ) {
+			$( "#set-value" ).html( ui.values[ 0 ] + "% - " + ui.values[ 1 ] + "%" );
+			$('div#clinic_list').html("");
+			$('div#clinic_list').addClass('ajax_loading');
+		},
+		stop: function(event, ui){
+			set_lower = ui.values[0];
+			set_upper = ui.values[1];
+			UpdateClinics();
+		}
+	});
+	$( "#set-value" ).html( $( "#set-slider" ).slider( "values", 0 ) + "% - " + $( "#set-slider" ).slider( "values", 1 ) + "%" );
+	//Governs the cancellation rate slider
+	$('#cancellation-slider').slider({
+		range: true,
+		min: 0,
+		max: 100,
+		values: [ 0, 100 ],
+		slide: function( event, ui ) {
+			$( "#cancellation-value" ).html( ui.values[ 0 ] + "% - " + ui.values[ 1 ] + "%" );
+			$('div#clinic_list').html("");
+			$('div#clinic_list').addClass('ajax_loading');
+		},
+		stop: function(event, ui){
+			cancellation_lower = ui.values[0];
+			cancellation_upper = ui.values[1];
+			UpdateClinics();
+		}
+	});
+	$( "#cancellation-value" ).html( $( "#cancellation-slider" ).slider( "values", 0 ) + "% - " + $( "#cancellation-slider" ).slider( "values", 1 ) + "%" );
+	//Twin Slider
+	$('#twin-slider').slider({
+		range: true,
+		min: 0,
+		max: 100,
+		values: [ 0, 100 ],
+		slide: function( event, ui ) {
+			$( "#twin-value" ).html( ui.values[ 0 ] + "% - " + ui.values[ 1 ] + "%" );
+			$('div#clinic_list').html("");
+			$('div#clinic_list').addClass('ajax_loading');
+		},
+		stop: function(event, ui){
+			twin_lower = ui.values[0];
+			twin_upper = ui.values[1];
+			UpdateClinics();
+		}
+	});
+	$( "#twin-value" ).html( $( "#twin-slider" ).slider( "values", 0 ) + "% - " + $( "#twin-slider" ).slider( "values", 1 ) + "%" );
+	//Triplet Slider
+	$('#triplet-slider').slider({
+		range: true,
+		min: 0,
+		max: 100,
+		values: [ 0, 100 ],
+		slide: function( event, ui ) {
+			$( "#triplet-value" ).html( ui.values[ 0 ] + "% - " + ui.values[ 1 ] + "%" );
+			$('div#clinic_list').html("");
+			$('div#clinic_list').addClass('ajax_loading');
+		},
+		stop: function(event, ui){
+			trip_lower = ui.values[0];
+			trip_upper = ui.values[1];
+			UpdateClinics();
+		}
+	});
+	$( "#triplet-value" ).html( $( "#triplet-slider" ).slider( "values", 0 ) + "% - " + $( "#triplet-slider" ).slider( "values", 1 ) + "%" );
+});
+</script>

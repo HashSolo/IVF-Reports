@@ -1,25 +1,38 @@
 <h1>Register</h1>
+<p>Register for an IVF Reports account to receive FREE access to some of our premium features including:</p>
+<ul class="content_list">
+	<li>Clinic Review Access</li>
+	<li>Favorite Clinics List</li>
+	<li>Personalized Clinic Recommendations</li>
+	<li>Contact a Clinic</li>
+	<li>Cycle Tracking System</li>
+	<li>A Community of Engaged Patients Like You</li>
+</ul>
 <%= form_for(@user) do |f| %>
 	<%= render 'shared/error_messages', :object => f.object %>
-	<table>
-	<tr><div class="field">
-		<td><strong><%= f.label :name %></strong></td>
+	<table class="register_form">
+		<h2 class="register_blurb">Become a Member of the IVF Reports Community</h2>
+	<tr>
+		<td class="label"><%= f.label :name %></td>
 		<td><%= f.text_field :name %></td>
-	</div></tr>
-	<tr><div class="field">
-		<td><strong><%= f.label :email %></strong></td>
+	</tr>
+	<tr>
+		<td class="label"><%= f.label :email %></td>
 		<td><%= f.text_field :email %></td>
-	</div></tr>
-	<tr><div class="field">
-		<td><strong><%= f.label :password %></strong></td>
+	</tr>
+	<tr>
+		<td class="label"><%= f.label :password %></td>
 		<td><%= f.password_field :password %></strong></td>
-	</div></tr>
-	<tr><div class="field">
-		<td><strong><%= f.label :password_confirmation, "Confirmation" %></td>
+	</tr>
+	<tr>
+		<td class="label"><%= f.label :password_confirmation, "Confirmation" %></td>
 		<td><%= f.password_field :password_confirmation %></td>
-	</div></tr>
+	</tr>
+	<tr>
+		<td class="label"> </td><td class="submit"><%= f.submit "Register" %></td>
+	</tr>
 	</table>
-	<div class="actions">
-		<%= f.submit "Register", :class=>"register-button green-gradient round shadow" %>
-	</div>
+
+
+
 <% end %>

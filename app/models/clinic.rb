@@ -1,6 +1,8 @@
 class Clinic < ActiveRecord::Base
   has_many :datapoints
   
+  default_scope :order => 'state ASC'
+  
   def to_param
     "#{id}-#{clinic_name.downcase.gsub(/[^[:alnum:]]/,'-')}".gsub(/-{2,}/,'-')
   end
