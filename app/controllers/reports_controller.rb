@@ -183,8 +183,13 @@ class ReportsController < ApplicationController
     @clinic_results = Array.new;
     @datapoints.each do |d|
       cur_clinic = Clinic.find_by_id(d.clinic_id)
-      @clinic_results << cur_clinic
+      
+      cur_new_object = {'implantation_rate' => d.implantation_rate, 'set_transfer_rate' => d.set_transfer_rate, 'twin_rate' => d.twin_rate, 'cycles' => d.cycles, 'avg_num_embs_transferred' => d.avg_num_embs_transferred, 'clinic_name' => cur_clinic.clinic_name, 'permalink' => cur_clinic.permalink, 'city' => cur_clinic.city, 'state' => cur_clinic.state}
+      @clinic_results << cur_new_object
     end
+    
+    nationaldata=Clinic.find_by_id(384)
+    @clinic_results = @clinic_results - [nationaldata]
     
     respond_to do |format|
   	  format.html {}
