@@ -81,7 +81,8 @@
 							
 							//This is the array data for the graph
 							var graph_data = [];
-							
+							var cycle_data = [];
+							var imp_data = [];
 							var tooltips = [];
 							
 							var cur_age_index = 0;
@@ -91,9 +92,8 @@
 								for(var i = 0; i < 5; i++){
 									if(data[k]['age_group']==age_groups[i]){
 										graph_data[i] = data[k]['implantation_rate'];
-										tooltips[i] = "<b>"+age_groups[i]+"</b><br/>";
-										tooltips[i] = tooltips[i] + "Cycles: " + data[k]['cycles'] + "<br/>";
-										tooltips[i] = tooltips[i] + "Imp Rate: " + data[k]['implantation_rate'];
+										cycle_data[i] = data[k]['cycles'];
+										imp_data[i] = data[k]['implantation_rate'];
 									}
 								}
 							});
@@ -129,14 +129,14 @@
 								data: data,
 								success: 	function(data){
 									var graph_data2 = [];
-									$.each(data, function(k){
+									$.each(data, function(l){
 										for(var i = 0; i < 5; i++){
-											if(data[k]['age_group']==age_groups[i]){
-												graph_data2[i] = data[k]['implantation_rate'];
-												tooltips[i] = "<b>Age Group: "+age_groups[i]+"</b><br/>";
-												tooltips[i] = tooltips[i] + "Cycles: " + graph_data[k]['cycles'] + "<br/>";
-												tooltips[i] = tooltips[i] + "Imp Rate: " + graph_data[k]['implantation_rate'] + "<br/>";
-												tooltips[i] = tooltips[i] + "National Avg: " + graph_data2[k]['implantation_rate'];
+											if(data[l]['age_group']==age_groups[i]){
+												graph_data2[i] = data[l]['implantation_rate'];
+												tooltips[i] = "<b>Age Group: "+ age_groups[i] +"</b><br/>";
+												tooltips[i] = tooltips[i] + "Cycles: " + cycle_data[i] + "<br/>";
+												tooltips[i] = tooltips[i] + "Imp Rate: " + Math.round(10*graph_data[i])/10 + "<br/>";
+												tooltips[i] = tooltips[i] + "National Avg: " + Math.round(10*graph_data2[i])/10;
 											}
 										}
 									});
