@@ -43,17 +43,25 @@
 			<div id="stat_debug">
 			
 			</div>	
+			<h4 style="text-align:center;">Implantation Rate vs. National Average</h4>
 			<canvas id="stat_canvas" width="410" height="300">[No canvas support]</canvas>
+			<div class="legend">Solid Bars Show Clinic Performance. Line Shows National Average.</div>
+			<h4 style="text-align:center;">Patient Diversity</h4>
+			<ul id="select-age">
+				<li class="ui-selected"><35</li>
+				<li>35-37</li>
+				<li>38-40</li>
+				<li>41-42</li>
+				<li>>42</li>
+			</ul>
+			<canvas id="rose_canvas" width="410" height="300">[No canvas support]</canvas>
+			<div class="legend">Graph shows the various diagnostic groups this clinic treats.</div>
 		</div>	
 	</div>
 	
 	
 	<script type="text/javascript">
-	$(document).ready(function(){
-		LoadInitialStatsGraph();
-		
-		
-	})
+	var global_age_group = '<35';
 	
 	function LoadInitialStatsGraph(){
 		var data = {
@@ -82,7 +90,7 @@
 							$.each(data, function(k){
 								for(var i = 0; i < 5; i++){
 									if(data[k]['age_group']==age_groups[i]){
-										graph_data[i] = data[k]['cycles'];
+										graph_data[i] = data[k]['implantation_rate'];
 										tooltips[i] = "<b>"+age_groups[i]+"</b><br/>";
 										tooltips[i] = tooltips[i] + "Cycles: " + data[k]['cycles'] + "<br/>";
 										tooltips[i] = tooltips[i] + "Imp Rate: " + data[k]['implantation_rate'];
@@ -104,27 +112,125 @@
 							cycles_bar_graph.Set('chart.shadow.offsety', 0);
 							cycles_bar_graph.Set('chart.shadow.color', '#0F5151');
 							cycles_bar_graph.Set('chart.text.font', 'Trebuchet MS');
+							cycles_bar_graph.Set('chart.ymax', 100);
 							
-							//Render the graph
+							//Render the national averages line
+							var data = {
+								year: 2009,
+								statistic: 'cycles',
+								cycle_type: 'fresh',
+								clinic_id: '384',
+								diagnosis: 'All Diagnoses'
+							}
+							$.ajax({
+								url: "<%= url_for(:action => 'pull_clinic_data') %>",
+								dataType: 'json',
+								async: true,
+								data: data,
+								success: 	function(data){
+									var graph_data2 = [];
+									$.each(data, function(k){
+										for(var i = 0; i < 5; i++){
+											if(data[k]['age_group']==age_groups[i]){
+												graph_data2[i] = data[k]['implantation_rate'];
+												tooltips[i] = "<b>Age Group: "+age_groups[i]+"</b><br/>";
+												tooltips[i] = tooltips[i] + "Cycles: " + graph_data[k]['cycles'] + "<br/>";
+												tooltips[i] = tooltips[i] + "Imp Rate: " + graph_data[k]['implantation_rate'] + "<br/>";
+												tooltips[i] = tooltips[i] + "National Avg: " + graph_data2[k]['implantation_rate'];
+											}
+										}
+									});
+							
+									var imprate_line_graph = new RGraph.Line('stat_canvas', graph_data2);
+									imprate_line_graph.Set('chart.background.grid', false);
+									imprate_line_graph.Set('chart.linewidth', 2);
+									imprate_line_graph.Set('chart.colors', ['#0F5151']);
+									imprate_line_graph.Set('chart.tickmarks', 'circle');
+									imprate_line_graph.Set('chart.highlight.fill', 'black');
+									imprate_line_graph.Set('chart.noaxes', true);
+									imprate_line_graph.Set('chart.ylabels', false);
+							
+									imprate_line_graph.Set('chart.tooltips', tooltips);
+							
+							
+									cycles_bar_graph.Set('chart.line', imprate_line_graph);
+							
+									RGraph.Effects.Fade.In(cycles_bar_graph);
+									RGraph.Effects.Bar.Grow(cycles_bar_graph);
+								}
+							});
+							
+			}
+		});
+	}
+	
+	function LoadRoseChart(){
+		//Clear the canvas first...
+		var canvas_rose = document.getElementById('rose_canvas');
+		var canvas_context_rose = canvas_rose.getContext('2d');
+		canvas_context_rose.clearRect(0, 0, canvas_rose.width, canvas_rose.height);
+		
+		var data = {
+			year: 2009,
+			statistic: 'cycles',
+			cycle_type: 'fresh',
+			clinic_id: <%= @clinic.id %>,
+			age_group: global_age_group
+		}
+		$.ajax({
+			url: "<%= url_for(:action => 'pull_clinic_data') %>",
+			dataType: 'json',
+			async: true,
+			data: data,
+			success: 	function(data){
+							var diagnoses = ['Endometriosis', 'Diminished Ovarian Reserve', 'Multiple Female Factors', 'Ovulatory Dysfunction', 'Tubal Factor', 'Female and Male Factor', 'Male Factor', 'Other Factor', 'Uterine Factor', 'Unknown Factor'];
+							
+							//This is the array data for the graph
+							var graph_data = [];
+							
+							var tooltips = [];
+							
+							var ymax = 0;
+							
+							//Load the cycle data into the graph
+							$.each(data, function(k){
+								for(var i = 0; i < 10; i++){
+									if(data[k]['diagnosis']==diagnoses[i]){
+										graph_data[i] = parseInt(data[k]['cycles']);
+										tooltips[i] = data[k]['cycles'] + " Cycles";
+									}
+								}
+								if(data[k]['diagnosis']=="All Diagnoses"){
+									//Nothing
+								}
+								else if(k==0 && data[k]['diagnosis']=="All Diagnoses"){
+									ymax = parseInt(data[k]['cycles']);
+									var j = 1;
+									ymax = parseInt(data[j]['cycles']);
+								}
+								else if(k==0){
+									ymax = parseInt(data[k]['cycles']);
+								}
+								else{
+									ymax = Math.max(ymax, parseInt(data[k]['cycles']));
+								}
+							});
+							//Change the labels so they fit:
+							var diagnoses = ['Endometriosis', 'Diminished Ovarian Reserve', 'Mult. Female Factors', 'Ovulatory Dysfunction', 'Tubal Factor', 'Female and Male', 'Male Factor', 'Other Factor', 'Uterine Factor', 'Unknown Factor'];							
+							
+							
+							//Instantiate the new graph
+							var diagnoses_rose_chart = new RGraph.Rose('rose_canvas', graph_data);
+							diagnoses_rose_chart.Set('chart.colors.alpha', 0.5);
+							diagnoses_rose_chart.Set('chart.labels', diagnoses);
+							diagnoses_rose_chart.Set('chart.ymax', ymax);
+							diagnoses_rose_chart.Set('chart.text.size', 8);
+							diagnoses_rose_chart.Set('chart.colors', ['#0F5151']);
+							diagnoses_rose_chart.Set('tooltips', tooltips);
 
 							
-							var imprate_line_graph = new RGraph.Line('stat_canvas', graph_data);
-							imprate_line_graph.Set('chart.background.grid', false);
-							imprate_line_graph.Set('chart.linewidth', 2);
-							imprate_line_graph.Set('chart.colors', ['#0F5151']);
-							imprate_line_graph.Set('chart.tickmarks', 'circle');
-							imprate_line_graph.Set('chart.highlight.fill', 'black');
-							imprate_line_graph.Set('chart.noaxes', true);
-							imprate_line_graph.Set('chart.ylabels', false);
-							
-							imprate_line_graph.Set('chart.tooltips', tooltips);
-							
-							
-							cycles_bar_graph.Set('chart.line', imprate_line_graph);
-							
-							RGraph.Effects.Fade.In(cycles_bar_graph);
-							RGraph.Effects.Bar.Grow(cycles_bar_graph);
-							RGraph.Effects.Line.Unfold(cycles_bar_graph.Get('chart.imprate_line_graph'));
+							//Render the graph
+							diagnoses_rose_chart.Draw();
 							
 			}
 		});
@@ -134,7 +240,7 @@
 	
 
 	<div id="reviews_box" class="infobox hidden">
-		<h3>Clinic Reviews</h3>	
+		<h3>Clinic Reviews</h3>
 		<p>There are no reviews currently in the system.</p>
 	</div>
 
@@ -170,6 +276,7 @@
 $(document).ready(function(){
 	
 	$( "#tabs" ).tabs();
+	
 	$('ul#clinic_info li').click(function(){
 		$(this).siblings().removeClass('selected');
 		$(this).addClass('selected');
@@ -179,5 +286,37 @@ $(document).ready(function(){
 		$(dividtoopen).siblings().addClass('hidden');
 		$(dividtoopen).removeClass('hidden');
 	});
+	
+	
+	$('#select-age').selectable({
+		stop: function(){
+			$( ".ui-selected", this ).each(function() {
+				var index = $( "#select-age li" ).index( this );
+				if(index==0){
+					global_age_group="<35";
+				}
+				else if(index==1){
+					global_age_group="35-37";
+				}
+				else if(index==2){
+					global_age_group="38-40";
+				}
+				else if(index==3){
+					global_age_group="41-42";
+				}
+				else if(index==4){
+					global_age_group=">42";
+				}
+				else{
+					global_age_group="<35";
+				}
+			});
+			LoadRoseChart();
+		}
+	});
+	
+	
+	LoadInitialStatsGraph();
+	LoadRoseChart();
 });
 </script>
