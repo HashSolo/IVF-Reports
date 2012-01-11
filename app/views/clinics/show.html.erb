@@ -3,6 +3,7 @@
 
 <h2>Ranking Information</h2>
 <div id='tabs'>
+	
 	<ul class="ranking_tabs">
 		<li><a href='#tabs-1'>Overall</a></li>
 		<li><a href='#tabs-2'><35</a></li>
@@ -10,14 +11,15 @@
 		<li><a href='#tabs-4'>38-40</a></li>
 		<li><a href='#tabs-5'>41-42</a></li>
 		<li><a href='#tabs-6'>>42</a></li>
-		
 	</ul>
+	
 	<div id='tabs-1' class="tab_content">Overall Ranking Data</div>
 	<div id='tabs-2' class="tab_content"><35 Ranking Data</div>
 	<div id='tabs-3' class="tab_content">35-37 Ranking Data</div>
 	<div id='tabs-4' class="tab_content">38-40 Ranking Data</div>
 	<div id='tabs-5' class="tab_content">41-42 Ranking Data</div>
 	<div id='tabs-6' class="tab_content">>42 Ranking Data</div>
+	
 </div>
 
 
@@ -46,6 +48,7 @@
 			<h4 style="text-align:center;">Implantation Rate vs. National Average</h4>
 			<canvas id="stat_canvas" width="410" height="300">[No canvas support]</canvas>
 			<div class="legend">Solid Bars Show Clinic Performance. Line Shows National Average.</div>
+			<hr>
 			<h4 style="text-align:center;">Patient Diversity</h4>
 			<canvas id="rose_canvas" width="410" height="300">[No canvas support]</canvas>
 			<ul id="select-age">
@@ -55,7 +58,7 @@
 				<li>41-42</li>
 				<li>>42</li>
 			</ul>
-			<div class="legend">Graph shows the number of cycles performed for various diagnostic groups by this clinic.</div>
+			<div class="legend">Graph shows the number of cycles performed for various diagnostic groups by this clinic.<br/>Click a wedge to learn more.</div>
 		</div>	
 	</div>
 	
@@ -183,23 +186,16 @@
 			async: true,
 			data: data,
 			success: 	function(data){
-							var diagnoses = ['Endometriosis', 'Diminished Ovarian Reserve', 'Multiple Female Factors', 'Ovulatory Dysfunction', 'Tubal Factor', 'Female and Male Factor', 'Male Factor', 'Other Factor', 'Uterine Factor', 'Unknown Factor'];
+							var diagnoses = ['Endometriosis', 'Diminished Ovarian Reserve', 'Multiple Female Factors', 'Ovulatory Dysfunction', 'Tubal Factor', 'Female and Male Factors', 'Male Factor', 'Other Factor', 'Uterine Factor', 'Unknown Factor'];
 							
 							//This is the array data for the graph
 							var graph_data = [];
-							
 							var tooltips = [];
 							
 							var ymax = 0;
 							
 							//Load the cycle data into the graph
 							$.each(data, function(k){
-								for(var i = 0; i < 10; i++){
-									if(data[k]['diagnosis']==diagnoses[i]){
-										graph_data[i] = parseInt(data[k]['cycles']);
-										tooltips[i] = data[k]['cycles'] + " Cycles";
-									}
-								}
 								if(data[k]['diagnosis']=="All Diagnoses"){
 									//Nothing
 								}
@@ -207,16 +203,37 @@
 									ymax = parseInt(data[k]['cycles']);
 									var j = 1;
 									ymax = parseInt(data[j]['cycles']);
-								}
+								}	
 								else if(k==0){
 									ymax = parseInt(data[k]['cycles']);
+									for(var i = 0; i < 10; i++){
+										if(data[k]['diagnosis']==diagnoses[i]){
+											graph_data[i] = parseInt(data[k]['cycles']);
+											tooltips[i] = "<b>" + diagnoses[i] + "</b><br/>"
+											tooltips[i] = tooltips[i] + "Cycles: " + parseInt(data[k]['cycles']) + "<br/>";
+											tooltips[i] = tooltips[i] + "Implantation Rate: " + Math.round(10*data[k]['implantation_rate'])/10 + "<br/>";
+											tooltips[i] = tooltips[i] + "Average Number of Embryos Transferred: " + parseInt(data[k]['avg_num_embs_transferred']);
+										}
+									}
 								}
+								
 								else{
 									ymax = Math.max(ymax, parseInt(data[k]['cycles']));
+									for(var i = 0; i < 10; i++){
+										if(data[k]['diagnosis']==diagnoses[i]){
+											graph_data[i] = parseInt(data[k]['cycles']);
+											tooltips[i] = "<b>" + diagnoses[i] + "</b><br/>"
+											tooltips[i] = tooltips[i] + "Cycles: " + parseInt(data[k]['cycles']) + "<br/>";
+											tooltips[i] = tooltips[i] + "Implantation Rate: " + Math.round(10*data[k]['implantation_rate'])/10 + "<br/>";
+											tooltips[i] = tooltips[i] + "Average Number of Embryos Transferred: " + parseInt(data[k]['avg_num_embs_transferred']);
+										}
+									}
 								}
+
+								
 							});
 							//Change the labels so they fit:
-							var diagnoses = ['Endometriosis', 'Diminished Ovarian Reserve', 'Mult. Female Factors', 'Ovulatory Dysfunction', 'Tubal Factor', 'Female and Male', 'Male Factor', 'Other Factor', 'Uterine Factor', 'Unknown Factor'];							
+							var diagnoses = ['Endometriosis', 'Diminished Ovarian Reserve', 'Multiple Female Factors', 'Ovulatory Dysfunction', '     Tubal Factor', 'Female + Male Factors', 'Male Factor', 'Other Factor', 'Uterine Factor', 'Unknown Factor'];
 							
 							
 							//Instantiate the new graph
@@ -226,7 +243,8 @@
 							diagnoses_rose_chart.Set('chart.ymax', ymax);
 							diagnoses_rose_chart.Set('chart.text.size', 8);
 							diagnoses_rose_chart.Set('chart.colors', ['#0F5151']);
-							diagnoses_rose_chart.Set('tooltips', tooltips);
+							diagnoses_rose_chart.Set('chart.tooltips', tooltips);
+							diagnoses_rose_chart.Set('chart.tooltips.effect', 'expand');
 
 							
 							//Render the graph
