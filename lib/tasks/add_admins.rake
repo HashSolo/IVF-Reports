@@ -10,6 +10,13 @@ namespace :db do
                          :password => "foobar",
                          :password_confirmation => "foobar")
     admin.toggle!(:admin)
+    
+    #create administrative user
+  	admin2 = User.create!(:name => "chriscleveland",
+                           :email => "cfclevel@gmail.com",
+                           :password => "foobar",
+                           :password_confirmation => "foobar")
+      admin2.toggle!(:admin)
 	
 	
   end
