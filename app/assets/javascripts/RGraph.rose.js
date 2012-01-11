@@ -468,7 +468,7 @@
                 
                 // Fallback is stacked
                 } else {
-                    max = Math.max(max, RGraph.array_sum(data[i]));
+                    max = Math.max(max, data[i]);
                 }
             }
 

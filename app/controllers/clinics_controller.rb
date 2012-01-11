@@ -20,8 +20,13 @@ class ClinicsController < ApplicationController
 
     year = params[:year]
     diagnosis_group = params[:diagnosis]
+    age_group = params[:age_group]
     
-    @datapull = @clinic.datapoints.where(:year => year, :diagnosis => diagnosis_group)
+    if(age_group.nil?)
+      @datapull = @clinic.datapoints.where(:year => year, :diagnosis => diagnosis_group)
+    else
+      @datapull = @clinic.datapoints.where(:year => year, :age_group => age_group)
+    end
     respond_to do |format|
       format.json { render :json => @datapull.to_json() }
     end

@@ -4,7 +4,7 @@
 		<div class="left_sidebar">
 			<h2>Select an Age Group</h2>
 				<ul id="age-selectable">
-					<li class="ui-selected">< 35</li>
+					<li class="ui-selected"><35</li>
 					<li>35-37</li>
 					<li>38-40</li>
 					<li>41-42</li>
@@ -43,11 +43,13 @@
 			<h2 style="margin-bottom:10px;">Select Parameters</h2>
 			<ul class="parameter">
 				<li class="label">Cycles</li>
-				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="x_small" checked />&nbsp;&nbsp;X-Small (0-25 Cycles)</li>
-				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="small" />&nbsp;&nbsp;Small (26-100 Cycles)</li>
-				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="medium" />&nbsp;&nbsp;Medium (101-200 Cycles)</li>
-				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="large" />&nbsp;&nbsp;Large (201-300 Cycles)</li>
-				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="x_large" />&nbsp;&nbsp;X-Large (>300 Cycles)</li>
+				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="x_small" checked />&nbsp;&nbsp;1-25 Cycles</li>
+				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="small" />&nbsp;&nbsp;26-100 Cycles</li>
+				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="medium" />&nbsp;&nbsp;101-200 Cycles</li>
+				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="large" />&nbsp;&nbsp;201-300 Cycles</li>
+				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="x_large" />&nbsp;&nbsp;>300 Cycles</li>
+				<li id="cycles-slider-value" class="value"></li>
+				<li class="slider"><div id="cycles-slider"></div></li>
 			</ul>
 			<ul class="parameter">
 				<li class="label">Single Embryo Transfer Rate</li>
@@ -109,7 +111,7 @@
 var year = 2009;
 var age_group = "<35";
 var diagnosis = "All Diagnoses";
-var cycles_lower = 0;
+var cycles_lower = 1;
 var cycles_upper = 25;
 var emb_trx_lower = 0;
 var emb_trx_upper = 7;
@@ -171,9 +173,11 @@ function UpdateClinics(){
 						//This will have to update the html of the middle section with the new clinic info...
 						$('div#clinic_list').removeClass('ajax_loading');
 						$.each(data, function(k){
-							var clinic_html = "<ul><li class='clinic_name'><a href='/clinics/"+data[k]['permalink']+"'>"+ (k+1) + ". " + data[k]['clinic_name'] + "</a></li>";
-							var clinic_html = clinic_html + "<li class='clinic_stats'>" + data[k]['city'] + ", " + data[k]['state'] + "</li></ul>";
-							$('div#clinic_list').append(clinic_html);
+								var clinic_html = "<ul><li class='clinic_name'><a href='/clinics/"+data[k]['permalink']+"'>"+ (k+1) + ". " + data[k]['clinic_name'] + "</a></li>";
+								var clinic_html = clinic_html + "<li class='clinic_stats'>" + data[k]['city'] + ", " + data[k]['state'] + "</li>";
+								var clinic_html = clinic_html + "<li class='clinic_stats'>Cycles: " + data[k]['cycles'] + " | Imp Rate: " + Math.round(10*data[k]['implantation_rate'])/10 + " | Avg. Number Embryos Trx: " + data[k]['avg_num_embs_transferred'] + "</li>";
+								var clinic_html = clinic_html + "<li class='clinic_stats'>SET Rate: " + Math.round(10*data[k]['set_transfer_rate'])/10 + " | Twin Rate: " + Math.round(10*data[k]['twin_rate'])/10 + "</li></ul>";
+								$('div#clinic_list').append(clinic_html);
 						});
 					}
 	});
@@ -182,6 +186,7 @@ function UpdateClinics(){
 $(document).ready(function(){
 	UpdateClinics();
 	//Governs the age selectable
+	$( "#cycles-slider-value" ).html( "1 - 25" );
 	$('#age-selectable').selectable({
 		stop: function(){
 			$('div#clinic_list').html("");
@@ -263,28 +268,78 @@ $(document).ready(function(){
 		if(radiovalue=="x_small"){
 			cycles_lower=1;
 			cycles_upper=25;
+			$('#cycles-slider').slider("values", 0, cycles_lower);
+			$('#cycles-slider').slider("values", 1, cycles_upper);
+			$( "#cycles-slider-value" ).html( cycles_lower + " - " + cycles_upper );
 		}
 		else if(radiovalue=="small"){
 			cycles_lower=26;
 			cycles_upper=100;
+			$('#cycles-slider').slider("values", 0, cycles_lower);
+			$('#cycles-slider').slider("values", 1, cycles_upper);
+			$( "#cycles-slider-value" ).html( cycles_lower + " - " + cycles_upper );
 		}
 		else if(radiovalue=="medium"){
 			cycles_lower=101;
 			cycles_upper=200;
+			$('#cycles-slider').slider("values", 0, cycles_lower);
+			$('#cycles-slider').slider("values", 1, cycles_upper);
+			$( "#cycles-slider-value" ).html( cycles_lower + " - " + cycles_upper );
 		}
 		else if(radiovalue=="large"){
 			cycles_lower=201;
 			cycles_upper=300;
+			$('#cycles-slider').slider("values", 0, cycles_lower);
+			$('#cycles-slider').slider("values", 1, cycles_upper);
+			$( "#cycles-slider-value" ).html( cycles_lower + " - " + cycles_upper );
 		}
 		else if(radiovalue=="x_large"){			
 			cycles_lower=301;
 			cycles_upper=5000;
+			$('#cycles-slider').slider("values", 0, 300);
+			$('#cycles-slider').slider("values", 1, 300);
+			$( "#cycles-slider-value" ).html( " > 300" );
 		}
 		$('div#clinic_list').html("");
 		$('div#clinic_list').addClass('ajax_loading');
 		UpdateClinics();
 	});
-	
+	//Governs the cycles trx slider
+	$('#cycles-slider').slider({
+		range: true,
+		min: 1,
+		max: 300,
+		step: 1,
+		values: [ 1, 25 ],
+		slide: function( event, ui ) {
+			var cycles_start_value = ui.values[0];
+			var cycles_end_value = ui.values[1];
+			if(cycles_end_value==300){
+				$( "#cycles-slider-value" ).html( ui.values[ 0 ] + " - >" + ui.values[ 1 ] );
+				$('div#clinic_list').html("");
+				$('div#clinic_list').addClass('ajax_loading');
+			}
+			else{
+				$( "#cycles-slider-value" ).html( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+				$('div#clinic_list').html("");
+				$('div#clinic_list').addClass('ajax_loading');
+			}
+		},
+		stop: function(event, ui){
+			var cycles_start_value = ui.values[0];
+			var cycles_end_value = ui.values[1];
+			if(cycles_end_value==300){
+				cycles_lower = cycles_start_value
+				cycles_upper = 5000
+				UpdateClinics();
+			}
+			else{
+				cycles_lower = cycles_start_value
+				cycles_upper = cycles_end_value
+				UpdateClinics();
+			}
+		}
+	});
 	//Governs the avg num embryos trx slider
 	$('#avg-emb-trx-slider').slider({
 		range: true,
