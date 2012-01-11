@@ -9,6 +9,7 @@ gem 'will_paginate', '3.0.pre2'
 gem 'aws-s3'
 gem 'paperclip'
 gem 'feedzirra'
+gem 'yaml_db'
 
 gem 'json'
 
