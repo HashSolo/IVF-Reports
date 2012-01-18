@@ -159,7 +159,7 @@
 									cycles_bar_graph.Set('chart.line', imprate_line_graph);
 							
 									RGraph.Effects.Fade.In(cycles_bar_graph);
-									RGraph.Effects.Bar.Grow(cycles_bar_graph);
+									RGraph.Effects.Bar.Wave(cycles_bar_graph);
 								}
 							});
 							
@@ -248,7 +248,7 @@
 
 							
 							//Render the graph
-							diagnoses_rose_chart.Draw();
+							RGraph.Effects.Fade.In(diagnoses_rose_chart);
 							
 			}
 		});

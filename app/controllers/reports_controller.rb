@@ -18,31 +18,37 @@ class ReportsController < ApplicationController
     #default diagnosis is all
     #default age group is <35
     #default year is 2009 (might not allow this to change)
-    query_year = "2009";
-    age = "<35";
-    diagnosis = "All Diagnoses";
-    cycles_lower = 0;
-    cycles_upper = 25;
-    avg_emb_trx_lower = 0;
-    avg_emb_trx_upper = 7;
-    imp_lower = 0;
-    imp_upper = 100;
-    preg_lower = 0;
-    preg_upper = 100;
-    birth_cycle_lower = 0;
-    birth_cycle_upper = 100;
-    birth_retrieval_lower = 0;
-    birth_retrieval_upper = 100;
-    birth_trx_lower = 100;
-    birth_trx_upper = 100;
-    set_lower = 0;
-    set_upper = 100;
-    cancellation_lower = 0;
-    cancellation_upper = 100;
-    twin_lower = 0;
-    twin_upper = 100;
-    trip_lower = 0;
-    trip_upper = 100;
+    query_year = "2009"
+    age = "<35"
+    diagnosis = "All Diagnoses"
+    cycles_lower = 0
+    cycles_upper = 25
+    avg_emb_trx_lower = 0
+    avg_emb_trx_upper = 7
+    imp_lower = 0
+    imp_upper = 100
+    preg_lower = 0
+    preg_upper = 100
+    birth_cycle_lower = 0
+    birth_cycle_upper = 100
+    birth_retrieval_lower = 0
+    birth_retrieval_upper = 100
+    birth_trx_lower = 100
+    birth_trx_upper = 100
+    set_lower = 0
+    set_upper = 100
+    cancellation_lower = 0
+    cancellation_upper = 100
+    twin_lower = 0
+    twin_upper = 100
+    trip_lower = 0
+    trip_upper = 100
+    if(params[:year].nil?)
+      query_year = "2009"
+    else
+      query_year = params[:year]
+    end
+    
     if(params[:age].nil?)
       age = "<35"
     else
@@ -182,14 +188,14 @@ class ReportsController < ApplicationController
     
     @clinic_results = Array.new;
     @datapoints.each do |d|
-      cur_clinic = Clinic.find_by_id(d.clinic_id)
-      
-      cur_new_object = {'implantation_rate' => d.implantation_rate, 'set_transfer_rate' => d.set_transfer_rate, 'twin_rate' => d.twin_rate, 'cycles' => d.cycles, 'avg_num_embs_transferred' => d.avg_num_embs_transferred, 'clinic_name' => cur_clinic.clinic_name, 'permalink' => cur_clinic.permalink, 'city' => cur_clinic.city, 'state' => cur_clinic.state}
-      @clinic_results << cur_new_object
+      if(d.clinic_id==384)
+        
+      else
+        cur_clinic = Clinic.find_by_id(d.clinic_id)
+        cur_new_object = {'implantation_rate' => d.implantation_rate, 'set_transfer_rate' => d.set_transfer_rate, 'twin_rate' => d.twin_rate, 'cycles' => d.cycles, 'avg_num_embs_transferred' => d.avg_num_embs_transferred, 'clinic_name' => cur_clinic.clinic_name, 'permalink' => cur_clinic.permalink, 'city' => cur_clinic.city, 'state' => cur_clinic.state}
+        @clinic_results << cur_new_object
+      end
     end
-    
-    nationaldata=Clinic.find_by_id(384)
-    @clinic_results = @clinic_results - [nationaldata]
     
     respond_to do |format|
   	  format.html {}
