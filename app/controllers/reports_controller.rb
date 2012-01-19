@@ -197,10 +197,12 @@ class ReportsController < ApplicationController
       end
     end
     
+
+    
     respond_to do |format|
   	  format.html {}
   	  format.json { render :json => @clinic_results.to_json() }
-  	  format.js { }
+  	  format.js {}
 	  end
   end
 end

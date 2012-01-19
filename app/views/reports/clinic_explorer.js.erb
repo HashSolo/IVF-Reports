@@ -1,21 +1,8 @@
 <%
 
-require 'csv'
-
-csv_string = CSV.generate do |csv|
-	#Render the headers here
-	csv << ["clinic_id", "clinic_name"]
-	
-	#Now cycle through the data
-	@clinic_results.each do |c|
-		csv << ["#{c['clinic_id']}", "#{c['clinic_name']}"]
-	end
-	
-	filename = "data-#{Time.now.to_date.to_s}.csv"    
-	send_data(csv_string, :type => 'text/csv; charset=utf-8; header=present', :filename => filename)  
-	
-	
-end
+download_csv(@clinic_results)
 
 
 %>
+
+alert('js test');
