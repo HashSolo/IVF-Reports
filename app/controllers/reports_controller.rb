@@ -192,7 +192,7 @@ class ReportsController < ApplicationController
         
       else
         cur_clinic = Clinic.find_by_id(d.clinic_id)
-        cur_new_object = {'implantation_rate' => d.implantation_rate, 'set_transfer_rate' => d.set_transfer_rate, 'twin_rate' => d.twin_rate, 'cycles' => d.cycles, 'avg_num_embs_transferred' => d.avg_num_embs_transferred, 'clinic_name' => cur_clinic.clinic_name, 'permalink' => cur_clinic.permalink, 'city' => cur_clinic.city, 'state' => cur_clinic.state}
+        cur_new_object = {'implantation_rate' => d.implantation_rate, 'set_transfer_rate' => d.set_transfer_rate, 'twin_rate' => d.twin_rate, 'cycles' => d.cycles, 'avg_num_embs_transferred' => d.avg_num_embs_transferred, 'clinic_id' => cur_clinic.id, 'clinic_name' => cur_clinic.clinic_name, 'permalink' => cur_clinic.permalink, 'city' => cur_clinic.city, 'state' => cur_clinic.state}
         @clinic_results << cur_new_object
       end
     end
@@ -200,6 +200,7 @@ class ReportsController < ApplicationController
     respond_to do |format|
   	  format.html {}
   	  format.json { render :json => @clinic_results.to_json() }
+  	  format.js { }
 	  end
   end
 end

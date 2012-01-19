@@ -34,6 +34,13 @@
 					<li>2005</li>
 				</ul>
 			<h2>Download Options</h2>
+			
+			
+				<div class="download_button">
+					Download Results
+				</div>
+			
+			
 		</div>
 	</div>
 	<div class="grid_6">
@@ -142,6 +149,46 @@ var twin_upper = 100;
 var trip_lower = 0;
 var trip_upper = 100;
 
+function DownloadClinics(){
+	var data = {
+		year: year,
+		age: age_group,
+		diagnosis: diagnosis,
+		cycles_lower: cycles_lower,
+		cycles_upper: cycles_upper,
+		emb_trx_lower: emb_trx_lower,
+		emb_trx_upper: emb_trx_upper,
+		implantation_lower: implantation_lower,
+		implantation_upper: implantation_upper,
+		preg_lower: preg_lower,
+		preg_upper: preg_upper,
+		birth_cycle_lower: birth_cycle_lower,
+		birth_cycle_upper: birth_cycle_upper,
+		birth_retrieval_lower: birth_retrieval_lower,
+		birth_retrieval_upper: birth_retrieval_upper,
+		birth_trx_lower: birth_trx_lower,
+		birth_trx_upper: birth_trx_upper,
+		set_lower: set_lower,
+		set_upper: set_upper,
+		cancellation_lower: cancellation_lower,
+		cancellation_upper: cancellation_upper,
+		twin_lower: twin_lower,
+		twin_upper: twin_upper,
+		trip_lower: trip_lower,
+		trip_upper: trip_upper
+	}
+	$.ajax({
+		url: "<%= url_for(:action => 'clinic_explorer') %>",
+		dataType: 'script',
+		async: true,
+		data: data,
+		success: 	function(data){
+						alert("Successfully clicked download!");
+					}
+	});
+}
+
+
 function UpdateClinics(){
 	$('div#clinic_list').html("");
 	$('div#clinic_list').addClass('ajax_loading');
@@ -192,6 +239,10 @@ function UpdateClinics(){
 }
 
 $(document).ready(function(){
+	$('div.download_button').click(function(){
+		DownloadClinics();
+	});
+	
 	UpdateClinics();
 	//Governs the age selectable
 	$('#year-selectable').selectable({
