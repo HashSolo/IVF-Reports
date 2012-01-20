@@ -1,4 +1,7 @@
 class ReportsController < ApplicationController
+  before_filter :authenticate, :only => :clinic_explorer
+  before_filter :admin_or_insurance_user, 	:only => :clinic_explorer
+  
   def the_ivf_process
   end
   
@@ -192,7 +195,7 @@ class ReportsController < ApplicationController
         
       else
         cur_clinic = Clinic.find_by_id(d.clinic_id)
-        cur_new_object = {'implantation_rate' => d.implantation_rate, 'set_transfer_rate' => d.set_transfer_rate, 'twin_rate' => d.twin_rate, 'cycles' => d.cycles, 'avg_num_embs_transferred' => d.avg_num_embs_transferred, 'clinic_id' => cur_clinic.id, 'clinic_name' => cur_clinic.clinic_name, 'permalink' => cur_clinic.permalink, 'city' => cur_clinic.city, 'state' => cur_clinic.state}
+        cur_new_object = {'updated_at' => d.updated_at, 'year' => d.year, 'age_group' => d.age_group, 'diagnosis' => d.diagnosis, 'implantation_rate' => d.implantation_rate, 'pregnancy_rate' => d.pregs_per_cycle, 'birth_cycle_rate' => d.births_per_cycle, 'birth_retrieval_rate' => d.births_per_retrieval, 'birth_transfer_rate' => d.births_per_transfer, 'set_transfer_rate' => d.set_transfer_rate, 'cancellation_rate' => d.cancellation_rate, 'twin_rate' => d.twin_rate, 'trip_rate' => d.trip_rate, 'cycles' => d.cycles, 'avg_num_embs_transferred' => d.avg_num_embs_transferred, 'clinic_id' => cur_clinic.id, 'clinic_name' => cur_clinic.clinic_name, 'permalink' => cur_clinic.permalink, 'city' => cur_clinic.city, 'state' => cur_clinic.state, 'address' => cur_clinic.address, 'practice_director' => cur_clinic.practice_director, 'lab_director' => cur_clinic.laboratory_director, 'medical_director' => cur_clinic.medical_director, 'zip' => cur_clinic.zip}
         @clinic_results << cur_new_object
       end
     end
@@ -202,7 +205,8 @@ class ReportsController < ApplicationController
     respond_to do |format|
   	  format.html {}
   	  format.json { render :json => @clinic_results.to_json() }
-  	  format.js {}
+  	  format.csv { download_csv(@clinic_results) }
 	  end
   end
+  
 end
