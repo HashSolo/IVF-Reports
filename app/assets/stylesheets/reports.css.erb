@@ -13,40 +13,45 @@ p.rss_feed {border-bottom:1px solid #d5d5d5;padding-bottom:10px;}
 /*Clinic Explorer*/
 .explorer_content h1 {text-align:center;font-weight:normal;font-family:'Trebuchet MS', Arial, sans-serif;color:#00345c;font-size:20px;margin-bottom:10px;}
 .explorer_center {min-height:950px;}
-
 #age-selectable {padding:0px;margin:0px;display:inline-block;width:80%;font-size:13px;margin-top:20px;margin-bottom:20px;padding-left:10px;padding-right:10px;}
 #age-selectable li {padding:0px;margin:0px;list-style-type:none;display:inline-block;width:100%;text-align:center;height:25px;line-height:25px;cursor:pointer;margin-top:5px;}
 #age-selectable .ui-selectee {background:#7895a3;color:#ffffff;border:1px solid #325d5d; }
 #age-selectable .ui-selecting { background: #FECA40; }
 #age-selectable .ui-selected { background: #F39814; color: white; }
-
 #diagnosis-selectable {padding:0px;margin:0px;display:inline-block;width:80%;font-size:13px;margin-top:20px;margin-bottom:20px;padding-left:10px;padding-right:10px;}
 #diagnosis-selectable li {padding:0px;margin:0px;list-style-type:none;display:inline-block;width:100%;text-align:center;height:25px;line-height:25px;cursor:pointer;margin-top:5px;}
 #diagnosis-selectable .ui-selectee {background:#7895a3;color:#ffffff;border:1px solid #325d5d; }
 #diagnosis-selectable .ui-selecting { background: #FECA40; }
 #diagnosis-selectable .ui-selected { background: #F39814; color: white; }
-
 #year-selectable {padding:0px;margin:0px;display:inline-block;width:80%;font-size:13px;margin-top:20px;margin-bottom:20px;padding-left:10px;padding-right:10px;}
 #year-selectable li {padding:0px;margin:0px;list-style-type:none;display:inline-block;width:100%;text-align:center;height:25px;line-height:25px;cursor:pointer;margin-top:5px;}
 #year-selectable .ui-selectee {background:#7895a3;color:#ffffff;border:1px solid #325d5d; }
 #year-selectable .ui-selecting { background: #FECA40; }
 #year-selectable .ui-selected { background: #F39814; color: white; }
-
 div.download_button {background:#7895a3;color:#ffffff;border:1px solid #325d5d; cursor:pointer;margin-left:10px;margin-right:30px;height:30px;line-height:30px;text-align:center;margin-top:10px;}
 div.download_button:hover {color:#F39814;}
 div.download_button:active {background: #FECA40;}
-
 li#cycles-value {text-align:left;margin-bottom:6px;font-weight:bold;}
-
 ul.parameter {border:1px solid #d5d5d5;padding:0px;margin:0px;display:inline-block;width:90%;font-size:13px;padding-left:5%;padding-right:5%;margin-top:10px;}
 ul.parameter li {list-style-type:none;padding:0px;margin:0px;display:inline-block;height:20px;width:100%;}
 ul.parameter li.label {font-weight:bold;font-size:14px;color:#325d5d;margin-bottom:5px;}
 ul.parameter li.value {color:#7895a3;text-align:center;}
 ul.parameter li.value input.input-value {color:#7895a3;border:0px;width:35px;text-align:center;font-size:12px;}
 ul.parameter li.slider {}
-	
 div#clinic_list ul {display:inline-block;width:90%;padding:0px;margin:0px;padding-left:2%;padding-right:8%;background:#C2CFD6;border:1px solid #7895a3;color:#0F5151;margin-bottom:10px;}
 div#clinic_list ul li {overflow:hidden;display:inline-block;width:100%;padding:0px;margin:0px;list-style-type:none;height:25px;font-size:14px;line-height:25px;}
 div#clinic_list ul li.clinic_name {}
 div#clinic_list ul li.clinic_name a {text-decoration:none;color:#0F5151;font-weight:bold;}
 div#clinic_list ul li.clinic_stats {}
+	
+	
+/* Clinic Comparator*/
+.comparator_content {min-height:550px;}
+.comparator_content h2 {text-align:center;font-weight:normal;font-family:'Trebuchet MS', Arial, sans-serif;font-size:16px;margin-bottom:10px;}
+.clinic_selection {display:inline-block;float:left;width:100%;margin-bottom:20px;}
+.clinic_selection .clinic_a {display:inline-block;float:left;width:150px;}
+.clinic_selection .clinic_a select {width:100%;}
+.clinic_selection .clinic_b {display:inline-block;float:right;width:150px;}
+.clinic_selection .clinic_b select {width:100%;}
+#comparison_results {display:inline-block;float:left;width:100%;background:#cccccc;padding:0px;}
+#comparison_results canvas.canvas_for_comparison {margin-left:auto;margin-right:auto;width:100%;margin-bottom:0px;margin-top:0px;}

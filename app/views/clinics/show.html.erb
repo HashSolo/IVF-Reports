@@ -5,20 +5,104 @@
 <div id='tabs'>
 	
 	<ul class="ranking_tabs">
-		<li><a href='#tabs-1'>Overall</a></li>
-		<li><a href='#tabs-2'><35</a></li>
-		<li><a href='#tabs-3'>35-37</a></li>
-		<li><a href='#tabs-4'>38-40</a></li>
-		<li><a href='#tabs-5'>41-42</a></li>
-		<li><a href='#tabs-6'>>42</a></li>
+		<li><a href='#rankingtabs_1'>Overall</a></li>
+		<li><a href='#rankingtabs_2'><35</a></li>
+		<li><a href='#rankingtabs_3'>35-37</a></li>
+		<li><a href='#rankingtabs_4'>38-40</a></li>
+		<li><a href='#rankingtabs_5'>41-42</a></li>
+		<li><a href='#rankingtabs_6'>>42</a></li>
 	</ul>
 	
-	<div id='tabs-1' class="tab_content">Overall Ranking Data</div>
-	<div id='tabs-2' class="tab_content"><35 Ranking Data</div>
-	<div id='tabs-3' class="tab_content">35-37 Ranking Data</div>
-	<div id='tabs-4' class="tab_content">38-40 Ranking Data</div>
-	<div id='tabs-5' class="tab_content">41-42 Ranking Data</div>
-	<div id='tabs-6' class="tab_content">>42 Ranking Data</div>
+	<div id='rankingtabs_1' class="tab_content">
+		<table class="score_table">
+			<% if(@scores_all_ages.empty?) %>
+				<tr><td class="score_label">IVF Reports Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label">Quality Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label">Safety Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label">SART Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+			<% else %>
+				<tr><td class="score_label">IVF Reports Score</td><td class="score_result"><%= number_with_precision(@scores_all_ages[0].ivf_reports_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_all_ages[0].ivf_reports_score) %>'>★</span></td></tr>
+				<tr><td class="score_label">Quality Score</td><td class="score_result"><%= number_with_precision(@scores_all_ages[0].quality_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_all_ages[0].quality_score) %>'>★</span></td></tr>
+				<tr><td class="score_label">Safety Score</td><td class="score_result"><%= number_with_precision(@scores_all_ages[0].safety_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_all_ages[0].safety_score) %>'>★</span></td></tr>
+				<tr><td class="score_label">SART Score</td><td class="score_result"><%= number_with_precision(@scores_all_ages[0].sart_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_all_ages[0].sart_score) %>'>★</span></td></tr>			
+			<% end %>
+		</table>
+	</div>
+	<div id='rankingtabs_2' class="tab_content">
+		<table class="score_table">
+			<% if(@scores_35.empty?) %>
+				<tr><td class="score_label">IVF Reports Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label">Quality Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label">Safety Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label">SART Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+			<% else %>
+				<tr><td class="score_label">IVF Reports Score</td><td class="score_result"><%= number_with_precision(@scores_35[0].ivf_reports_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_35[0].ivf_reports_score) %>'>★</span></td></tr>
+				<tr><td class="score_label">Quality Score</td><td class="score_result"><%= number_with_precision(@scores_35[0].quality_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_35[0].quality_score) %>'>★</span></td></tr>
+				<tr><td class="score_label">Safety Score</td><td class="score_result"><%= number_with_precision(@scores_35[0].safety_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_35[0].safety_score) %>'>★</span></td></tr>
+				<tr><td class="score_label">SART Score</td><td class="score_result"><%= number_with_precision(@scores_35[0].sart_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_35[0].sart_score) %>'>★</span></td></tr>			
+			<% end %>
+		</table>
+	</div>
+	<div id='rankingtabs_3' class="tab_content">
+		<table class="score_table">	
+			<% if(@scores_35_37.empty?) %>
+				<tr><td class="score_label">IVF Reports Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label">Quality Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label">Safety Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label">SART Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+			<% else %>
+				<tr><td class="score_label">IVF Reports Score</td><td class="score_result"><%= number_with_precision(@scores_35_37[0].ivf_reports_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_35_37[0].ivf_reports_score) %>'>★</span></td></tr>
+				<tr><td class="score_label">Quality Score</td><td class="score_result"><%= number_with_precision(@scores_35_37[0].quality_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_35_37[0].quality_score) %>'>★</span></td></tr>
+				<tr><td class="score_label">Safety Score</td><td class="score_result"><%= number_with_precision(@scores_35_37[0].safety_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_35_37[0].safety_score) %>'>★</span></td></tr>
+				<tr><td class="score_label">SART Score</td><td class="score_result"><%= number_with_precision(@scores_35_37[0].sart_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_35_37[0].sart_score) %>'>★</span></td></tr>
+			<% end %>
+		</table>
+	</div>	
+	<div id='rankingtabs_4' class="tab_content">
+		<table class="score_table">	
+			<% if(@scores_38_40.empty?) %>
+				<tr><td class="score_label">IVF Reports Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label">Quality Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label">Safety Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label">SART Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+			<% else %>
+				<tr><td class="score_label">IVF Reports Score</td><td class="score_result"><%= number_with_precision(@scores_38_40[0].ivf_reports_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_38_40[0].ivf_reports_score) %>'>★</span></td></tr>
+				<tr><td class="score_label">Quality Score</td><td class="score_result"><%= number_with_precision(@scores_38_40[0].quality_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_38_40[0].quality_score) %>'>★</span></td></tr>
+				<tr><td class="score_label">Safety Score</td><td class="score_result"><%= number_with_precision(@scores_38_40[0].safety_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_38_40[0].safety_score) %>'>★</span></td></tr>
+				<tr><td class="score_label">SART Score</td><td class="score_result"><%= number_with_precision(@scores_38_40[0].sart_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_38_40[0].sart_score) %>'>★</span></td></tr>			
+			<% end %>
+		</table>
+	</div>
+	<div id='rankingtabs_5' class="tab_content">
+		<table class="score_table">
+			<% if(@scores_41_42.empty?) %>
+				<tr><td class="score_label">IVF Reports Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label">Quality Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label">Safety Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label">SART Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+			<% else %>
+				<tr><td class="score_label">IVF Reports Score</td><td class="score_result"><%= number_with_precision(@scores_41_42[0].ivf_reports_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_41_42[0].ivf_reports_score) %>'>★</span></td></tr>
+				<tr><td class="score_label">Quality Score</td><td class="score_result"><%= number_with_precision(@scores_41_42[0].quality_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_41_42[0].quality_score) %>'>★</span></td></tr>
+				<tr><td class="score_label">Safety Score</td><td class="score_result"><%= number_with_precision(@scores_41_42[0].safety_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_41_42[0].safety_score) %>'>★</span></td></tr>
+				<tr><td class="score_label">SART Score</td><td class="score_result"><%= number_with_precision(@scores_41_42[0].sart_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_41_42[0].sart_score) %>'>★</span></td></tr>			
+			<% end %>
+		</table>
+	</div>
+	<div id='rankingtabs_6' class="tab_content">
+		<table class="score_table">
+			<% if(@scores_42.empty?) %>
+				<tr><td class="score_label">IVF Reports Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label">Quality Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label">Safety Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label">SART Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+			<% else %>
+				<tr><td class="score_label">IVF Reports Score</td><td class="score_result"><%= number_with_precision(@scores_42[0].ivf_reports_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_42[0].ivf_reports_score) %>'>★</span></td></tr>
+				<tr><td class="score_label">Quality Score</td><td class="score_result"><%= number_with_precision(@scores_42[0].quality_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_42[0].quality_score) %>'>★</span></td></tr>
+				<tr><td class="score_label">Safety Score</td><td class="score_result"><%= number_with_precision(@scores_42[0].safety_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_42[0].safety_score) %>'>★</span></td></tr>
+				<tr><td class="score_label">SART Score</td><td class="score_result"><%= number_with_precision(@scores_42[0].sart_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_42[0].sart_score) %>'>★</span></td></tr>			
+			<% end %>
+		</table>
+	</div>
 	
 </div>
 
@@ -64,7 +148,22 @@
 	
 	
 	<script type="text/javascript">
+	var score_age_group = 'All Ages';
+	var score_diagnosis = 'All Diagnoses';
+	var score_year = 2009;
+	var score_cycle_type = 'fresh';
 	var global_age_group = '<35';
+	
+	function LoadRankingData(new_age_group, new_diagnosis){
+		var data = {
+			id: <%= @clinic.id %>,
+			cycle_type: score_cycle_type,
+			year: score_year,
+			diagnosis: score_diagnosis,
+			age_group: score_age_group
+		}
+		
+	}
 	
 	function LoadInitialStatsGraph(){
 		var data = {
@@ -90,6 +189,8 @@
 							
 							var cur_age_index = 0;
 							
+							var y_max = 0;
+							
 							//Load the cycle data into the graph
 							$.each(data, function(k){
 								for(var i = 0; i < 5; i++){
@@ -97,12 +198,15 @@
 										graph_data[i] = data[k]['implantation_rate'];
 										cycle_data[i] = data[k]['cycles'];
 										imp_data[i] = data[k]['implantation_rate'];
+										if(data[k]['implantation_rate'] > y_max){
+											y_max = data[k]['implantation_rate'];
+										}
 									}
 								}
 							});
 							
 							//Instantiate the new graph
-							var cycles_bar_graph = new RGraph.Bar('stat_canvas', graph_data);
+							cycles_bar_graph = new RGraph.Bar('stat_canvas', graph_data);
 							cycles_bar_graph.Set('chart.labels', age_groups);
 					        cycles_bar_graph.Set('chart.gutter.left', 45);
 					        cycles_bar_graph.Set('chart.background.barcolor1', 'white');
@@ -115,7 +219,12 @@
 							cycles_bar_graph.Set('chart.shadow.offsety', 0);
 							cycles_bar_graph.Set('chart.shadow.color', '#0F5151');
 							cycles_bar_graph.Set('chart.text.font', 'Trebuchet MS');
-							cycles_bar_graph.Set('chart.ymax', 100);
+							cycles_bar_graph.Set('chart.units.post', '%');
+							
+
+							
+							//RGraph.Effects.Fade.In(cycles_bar_graph);
+							//RGraph.Effects.Bar.Wave(cycles_bar_graph);
 							
 							//Render the national averages line
 							var data = {
@@ -140,26 +249,31 @@
 												tooltips[i] = tooltips[i] + "Cycles: " + cycle_data[i] + "<br/>";
 												tooltips[i] = tooltips[i] + "Imp Rate: " + Math.round(10*graph_data[i])/10 + "<br/>";
 												tooltips[i] = tooltips[i] + "National Avg: " + Math.round(10*graph_data2[i])/10;
+												if(data[l]['implantation_rate'] > y_max){
+													y_max = data[l]['implantation_rate'];
+												}
 											}
 										}
 									});
+									
+									y_max = y_max + 5;
+									if(y_max > 100.0){
+										y_max = 100;
+									}
 							
-									var imprate_line_graph = new RGraph.Line('stat_canvas', graph_data2);
+									imprate_line_graph = new RGraph.Line('stat_canvas', graph_data2);
 									imprate_line_graph.Set('chart.background.grid', false);
 									imprate_line_graph.Set('chart.linewidth', 2);
 									imprate_line_graph.Set('chart.colors', ['#0F5151']);
 									imprate_line_graph.Set('chart.tickmarks', 'circle');
 									imprate_line_graph.Set('chart.highlight.fill', 'black');
-									imprate_line_graph.Set('chart.noaxes', true);
-									imprate_line_graph.Set('chart.ylabels', false);
-							
+									imprate_line_graph.Set('chart.ylabels', false);																					
+									cycles_bar_graph.Set('chart.ymax', y_max);
 									imprate_line_graph.Set('chart.tooltips', tooltips);
-							
-							
+
+
 									cycles_bar_graph.Set('chart.line', imprate_line_graph);
-							
-									RGraph.Effects.Fade.In(cycles_bar_graph);
-									RGraph.Effects.Bar.Wave(cycles_bar_graph);
+									cycles_bar_graph.Draw();
 								}
 							});
 							

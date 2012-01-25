@@ -41,10 +41,46 @@ class ClinicsController < ApplicationController
   end
   
   def show
+    year = params[:year]
+    diagnosis = params[:diagnosis]
+    age_group = params[:age_group]
+    cycle_type = params[:cycle_type]
+    
+    if(year.nil?)
+      year = '2009'
+    else
+      year = params[:year]
+    end
+    
+    if(diagnosis.nil?)
+      diagnosis = "All Diagnoses"
+    else
+      diagnosis = params[:diagnosis]
+    end
+    
+    if(age_group.nil?)
+      age_group = "All Ages"
+    else
+      age_group = params[:age_group]
+    end
+    
+    if(cycle_type.nil?)
+      cycle_type = "fresh"
+    else
+      cycle_type = params[:cycle_type]
+    end
+
     @clinic = Clinic.find(params[:id])
+    @datapoints = @clinic.datapoints.where(:year => year, :age_group => age_group, :diagnosis => diagnosis, :cycle_type => cycle_type)
+    @scores = @clinic.scores.where(:year => year, :age_group => age_group, :diagnosis => diagnosis, :cycle_type => cycle_type)
+    @scores_all_ages = @clinic.scores.where(:year => year, :age_group => "All Ages", :diagnosis => diagnosis, :cycle_type => cycle_type)
+    @scores_35 = @clinic.scores.where(:year => year, :age_group => "<35", :diagnosis => diagnosis, :cycle_type => cycle_type)
+    @scores_35_37 = @clinic.scores.where(:year => year, :age_group => "35-37", :diagnosis => diagnosis, :cycle_type => cycle_type)
+    @scores_38_40 = @clinic.scores.where(:year => year, :age_group => "38-40", :diagnosis => diagnosis, :cycle_type => cycle_type)
+    @scores_41_42 = @clinic.scores.where(:year => year, :age_group => "41-42", :diagnosis => diagnosis, :cycle_type => cycle_type)
+    @scores_42 = @clinic.scores.where(:year => year, :age_group => ">42", :diagnosis => diagnosis, :cycle_type => cycle_type)
     @title = @clinic.clinic_name
   end
-  
   
   def new
 	  @title = "Add a New Clinic"

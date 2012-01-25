@@ -1,0 +1,48 @@
+<h1>The IVF Reports Clinic Comparator</h1>
+<div class="grid_3 alpha">
+	<div class="left_sidebar">
+		<h2>Statistic Options</h2>
+	</div>
+</div>
+<div class="grid_6">
+	<div class="middle_content">
+	<div class="comparator_content">
+		<h2 id="results_title">Select Two Clinics to Compare</h2>
+		<div class="clinic_selection">
+			<div class="clinic_a">Clinic A:
+				<select id="clinic_a_select">
+					<option value="">Select a Clinic</option>
+					<% @clinics.each do |c| %>
+					
+					<option value="clinic_a_<%= c.id %>" id="clinic_a_id_<%= c.id %>"><%= c.clinic_name %> - <%= c.city %>, <%= c.state %></option>
+					
+					<% end %>
+				</select>
+			</div>
+				
+			<div class="clinic_b">Clinic B:
+				<select id="clinic_b_select">
+					<option value="">Select a Clinic</option>
+					<% @clinics.each do |c| %>
+					
+					<option value="clinic_b_<%= c.id %>" id="clinic_b_id_<%= c.id %>"><%= c.clinic_name %> - <%= c.city %>, <%= c.state %></option>
+					
+					<% end %>
+				</select>
+			</div>
+		</div>
+		
+		<hr>
+		
+		<div id="comparison_results">
+			<canvas id="comparison_canvas" class="canvas_for_comparison" height="250">[Your Browser Does Not Support the Canvas]</canvas>
+		</div>
+	</div>
+	</div>
+</div>
+
+<div class="grid_3 omega">
+	<div class="right_sidebar">
+		<h2>Graphing Options</h2>
+	</div>
+</div>

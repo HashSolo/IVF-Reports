@@ -1,23 +1,33 @@
 class ReportsController < ApplicationController
-  before_filter :authenticate, :only => :clinic_explorer
-  before_filter :admin_or_insurance_user, 	:only => :clinic_explorer
+  before_filter :authenticate, :only => [:clinic_explorer, :clinic_comparator]
+  before_filter :admin_or_insurance_user, 	:only => [:clinic_explorer, :clinic_comparator]
   
   def the_ivf_process
+    @title = "The IVF Process"
+  end
+  
+  def infertility_diagnoses
+    @title = "Infertility Diagnoses"
   end
   
   def cdc_vs_sart
+    @title = "The CDC vs. SART"
   end
   
   def fertility_news
+    @title = "Fertility News"
   end
   
   def other_technologies
   end
   
-  def clinics_by_region
+  def clinic_comparator
+    @title = "Clinic Comparator"
+    @clinics = Clinic.all
   end
   
   def clinic_explorer
+    @title = "Clinic Explorer"
     #default diagnosis is all
     #default age group is <35
     #default year is 2009 (might not allow this to change)

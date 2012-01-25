@@ -1,125 +1,119 @@
-	<h1>The IVF Reports Clinic Explorer</h1>
-	<div class="grid_3 alpha">
-		<div class="left_sidebar">
-			<h2>Select an Age Group</h2>
-				<ul id="age-selectable">
-					<li class="ui-selected"><35</li>
-					<li>35-37</li>
-					<li>38-40</li>
-					<li>41-42</li>
-					<li>>42</li>
-				</ul>
-			<hr>
-			<h2>Select a Diagnosis</h2>
-				<ul id="diagnosis-selectable">
-					<li class="ui-selected">All Diagnoses</li>
-					<li>Endometriosis</li>
-					<li>Diminished Ovarian Reserve</li>
-					<li>Multiple Female Factors</li>
-					<li>Ovulatory Dysfunction</li>
-					<li>Tubal Factor</li>
-					<li>Female and Male Factors</li>
-					<li>Male Factor</li>
-					<li>Other Factor</li>
-					<li>Uterine Factor</li>
-					<li>Unknown Factor</li>
-				</ul>
-			<hr>
-			<h2>Select a Year</h2>
-				<ul id="year-selectable">
-					<li class="ui-selected">2009</li>
-					<li>2008</li>
-					<li>2007</li>
-					<li>2006</li>
-					<li>2005</li>
-				</ul>
-			<h2>Download Options</h2>
-			
-			
-				<div class="download_button">
-					Download Results
-				</div>
-			
-			
+<h1>The IVF Reports Clinic Explorer</h1>
+<div class="grid_3 alpha">
+	<div class="left_sidebar">
+		<h2>Select an Age Group</h2>
+			<ul id="age-selectable">
+				<li class="ui-selected"><35</li>
+				<li>35-37</li>
+				<li>38-40</li>
+				<li>41-42</li>
+				<li>>42</li>
+			</ul>
+		<hr>
+		<h2>Select a Diagnosis</h2>
+			<ul id="diagnosis-selectable">
+				<li class="ui-selected">All Diagnoses</li>
+				<li>Endometriosis</li>
+				<li>Diminished Ovarian Reserve</li>
+				<li>Multiple Female Factors</li>
+				<li>Ovulatory Dysfunction</li>
+				<li>Tubal Factor</li>
+				<li>Female and Male Factors</li>
+				<li>Male Factor</li>
+				<li>Other Factor</li>
+				<li>Uterine Factor</li>
+				<li>Unknown Factor</li>
+			</ul>
+		<hr>
+		<h2>Select a Year</h2>
+			<ul id="year-selectable">
+				<li class="ui-selected">2009</li>
+				<li>2008</li>
+				<li>2007</li>
+				<li>2006</li>
+				<li>2005</li>
+			</ul>
+		<h2>Download Options</h2>			
+			<div class="download_button">
+				Download Results
+			</div>		
+	</div>
+</div>
+<div class="grid_6">
+	<div class="middle_content">
+	<div class="explorer_center">
+		<h2>Results</h2>
+		<div id="clinic_list">
 		</div>
 	</div>
-	<div class="grid_6">
-		<div class="middle_content">
-		<div class="explorer_center">
-			<h2>Results</h2>
-			<div id="clinic_list">
-			</div>
-		</div>
-		</div>
 	</div>
+</div>
 
-	<div class="grid_3 omega">
-		<div class="right_sidebar">
-			<h2 style="margin-bottom:10px;">Select Parameters</h2>
-			<ul class="parameter">
-				<li class="label">Cycles</li>
-				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="x_small" checked />&nbsp;&nbsp;1-25 Cycles</li>
-				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="small" />&nbsp;&nbsp;26-100 Cycles</li>
-				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="medium" />&nbsp;&nbsp;101-200 Cycles</li>
-				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="large" />&nbsp;&nbsp;201-300 Cycles</li>
-				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="x_large" />&nbsp;&nbsp;>300 Cycles</li>
-				<li id="cycles-slider-value" class="value"><input type="text" id="cycles-lower-input" class="input-value" value="1"/> - <input type="text" id="cycles-upper-input" class="input-value" value="25"/></li>
-				<li class="slider"><div id="cycles-slider"></div></li>
-			</ul>
-			<ul class="parameter">
-				<li class="label">Single Embryo Transfer Rate</li>
-				<li id="set-value" class="value"><input type="text" id="set-lower-input" class="input-value" value="0"/>% - <input type="text" id="set-upper-input" class="input-value" value="100"/>%</li>
-				<li class="slider"><div id="set-slider"></div></li>
-			</ul>
-			<ul class="parameter">
-				<li class="label">Implantation Rate</li>
-				<li id="implantation-value" class="value"><input type="text" id="implantation-lower-input" class="input-value" value="0"/>% - <input type="text" id="implantation-upper-input" class="input-value" value="100"/>%</li>
-				<li class="slider"><div id="implantation-slider"></div></li>
-			</ul>
-			<ul class="parameter">
-				<li class="label">Avg. Number Embryos Transferred</li>
-				<li id="avg-emb-trx-value" class="value"><input type="text" id="avg-emb-trx-lower-input" class="input-value" value="0"/> - <input type="text" id="avg-emb-trx-upper-input" class="input-value" value="7"/></li>
-				<li class="slider"><div id="avg-emb-trx-slider"></div></li>
-			</ul>			
-			<ul class="parameter">
-				<li class="label">Pregnancy Rate per Cycle</li>
-				<li id="pregnancy-value" class="value"><input type="text" id="pregnancy-lower-input" class="input-value" value="0"/>% - <input type="text" id="pregnancy-upper-input" class="input-value" value="100"/>%</li>
-				<li class="slider"><div id="pregnancy-slider"></div></li>
-			</ul>
-			<ul class="parameter">
-				<li class="label">Birth Rate per Cycle</li>
-				<li id="birth-cycle-value" class="value"><input type="text" id="birth-cycle-lower-input" class="input-value" value="0"/>% - <input type="text" id="birth-cycle-upper-input" class="input-value" value="100"/>%</li>
-				<li class="slider"><div id="birth-cycle-slider"></div></li>
-			</ul>
-			<ul class="parameter">
-				<li class="label">Birth Rate per Retrieval</li>
-				<li id="birth-retrieval-value" class="value"><input type="text" id="birth-retrieval-lower-input" class="input-value" value="0"/>% - <input type="text" id="birth-retrieval-upper-input" class="input-value" value="100"/>%</li>
-				<li class="slider"><div id="birth-retrieval-slider"></div></li>
-			</ul>
-			<ul class="parameter">
-				<li class="label">Birth Rate per Transfer</li>
-				<li id="birth-transfer-value" class="value"><input type="text" id="birth-transfer-lower-input" class="input-value" value="0"/>% - <input type="text" id="birth-transfer-upper-input" class="input-value" value="100"/>%</li>
-				<li class="slider"><div id="birth-transfer-slider"></div></li>
-			</ul>
-			<ul class="parameter">
-				<li class="label">Cancellation Rate</li>
-				<li id="cancellation-value" class="value"><input type="text" id="cancellation-lower-input" class="input-value" value="0"/>% - <input type="text" id="cancellation-upper-input" class="input-value" value="100"/>%</li>
-				<li class="slider"><div id="cancellation-slider"></div></li>
-			</ul>
-			<ul class="parameter">
-				<li class="label">Twin Rate</li>
-				<li id="twin-value" class="value"><input type="text" id="twin-lower-input" class="input-value" value="0"/>% - <input type="text" id="twin-upper-input" class="input-value" value="100"/>%</li>
-				<li class="slider"><div id="twin-slider"></div></li>
-			</ul>
-			
-			<ul class="parameter">
-				<li class="label">Triplet Rate</li>
-				<li id="trip-value" class="value"><input type="text" id="trip-lower-input" class="input-value" value="0"/>% - <input type="text" id="trip-upper-input" class="input-value" value="100"/>%</li>
-				<li class="slider"><div id="trip-slider"></div></li>
-			</ul>
-		</div>
+<div class="grid_3 omega">
+	<div class="right_sidebar">
+		<h2 style="margin-bottom:10px;">Select Parameters</h2>
+		<ul class="parameter">
+			<li class="label">Cycles</li>
+			<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="x_small" checked />&nbsp;&nbsp;1-25 Cycles</li>
+			<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="small" />&nbsp;&nbsp;26-100 Cycles</li>
+			<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="medium" />&nbsp;&nbsp;101-200 Cycles</li>
+			<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="large" />&nbsp;&nbsp;201-300 Cycles</li>
+			<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="x_large" />&nbsp;&nbsp;>300 Cycles</li>
+			<li id="cycles-slider-value" class="value"><input type="text" id="cycles-lower-input" class="input-value" value="1"/> - <input type="text" id="cycles-upper-input" class="input-value" value="25"/></li>
+			<li class="slider"><div id="cycles-slider"></div></li>
+		</ul>
+		<ul class="parameter">
+			<li class="label">Single Embryo Transfer Rate</li>
+			<li id="set-value" class="value"><input type="text" id="set-lower-input" class="input-value" value="0"/>% - <input type="text" id="set-upper-input" class="input-value" value="100"/>%</li>
+			<li class="slider"><div id="set-slider"></div></li>
+		</ul>
+		<ul class="parameter">
+			<li class="label">Implantation Rate</li>
+			<li id="implantation-value" class="value"><input type="text" id="implantation-lower-input" class="input-value" value="0"/>% - <input type="text" id="implantation-upper-input" class="input-value" value="100"/>%</li>
+			<li class="slider"><div id="implantation-slider"></div></li>
+		</ul>
+		<ul class="parameter">
+			<li class="label">Avg. Number Embryos Transferred</li>
+			<li id="avg-emb-trx-value" class="value"><input type="text" id="avg-emb-trx-lower-input" class="input-value" value="0"/> - <input type="text" id="avg-emb-trx-upper-input" class="input-value" value="7"/></li>
+			<li class="slider"><div id="avg-emb-trx-slider"></div></li>
+		</ul>			
+		<ul class="parameter">
+			<li class="label">Pregnancy Rate per Cycle</li>
+			<li id="pregnancy-value" class="value"><input type="text" id="pregnancy-lower-input" class="input-value" value="0"/>% - <input type="text" id="pregnancy-upper-input" class="input-value" value="100"/>%</li>
+			<li class="slider"><div id="pregnancy-slider"></div></li>
+		</ul>
+		<ul class="parameter">
+			<li class="label">Birth Rate per Cycle</li>
+			<li id="birth-cycle-value" class="value"><input type="text" id="birth-cycle-lower-input" class="input-value" value="0"/>% - <input type="text" id="birth-cycle-upper-input" class="input-value" value="100"/>%</li>
+			<li class="slider"><div id="birth-cycle-slider"></div></li>
+		</ul>
+		<ul class="parameter">
+			<li class="label">Birth Rate per Retrieval</li>
+			<li id="birth-retrieval-value" class="value"><input type="text" id="birth-retrieval-lower-input" class="input-value" value="0"/>% - <input type="text" id="birth-retrieval-upper-input" class="input-value" value="100"/>%</li>
+			<li class="slider"><div id="birth-retrieval-slider"></div></li>
+		</ul>
+		<ul class="parameter">
+			<li class="label">Birth Rate per Transfer</li>
+			<li id="birth-transfer-value" class="value"><input type="text" id="birth-transfer-lower-input" class="input-value" value="0"/>% - <input type="text" id="birth-transfer-upper-input" class="input-value" value="100"/>%</li>
+			<li class="slider"><div id="birth-transfer-slider"></div></li>
+		</ul>
+		<ul class="parameter">
+			<li class="label">Cancellation Rate</li>
+			<li id="cancellation-value" class="value"><input type="text" id="cancellation-lower-input" class="input-value" value="0"/>% - <input type="text" id="cancellation-upper-input" class="input-value" value="100"/>%</li>
+			<li class="slider"><div id="cancellation-slider"></div></li>
+		</ul>
+		<ul class="parameter">
+			<li class="label">Twin Rate</li>
+			<li id="twin-value" class="value"><input type="text" id="twin-lower-input" class="input-value" value="0"/>% - <input type="text" id="twin-upper-input" class="input-value" value="100"/>%</li>
+			<li class="slider"><div id="twin-slider"></div></li>
+		</ul>		
+		<ul class="parameter">
+			<li class="label">Triplet Rate</li>
+			<li id="trip-value" class="value"><input type="text" id="trip-lower-input" class="input-value" value="0"/>% - <input type="text" id="trip-upper-input" class="input-value" value="100"/>%</li>
+			<li class="slider"><div id="trip-slider"></div></li>
+		</ul>
 	</div>
-
+</div>
 
 <script type="text/javascript">
 //Global Variables

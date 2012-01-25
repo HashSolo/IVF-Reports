@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120120011044) do
+ActiveRecord::Schema.define(:version => 20120122203505) do
 
   create_table "clinics", :force => true do |t|
     t.string   "clinic_name"
@@ -59,6 +59,20 @@ ActiveRecord::Schema.define(:version => 20120120011044) do
     t.float    "procedure_icsi_rate"
     t.float    "procedure_unstimulated_rate"
     t.float    "procedure_pgd_rate"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "scores", :force => true do |t|
+    t.integer  "clinic_id"
+    t.string   "year"
+    t.string   "age_group"
+    t.string   "diagnosis"
+    t.string   "cycle_type"
+    t.float    "ivf_reports_score"
+    t.float    "quality_score"
+    t.float    "safety_score"
+    t.float    "sart_score"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
