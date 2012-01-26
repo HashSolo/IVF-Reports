@@ -1,51 +1,53 @@
-<div class="profile grid_12 centered-shadow">
+<div class='user_profile'>
+	
+	
+<div class="profile_top">
+	<div class="gravatar-and-name">
+		<%= gravatar_for @user %>
+		<div class="user_info">
+			<h1><%= @user.name %></h1>
+			<span class="user_subtitle">Joined <%= @user.created_at.strftime("%B %d, %Y") %></span>
+		</div>
+	</div>
 
-		<div class="grid_12 alpha omega">
-		<div class="top-profile-section">
-			<div class="grid_6 alpha">
-				<div class="gravatar-and-name">
-				<h1>
-					<%= gravatar_for @user %>
-					<%= @user.name %>
-				</h1>
-				</div>
-			</div>
-			
-			<div class="grid_6 omega">
-				<% if current_user?(@user) %>
-				<div class="edit-profile-link">
-					<div class="link"><%= link_to 'Edit Your Profile', edit_user_path(current_user), :class => "edit-button" %></div>
-				</div>
-				<% end %>
-			</div>
-		</div>
-		</div>
+
+	<div class="edit-profile-link">
+	<% if current_user?(@user) %>
+		<%= link_to edit_user_path(current_user), :class => "edit-button" do %><span class="icon">⚙</span>Edit Your Profile<% end %>
+	<% end %>
+	</div>
+</div>
+
+
+<div class="personal_info user_info_section">
+<h2>Personal Information</h2>
 <hr>
-		<div class="grid_12 alpha omega">
-		<div class="middle-profile-section">
-			<div class="grid_6 alpha">
-				<div class="user-info-table">
-				<table>
-					<tr><td><strong>Name</strong></td><td><%= @user.name %></td></tr>
-					<tr><td><strong>Email</strong></td><td><%= link_to @user.email, @user.email %></td></tr>
-					<tr><td><strong>Member Since</strong></td><td><%= @user.created_at.strftime("%B %d, %Y") %></td></tr>
-				</table>
-				</div>
-			</div>
-			
-			<div class="grid_6 omega">
-				<div class="social-statistics">
-			
-				</div>
-			</div>
-		</div>
-		</div>
+<table class="personal_info">
+	<tr><td>Name</td><td><%= @user.name %></td></tr>
+	<tr><td>Email</td><td><%= link_to @user.email, @user.email %></td></tr>
+	<tr><td>Member Since</td><td><%= @user.created_at.strftime("%B %d, %Y") %></td></tr>
+</table>
+</div>
+
+<div class="personal_info user_info_section">
+<h2>Personalized Clinic Recommendations</h2>
 <hr>
-		<div class="grid_12 alpha omega">
-		<div class="bottom-profile-section">
-			
-			
-			
-		</div>
-		</div>
+<table class="personal_info">
+	<tr><td>Clinic 1</td><td>Sample Place For Clinic Name</td></tr>
+	<tr><td>Clinic 2</td><td>Sample Place For Clinic Name</td></tr>
+	<tr><td>Clinic 3</td><td>Sample Place For Clinic Name</td></tr>
+</table>
+</div>
+
+<div class="personal_info user_info_section">
+<h2>Cycles/Attempt Information</h2>
+<hr>
+<span class="new_cycle_button"><span class="icon">+</span>Add New Cycle/Pregnancy Attempt</span>
+<ul class="cycle_list">
+	<li><span class="attempt_number">1</span><span class="clinic_name">Clinic Name Goes Here</span><span class="delete_option"><span class="icon">×</span></span><span class="clinic_info">Address, City, State, Zip</span></li>
+	<li><span class="attempt_number">2</span><span class="clinic_name">Clinic Name Goes Here</span><span class="delete_option"><span class="icon">×</span></span><span class="clinic_info">Address, City, State, Zip</span></li>
+</ul>
+</div>
+
+
 </div>

@@ -148,22 +148,7 @@
 	
 	
 	<script type="text/javascript">
-	var score_age_group = 'All Ages';
-	var score_diagnosis = 'All Diagnoses';
-	var score_year = 2009;
-	var score_cycle_type = 'fresh';
 	var global_age_group = '<35';
-	
-	function LoadRankingData(new_age_group, new_diagnosis){
-		var data = {
-			id: <%= @clinic.id %>,
-			cycle_type: score_cycle_type,
-			year: score_year,
-			diagnosis: score_diagnosis,
-			age_group: score_age_group
-		}
-		
-	}
 	
 	function LoadInitialStatsGraph(){
 		var data = {
