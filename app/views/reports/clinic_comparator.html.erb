@@ -35,7 +35,9 @@
 		<hr>
 		
 		<div id="comparison_results">
-			<canvas id="comparison_canvas" class="canvas_for_comparison" height="250">[Your Browser Does Not Support the Canvas]</canvas>
+			<h2 class="query_title">Currently Showing National Data</h2>
+			<canvas id="comparison_canvas" width="420" height="300">[No canvas support]</canvas>
+			
 		</div>
 	</div>
 	</div>
@@ -50,15 +52,177 @@
 
 
 <script type="text/javascript">
+	//The event listeners need to change the info when a selection is made from the clinics.
+	
+
 	//Charts can either be: multi-year, multi-age, multi-diagnostic
 	//Maybe more dimensions can vary in the future
 	//Global Variables
 	var clinic_a_id = 384; //The national clinic data will be used by default until clinics are selected.
 	var clinic_b_id = 384;
+	var year = 2009;
+	var age_group = "All Ages";
+	var statistic = "cycles";
+	var cycle_type = "fresh";
+	var diagnosis = "All Diagnoses";
 	
+	function RenderGraph(){
+
 	
+		var data = {
+			year: 2009,
+			clinic_a_id: clinic_a_id,
+			clinic_b_id: clinic_b_id,
+			age_group: age_group,
+			statistic: statistic,
+			cycle_type: cycle_type,
+			diagnosis: diagnosis
+		}
+		$.ajax({
+			url: "<%= url_for(:action => 'clinic_comparator') %>",
+			dataType: 'json',
+			async: true,
+			data: data,
+			success: 	function(data){
+							var age_groups = ['<35', '35-37', '38-40', '41-42', '>42'];
+							
+							//This is the array data for the graph
+							var graph_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array());
+							var cycle_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array());
+							var imp_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array());
+							var tooltips = new Array(new Array(), new Array(), new Array(), new Array(), new Array());
+							
+							var cur_age_index = 0;
+							var y_max = 0;
+							var key_data = new Array();
+							
+							if(clinic_a_id == 384 || clinic_b_id == 384){
+								
+							}
+							else{
+								var query_title = data[0]['clinic_name'] + " VS " + data[7]['clinic_name'];
+							}
+
+							$('h2.query_title').html(query_title);
+							
+							//Load the cycle data into the graph
+							$.each(data, function(k){
+								for(var i = 0; i < 5; i++){
+									if(data[k]['clinic_id']==clinic_a_id){
+										if(data[k]['age_group']==age_groups[i]){
+											key_data[1] = "Clinic A";
+											graph_data[i][1] = data[k]['implantation_rate'];
+											cycle_data[i][1] = data[k]['cycles'];
+											imp_data[i][1] = data[k]['implantation_rate'];
+											tooltips[i*(3)+1] = "<b>Age Group: "+ age_groups[i] +"</b><br/>";
+											tooltips[i*(3)+1] = tooltips[i*(3)+1] + "Clinic A Cycles: " + cycle_data[i][1] + "<br/>";
+											tooltips[i*(3)+1] = tooltips[i*(3)+1] + "Clinic A Implantation Rate: " + Math.round(10*graph_data[i][1])/10 + "%";
+											if(data[k]['implantation_rate'] > y_max){
+												y_max = data[k]['implantation_rate'];
+											}
+										}
+									}
+									if(data[k]['clinic_id']==clinic_b_id){
+										if(data[k]['age_group']==age_groups[i]){
+											key_data[2] = "Clinic B";
+											graph_data[i][2] = data[k]['implantation_rate'];
+											cycle_data[i][2] = data[k]['cycles'];
+											imp_data[i][2] = data[k]['implantation_rate'];
+											tooltips[i*(3)+2] = "<b>Age Group: "+ age_groups[i] +"</b><br/>";											
+											tooltips[i*(3)+2] = tooltips[i*(3)+2] + "Clinic B Cycles: " + cycle_data[i][2] + "<br/>";
+											tooltips[i*(3)+2] = tooltips[i*(3)+2] + "Clinic B Implantation Rate: " + Math.round(10*graph_data[i][2])/10 + "%";
+											if(data[k]['implantation_rate'] > y_max){
+												y_max = data[k]['implantation_rate'];
+											}
+										}
+									}
+									if(data[k]['clinic_id']==384){
+										if(data[k]['age_group']==age_groups[i]){									
+											key_data[0] = data[k]['clinic_name'];
+											graph_data[i][0] = data[k]['implantation_rate'];
+											cycle_data[i][0] = data[k]['cycles'];
+											imp_data[i][0] = data[k]['implantation_rate'];
+											tooltips[i*(3)+0] = "<b>Age Group: "+ age_groups[i] +"</b><br/>";								
+											tooltips[i*(3)+0] = tooltips[i*(3)+0] + "National Number of Cycles: " + cycle_data[i][0] + "<br/>";
+											tooltips[i*(3)+0] = tooltips[i*(3)+0] + "Average Implantation Rate: " + Math.round(10*graph_data[i][0])/10;
+											if(data[k]['implantation_rate'] > y_max){
+												y_max = data[k]['implantation_rate'];
+											}
+										}
+									}
+								}
+							});
+							
+							//Should add an option to include the national data.
+							//Render the national averages line
+							
+							
+							//Set the maximum y value		
+							y_max = y_max + 5;
+							if(y_max > 100.0){
+								y_max = 100;
+							}
+							
+							//Instantiate the new graph
+							cycles_bar_graph = new RGraph.Bar('comparison_canvas', graph_data);
+							cycles_bar_graph.Set('chart.labels', age_groups);
+							cycles_bar_graph.Set('chart.key', key_data);
+					        cycles_bar_graph.Set('chart.gutter.left', 45);
+					        cycles_bar_graph.Set('chart.key.position', 'gutter');
+					        cycles_bar_graph.Set('chart.background.barcolor1', 'white');
+					        cycles_bar_graph.Set('chart.background.barcolor2', 'ddffff');
+					        cycles_bar_graph.Set('chart.colors', ['#65BDBD', '#7895A3', '#0F5151']);
+							cycles_bar_graph.Set('chart.variant', '3d');
+							cycles_bar_graph.Set('chart.text.font', 'Trebuchet MS');
+							cycles_bar_graph.Set('chart.text.size', 10);
+							cycles_bar_graph.Set('chart.units.post', '%');
+							cycles_bar_graph.Set('chart.tooltips', tooltips);
+							cycles_bar_graph.Set('chart.shadow', true);
+							cycles_bar_graph.Set('chart.shadow.blur', 5);
+							cycles_bar_graph.Set('chart.shadow.offsetx', 2);
+							cycles_bar_graph.Set('chart.shadow.offsety', 0);
+							cycles_bar_graph.Set('chart.shadow.color', '#0F5151');
+							cycles_bar_graph.Set('chart.background.image', "<%= asset_path 'ivfr_washout.jpg' %>");
+							
+							//Bar graph grow
+							RGraph.Effects.Bar.Wave(cycles_bar_graph);
+							
+			}
+		});
+	}
 	
-	
+	$(document).ready(function(){
+		RenderGraph();
+		
+		$('select#clinic_a_select').change(function(){
+			var clinic_id = "";
+			$('select#clinic_a_select option:selected').each(function(){
+				clinic_id = $(this).val();
+			});
+			
+			clinic_id_array = clinic_id.split('_');
+			clinic_a_id = parseInt(clinic_id_array[2]);
+			
+			//Graph new data
+			RenderGraph();								
+		});
+
+
+		$('select#clinic_b_select').change(function(){
+			var clinic_id = "";
+			$('select#clinic_b_select option:selected').each(function(){
+				clinic_id = $(this).val();
+			});
+			
+			clinic_id_array = clinic_id.split('_');
+			clinic_b_id = parseInt(clinic_id_array[2]);
+			
+			//Graph new data
+			RenderGraph();														
+		});
+		
+		$('h2.query_title').html("Currently Showing National Data");
+	});
 	
 	
 </script>
