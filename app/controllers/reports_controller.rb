@@ -33,11 +33,11 @@ class ReportsController < ApplicationController
     age_group = "<35"
     year = "2009"
     diagnosis = "All Diagnoses"
+    statistic_visualize = "implantation_rate"
     
     unless(params[:clinic_a_id].nil?)
       clinic_a_id = params[:clinic_a_id]
     end
-    
     
     unless(params[:clinic_b_id].nil?)
       clinic_b_id = params[:clinic_b_id]
@@ -53,6 +53,10 @@ class ReportsController < ApplicationController
     
     unless(params[:diagnosis].nil?)
       diagnosis = params[:diagnosis]
+    end
+    
+    unless(params[:statistic_visualize].nil?)
+      statistic_visualize = params[:statistic_visualize]
     end
     
     @clinic_query = Clinic.find_all_by_id([clinic_a_id, clinic_b_id, national_data_id])
@@ -72,7 +76,7 @@ class ReportsController < ApplicationController
 
       @datapull.each do |d|
         cur_clinic = Clinic.find_by_id(d.clinic_id)
-        cur_new_object = {'clinic_id' => cur_clinic.id, 'clinic_name' => cur_clinic.clinic_name, 'permalink' => cur_clinic.permalink, 'city' => cur_clinic.city, 'state' => cur_clinic.state, 'address' => cur_clinic.address, 'practice_director' => cur_clinic.practice_director, 'lab_director' => cur_clinic.laboratory_director, 'medical_director' => cur_clinic.medical_director, 'zip' => cur_clinic.zip, 'updated_at' => d.updated_at, 'year' => d.year, 'age_group' => d.age_group, 'diagnosis' => d.diagnosis, 'implantation_rate' => d.implantation_rate, 'pregnancy_rate' => d.pregs_per_cycle, 'birth_cycle_rate' => d.births_per_cycle, 'birth_retrieval_rate' => d.births_per_retrieval, 'birth_transfer_rate' => d.births_per_transfer, 'set_transfer_rate' => d.set_transfer_rate, 'cancellation_rate' => d.cancellation_rate, 'twin_rate' => d.twin_rate, 'trip_rate' => d.trip_rate, 'cycles' => d.cycles, 'avg_num_embs_transferred' => d.avg_num_embs_transferred }
+        cur_new_object = {'clinic_id' => cur_clinic.id, 'clinic_name' => cur_clinic.clinic_name, 'permalink' => cur_clinic.permalink, 'city' => cur_clinic.city, 'state' => cur_clinic.state, 'address' => cur_clinic.address, 'practice_director' => cur_clinic.practice_director, 'lab_director' => cur_clinic.laboratory_director, 'medical_director' => cur_clinic.medical_director, 'zip' => cur_clinic.zip, 'updated_at' => d.updated_at, 'year' => d.year, 'age_group' => d.age_group, 'diagnosis' => d.diagnosis, 'statistic_visualize' => d[statistic_visualize], 'implantation_rate' => d.implantation_rate, 'pregnancy_rate' => d.pregs_per_cycle, 'birth_cycle_rate' => d.births_per_cycle, 'birth_retrieval_rate' => d.births_per_retrieval, 'birth_transfer_rate' => d.births_per_transfer, 'set_transfer_rate' => d.set_transfer_rate, 'cancellation_rate' => d.cancellation_rate, 'twin_rate' => d.twin_rate, 'trip_rate' => d.trip_rate, 'cycles' => d.cycles, 'avg_num_embs_transferred' => d.avg_num_embs_transferred }
         @clinic_results << cur_new_object
       end
     end

@@ -15,7 +15,7 @@ class ClinicsController < ApplicationController
 	  end
   end
   
-  def pull_clinic_data    
+  def pull_clinic_data
     @clinic = Clinic.find_by_id(params[:clinic_id])
 
     year = params[:year]
