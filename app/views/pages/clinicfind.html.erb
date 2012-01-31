@@ -1,5 +1,11 @@
 <h1 style="text-align:center;">Find a Clinic In Your Area</h1>
 
+<div id="zip_input">
+<input type="text" id="zip_code" onkeypress="return findZip(event)"/>
+<input id="zip_submit" type="submit" value="Find!"/>
+</div>
+<div class="zip_explanation">Enter Your Zip Code</div>
+
 <div id="map_canvas" class="google_map_canvas"></div>
 
 
@@ -8,7 +14,9 @@
 
 <script type="text/javascript">
 	var map;
+	var geocoder;
   	function initializeMap() {
+		geocoder = new google.maps.Geocoder();
 		var latlng = new google.maps.LatLng(37.769,-97.211);
     	var myOptions = {
       		zoom: 3,
@@ -17,6 +25,12 @@
     	};
      	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
   	}
+
+	function moveToLatLng(lat, long){
+		var latlong = new google.maps.LatLng(lat, long);
+		map.setCenter(latlong);
+		map.setZoom(7);
+	}
 
 	function plotClinics(clinic_data){
 		$.each(clinic_data, function(k){
@@ -69,7 +83,26 @@
 			});
 		});
 	}
-
+	
+	function findZip(e){
+		if (e.keyCode == 13) {
+			var zip_code = $('input#zip_code').val();
+			var lat = '';
+			var lng = '';
+			var address = zip_code;
+			geocoder.geocode({'address': address}, function(results, status){
+				if (status == google.maps.GeocoderStatus.OK) {
+					lat = results[0].geometry.location.lat();
+					lng = results[0].geometry.location.lng();
+					moveToLatLng(lat, lng);
+				} 
+				else {
+					alert("Geocode was not successful for the following reason: " + status);
+				}
+			});
+		}
+	}
+	
 	$(document).ready(function(){
 		initializeMap();
 		$.ajax({
@@ -80,6 +113,22 @@
 			success: 	function(data){
 							plotClinics(data);
 						}
+		});
+		$('input#zip_submit').click(function(){
+			var zip_code = $('input#zip_code').val();
+			var lat = '';
+			var lng = '';
+			var address = zip_code;
+			geocoder.geocode({'address': address}, function(results, status){
+				if (status == google.maps.GeocoderStatus.OK) {
+					lat = results[0].geometry.location.lat();
+					lng = results[0].geometry.location.lng();
+					moveToLatLng(lat, lng);
+				} 
+				else {
+					alert("Geocode was not successful for the following reason: " + status);
+				}
+			});
 		});
 	});
 
