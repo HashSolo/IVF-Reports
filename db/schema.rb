@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120122203505) do
+ActiveRecord::Schema.define(:version => 20120131194457) do
 
   create_table "clinics", :force => true do |t|
     t.string   "clinic_name"
@@ -63,6 +63,11 @@ ActiveRecord::Schema.define(:version => 20120122203505) do
     t.datetime "updated_at"
   end
 
+  add_index "datapoints", ["age_group"], :name => "index_datapoints_on_age_group"
+  add_index "datapoints", ["clinic_id"], :name => "index_datapoints_on_clinic_id"
+  add_index "datapoints", ["diagnosis"], :name => "index_datapoints_on_diagnosis"
+  add_index "datapoints", ["year"], :name => "index_datapoints_on_year"
+
   create_table "scores", :force => true do |t|
     t.integer  "clinic_id"
     t.string   "year"
@@ -76,6 +81,11 @@ ActiveRecord::Schema.define(:version => 20120122203505) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "scores", ["age_group"], :name => "index_scores_on_age_group"
+  add_index "scores", ["clinic_id"], :name => "index_scores_on_clinic_id"
+  add_index "scores", ["diagnosis"], :name => "index_scores_on_diagnosis"
+  add_index "scores", ["year"], :name => "index_scores_on_year"
 
   create_table "states", :force => true do |t|
     t.string   "abbrev"
