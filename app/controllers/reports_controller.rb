@@ -34,6 +34,11 @@ class ReportsController < ApplicationController
     year = "2009"
     diagnosis = "All Diagnoses"
     statistic_visualize = "implantation_rate"
+    compare_across = "age_group"
+    
+    unless(params[:statistic_across].nil?)
+      compare_across = params[:statistic_across]
+    end
     
     unless(params[:clinic_a_id].nil?)
       clinic_a_id = params[:clinic_a_id]
@@ -66,11 +71,11 @@ class ReportsController < ApplicationController
     @clinic_query.each do |clin|
       @datapull = []
       
-      if(age_group=="All Ages")
+      if(compare_across=="age_group")
         @datapull = clin.datapoints.where(:year => year, :diagnosis => diagnosis)
-      elsif(year=="All")
+      elsif(compare_across=="year")
         @datapull = clin.datapoints.where(:diagnosis => diagnosis, :age_group => age_group)
-      elsif(diagnosis=="All Diagnosis")
+      elsif(compare_across=="diagnosis")
         @datapull = clin.datapoints.where(:year => year, :age_group => age_group)
       end      
 

@@ -8,7 +8,6 @@ class ClinicsController < ApplicationController
     @title = "All Clinics"
   	@clinics = Clinic.paginate(:page => params[:page])
   	@all_clinics = Clinic.all
-  	@states = State.all
   	respond_to do |format|
   	  format.html {}
   	  format.json { render :json => @all_clinics.to_json() }

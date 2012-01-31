@@ -8,6 +8,7 @@
 				<li>Year</li>
 			</ul>
 		<hr>
+		<div id="age-group-selector" class="variable-selector hidden">
 		<h2>Select Age Group:</h2>
 			<ul id="age-selectable" class="jqueryui-selectable">
 				<li class="ui-selected"><35</li>
@@ -17,6 +18,8 @@
 				<li>>42</li>
 			</ul>
 		<hr>
+		</div>
+		<div id="diagnosis-selector" class="variable-selector">		
 		<h2>Select a Diagnosis:</h2>
 			<ul id="diagnosis-selectable" class="jqueryui-selectable">
 				<li class="ui-selected">All Diagnoses</li>
@@ -32,6 +35,8 @@
 				<li>Unknown Factor</li>
 			</ul>
 		<hr>
+		</div>
+		<div div id="year-selector" class="variable-selector">
 		<h2>Select a Year:</h2>
 			<ul id="year-selectable" class="jqueryui-selectable">
 				<li class="ui-selected">2009</li>
@@ -41,6 +46,7 @@
 				<li>2005</li>
 			</ul>
 		<hr>
+		</div>
 	</div>
 </div>
 <div class="grid_6">
@@ -75,7 +81,7 @@
 		
 		<div id="comparison_results">
 			<h2 class="query_title">Currently Showing National Data</h2>
-			<canvas id="comparison_canvas" width="420" height="300">[No canvas support]</canvas>
+			<canvas id="comparison_canvas" width="420" height="450">[No canvas support]</canvas>
 			
 		</div>
 	</div>
@@ -99,6 +105,7 @@
 			</ul>
 		<hr>
 		<h2>Graph Type:</h2>
+			
 	</div>
 </div>
 
@@ -109,7 +116,7 @@
 	var clinic_a_id = 384; //The national clinic data will be used by default until clinics are selected.
 	var clinic_b_id = 384;
 	var year = 2009;
-	var age_group = "All Ages";
+	var age_group = "<35";
 	var statistic_across = "age_group";
 	var statistic_visualize = "implantation_rate";
 	var cycle_type = "fresh";
@@ -124,17 +131,30 @@
 					var index = $( "#statistic-selectable li" ).index( this );
 					if(index==0){
 						statistic_across="age_group";
+						$('div#age-group-selector').addClass('hidden');
+						$('div#diagnosis-selector').removeClass('hidden');
+						$('div#year-selector').removeClass('hidden');
 					}
 					else if(index==1){
 						statistic_across="diagnosis";
+						$('div#age-group-selector').removeClass('hidden');
+						$('div#diagnosis-selector').addClass('hidden');
+						$('div#year-selector').removeClass('hidden');
 					}
 					else if(index==2){
 						statistic_across="year";
+						$('div#age-group-selector').removeClass('hidden');
+						$('div#diagnosis-selector').removeClass('hidden');
+						$('div#year-selector').addClass('hidden');
 					}
 					else{
 						statistic_across="age_group";
+						$('div#age-group-selector').addClass('hidden');
+						$('div#diagnosis-selector').removeClass('hidden');
+						$('div#year-selector').removeClass('hidden');
 					}
 				});
+				RenderGraph();
 			}
 		});
 		
@@ -233,6 +253,7 @@
 						age_group="<35";
 					}
 				});
+				RenderGraph();
 			}
 		});
 		//Governs the diagnosis selectable
@@ -338,13 +359,31 @@
 			data: data,
 			success: 	function(data){
 							var age_groups = ['<35', '35-37', '38-40', '41-42', '>42'];
+							var diagnoses = ["All Diagnoses", "Endometriosis", "Diminished Ovarian Reserve", "Multiple Female Factors", "Ovulatory Dysfunction", "Tubal Factor", "Female and Male Factors", "Male Factor", "Other Factor", "Unknown Factor", "Uterine Factor"]
+							var years = [2005, 2006, 2007, 2008, 2009]
+							
 							
 							//This is the array data for the graph
-							var graph_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array());
-							var cycle_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array());
-							var imp_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array());
-							var tooltips = new Array(new Array(), new Array(), new Array(), new Array(), new Array());
-							
+							if(statistic_across=="age_group"){
+								var graph_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array());
+								var cycle_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array());
+								var imp_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array());
+								var tooltips = new Array(new Array(), new Array(), new Array(), new Array(), new Array());
+								
+							}
+							else if(statistic_across=="diagnosis"){
+								var graph_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array());
+								var cycle_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array());
+								var imp_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array());
+								var tooltips = new Array(new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array());
+							}
+							else{
+								
+								var graph_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array());
+								var cycle_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array());
+								var imp_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array());
+								var tooltips = new Array(new Array(), new Array(), new Array(), new Array(), new Array());
+							}
 							var cur_age_index = 0;
 							var y_max = 0;
 							var key_data = new Array();
@@ -385,6 +424,8 @@
 								statistic_name = "Implantation Rate";								
 							}
 							
+							
+							//This needs to change depending on the statistic_across variable: there are more datapoints to get through in diagnoses
 							if(clinic_a_id == 384 || clinic_b_id == 384){
 								
 							}
@@ -403,55 +444,153 @@
 							$('h2.query_title').html(query_title);
 							
 							//Load the cycle data into the graph
-							$.each(data, function(k){
-								for(var i = 0; i < 5; i++){
-									if(data[k]['clinic_id']==clinic_a_id){
-										if(data[k]['age_group']==age_groups[i]){
-											key_data[1] = "Clinic A";
-											graph_data[i][1] = data[k]['statistic_visualize'];
-											cycle_data[i][1] = data[k]['cycles'];
-											imp_data[i][1] = data[k]['statistic_visualize'];
-											tooltips[i*(3)+1] = "<b>Age Group: "+ age_groups[i] +"</b><br/>";
-											tooltips[i*(3)+1] = tooltips[i*(3)+1] + "Clinic A Cycles: " + cycle_data[i][1] + "<br/>";
-											tooltips[i*(3)+1] = tooltips[i*(3)+1] + "Clinic A " + statistic_name+": " + Math.round(10*graph_data[i][1])/10;
-											if(data[k]['statistic_visualize'] > y_max){
-												y_max = data[k]['statistic_visualize'];
+							//Depends on the statistic that we are comparing across
+							if(statistic_across=="age_group"){
+								$.each(data, function(k){
+									for(var i = 0; i < 5; i++){
+										if(data[k]['clinic_id']==clinic_a_id){
+											if(data[k]['age_group']==age_groups[i]){
+												key_data[1] = "Clinic A";
+												graph_data[i][1] = data[k]['statistic_visualize'];
+												cycle_data[i][1] = data[k]['cycles'];
+												imp_data[i][1] = data[k]['statistic_visualize'];
+												tooltips[i*(3)+1] = "<b>Age Group: "+ age_groups[i] +"</b><br/>";
+												tooltips[i*(3)+1] = tooltips[i*(3)+1] + "Clinic A Cycles: " + cycle_data[i][1] + "<br/>";
+												tooltips[i*(3)+1] = tooltips[i*(3)+1] + "Clinic A " + statistic_name+": " + Math.round(10*graph_data[i][1])/10;
+												if(data[k]['statistic_visualize'] > y_max){
+													y_max = data[k]['statistic_visualize'];
+												}
+											}
+										}
+										if(data[k]['clinic_id']==clinic_b_id){
+											if(data[k]['age_group']==age_groups[i]){
+												key_data[2] = "Clinic B";
+												graph_data[i][2] = data[k]['statistic_visualize'];
+												cycle_data[i][2] = data[k]['cycles'];
+												imp_data[i][2] = data[k]['statistic_visualize'];
+												tooltips[i*(3)+2] = "<b>Age Group: "+ age_groups[i] +"</b><br/>";											
+												tooltips[i*(3)+2] = tooltips[i*(3)+2] + "Clinic B Cycles: " + cycle_data[i][2] + "<br/>";
+												tooltips[i*(3)+2] = tooltips[i*(3)+2] + "Clinic B "+statistic_name+": " + Math.round(10*graph_data[i][2])/10;
+												if(data[k]['statistic_visualize'] > y_max){
+													y_max = data[k]['statistic_visualize'];
+												}
+											}
+										}
+										if(data[k]['clinic_id']==384){
+											if(data[k]['age_group']==age_groups[i]){									
+												key_data[0] = data[k]['clinic_name'];
+												graph_data[i][0] = data[k]['statistic_visualize'];
+												cycle_data[i][0] = data[k]['cycles'];
+												imp_data[i][0] = data[k]['statistic_visualize'];
+												tooltips[i*(3)+0] = "<b>Age Group: "+ age_groups[i] +"</b><br/>";								
+												tooltips[i*(3)+0] = tooltips[i*(3)+0] + "National Number of Cycles: " + cycle_data[i][0] + "<br/>";
+												tooltips[i*(3)+0] = tooltips[i*(3)+0] + "National "+statistic_name+": " + Math.round(10*graph_data[i][0])/10;
+												if(data[k]['statistic_visualize'] > y_max){
+													y_max = data[k]['statistic_visualize'];
+												}
 											}
 										}
 									}
-									if(data[k]['clinic_id']==clinic_b_id){
-										if(data[k]['age_group']==age_groups[i]){
-											key_data[2] = "Clinic B";
-											graph_data[i][2] = data[k]['statistic_visualize'];
-											cycle_data[i][2] = data[k]['cycles'];
-											imp_data[i][2] = data[k]['statistic_visualize'];
-											tooltips[i*(3)+2] = "<b>Age Group: "+ age_groups[i] +"</b><br/>";											
-											tooltips[i*(3)+2] = tooltips[i*(3)+2] + "Clinic B Cycles: " + cycle_data[i][2] + "<br/>";
-											tooltips[i*(3)+2] = tooltips[i*(3)+2] + "Clinic B "+statistic_name+": " + Math.round(10*graph_data[i][2])/10;
-											if(data[k]['statistic_visualize'] > y_max){
-												y_max = data[k]['statistic_visualize'];
-											}
-										}
-									}
-									if(data[k]['clinic_id']==384){
-										if(data[k]['age_group']==age_groups[i]){									
-											key_data[0] = data[k]['clinic_name'];
-											graph_data[i][0] = data[k]['statistic_visualize'];
-											cycle_data[i][0] = data[k]['cycles'];
-											imp_data[i][0] = data[k]['statistic_visualize'];
-											tooltips[i*(3)+0] = "<b>Age Group: "+ age_groups[i] +"</b><br/>";								
-											tooltips[i*(3)+0] = tooltips[i*(3)+0] + "National Number of Cycles: " + cycle_data[i][0] + "<br/>";
-											tooltips[i*(3)+0] = tooltips[i*(3)+0] + "National "+statistic_name+": " + Math.round(10*graph_data[i][0])/10;
-											if(data[k]['statistic_visualize'] > y_max){
-												y_max = data[k]['statistic_visualize'];
-											}
-										}
-									}
-								}
-							});
+								});
+							} //If statistic across is age group
 							
-							//Should add an option to include the national data.
-							//Render the national averages line
+							else if(statistic_across=="diagnosis"){
+								$.each(data, function(k){
+									for(var i = 0; i < 11; i++){
+										if(data[k]['clinic_id']==clinic_a_id){
+											if(data[k]['diagnosis']==diagnoses[i]){
+												key_data[1] = "Clinic A";
+												graph_data[i][1] = data[k]['statistic_visualize'];
+												cycle_data[i][1] = data[k]['cycles'];
+												imp_data[i][1] = data[k]['statistic_visualize'];
+												tooltips[i*(3)+1] = "<b>Diagnosis: "+ diagnoses[i] +"</b><br/>";
+												tooltips[i*(3)+1] = tooltips[i*(3)+1] + "Clinic A Cycles: " + cycle_data[i][1] + "<br/>";
+												tooltips[i*(3)+1] = tooltips[i*(3)+1] + "Clinic A " + statistic_name+": " + Math.round(10*graph_data[i][1])/10;
+												if(data[k]['statistic_visualize'] > y_max){
+													y_max = data[k]['statistic_visualize'];
+												}
+											}
+										}
+										if(data[k]['clinic_id']==clinic_b_id){
+											if(data[k]['diagnosis']==diagnoses[i]){
+												key_data[2] = "Clinic B";
+												graph_data[i][2] = data[k]['statistic_visualize'];
+												cycle_data[i][2] = data[k]['cycles'];
+												imp_data[i][2] = data[k]['statistic_visualize'];
+												tooltips[i*(3)+2] = "<b>Diagnosis: "+ diagnoses[i] +"</b><br/>";											
+												tooltips[i*(3)+2] = tooltips[i*(3)+2] + "Clinic B Cycles: " + cycle_data[i][2] + "<br/>";
+												tooltips[i*(3)+2] = tooltips[i*(3)+2] + "Clinic B "+statistic_name+": " + Math.round(10*graph_data[i][2])/10;
+												if(data[k]['statistic_visualize'] > y_max){
+													y_max = data[k]['statistic_visualize'];
+												}
+											}
+										}
+										if(data[k]['clinic_id']==384){
+											if(data[k]['diagnosis']==diagnoses[i]){									
+												key_data[0] = data[k]['clinic_name'];
+												graph_data[i][0] = data[k]['statistic_visualize'];
+												cycle_data[i][0] = data[k]['cycles'];
+												imp_data[i][0] = data[k]['statistic_visualize'];
+												tooltips[i*(3)+0] = "<b>Diagnosis: "+ diagnoses[i] +"</b><br/>";								
+												tooltips[i*(3)+0] = tooltips[i*(3)+0] + "National Number of Cycles: " + cycle_data[i][0] + "<br/>";
+												tooltips[i*(3)+0] = tooltips[i*(3)+0] + "National "+statistic_name+": " + Math.round(10*graph_data[i][0])/10;
+												if(data[k]['statistic_visualize'] > y_max){
+													y_max = data[k]['statistic_visualize'];
+												}
+											}
+										}
+									}
+								});
+							}
+							
+							else if(statistic_across=="year"){
+								$.each(data, function(k){
+									for(var i = 0; i < 5; i++){
+										if(data[k]['clinic_id']==clinic_a_id){
+											if(data[k]['year']==years[i]){
+												key_data[1] = "Clinic A";
+												graph_data[i][1] = data[k]['statistic_visualize'];
+												cycle_data[i][1] = data[k]['cycles'];
+												imp_data[i][1] = data[k]['statistic_visualize'];
+												tooltips[i*(3)+1] = "<b>Year: "+ years[i] +"</b><br/>";
+												tooltips[i*(3)+1] = tooltips[i*(3)+1] + "Clinic A Cycles: " + cycle_data[i][1] + "<br/>";
+												tooltips[i*(3)+1] = tooltips[i*(3)+1] + "Clinic A " + statistic_name+": " + Math.round(10*graph_data[i][1])/10;
+												if(data[k]['statistic_visualize'] > y_max){
+													y_max = data[k]['statistic_visualize'];
+												}
+											}
+										}
+										if(data[k]['clinic_id']==clinic_b_id){
+											if(data[k]['year']==years[i]){
+												key_data[2] = "Clinic B";
+												graph_data[i][2] = data[k]['statistic_visualize'];
+												cycle_data[i][2] = data[k]['cycles'];
+												imp_data[i][2] = data[k]['statistic_visualize'];
+												tooltips[i*(3)+2] = "<b>Year: "+ years[i] +"</b><br/>";											
+												tooltips[i*(3)+2] = tooltips[i*(3)+2] + "Clinic B Cycles: " + cycle_data[i][2] + "<br/>";
+												tooltips[i*(3)+2] = tooltips[i*(3)+2] + "Clinic B "+statistic_name+": " + Math.round(10*graph_data[i][2])/10;
+												if(data[k]['statistic_visualize'] > y_max){
+													y_max = data[k]['statistic_visualize'];
+												}
+											}
+										}
+										if(data[k]['clinic_id']==384){
+											if(data[k]['year']==years[i]){									
+												key_data[0] = data[k]['clinic_name'];
+												graph_data[i][0] = data[k]['statistic_visualize'];
+												cycle_data[i][0] = data[k]['cycles'];
+												imp_data[i][0] = data[k]['statistic_visualize'];
+												tooltips[i*(3)+0] = "<b>Year: "+ years[i] +"</b><br/>";								
+												tooltips[i*(3)+0] = tooltips[i*(3)+0] + "National Number of Cycles: " + cycle_data[i][0] + "<br/>";
+												tooltips[i*(3)+0] = tooltips[i*(3)+0] + "National "+statistic_name+": " + Math.round(10*graph_data[i][0])/10;
+												if(data[k]['statistic_visualize'] > y_max){
+													y_max = data[k]['statistic_visualize'];
+												}
+											}
+										}
+									}
+								});
+							}
 							
 							
 							//Set the maximum y value		
@@ -462,9 +601,20 @@
 							
 							//Instantiate the new graph
 							cycles_bar_graph = new RGraph.Bar('comparison_canvas', graph_data);
-							cycles_bar_graph.Set('chart.labels', age_groups);
+							if(statistic_across=="age_group"){
+								cycles_bar_graph.Set('chart.labels', age_groups);
+							}
+							else if(statistic_across=="diagnosis"){
+								cycles_bar_graph.Set('chart.labels', diagnoses);
+							}
+							else{
+								cycles_bar_graph.Set('chart.labels', years);
+							}
+							
 							cycles_bar_graph.Set('chart.key', key_data);
 					        cycles_bar_graph.Set('chart.gutter.left', 45);
+							cycles_bar_graph.Set('chart.gutter.bottom', 150);
+							cycles_bar_graph.Set('chart.text.angle', 45);
 					        cycles_bar_graph.Set('chart.key.position', 'gutter');
 					        cycles_bar_graph.Set('chart.background.barcolor1', 'white');
 					        cycles_bar_graph.Set('chart.background.barcolor2', 'ddffff');
