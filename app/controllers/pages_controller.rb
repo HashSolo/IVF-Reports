@@ -12,7 +12,7 @@ class PagesController < ApplicationController
   
   def clinicfind
     @title = "Find a Clinic"
-  	year = 2009
+  	year = "2009"
   	age = "All Ages"
   	diagnosis = "All Diagnoses"
   	cycle_type = "fresh"
