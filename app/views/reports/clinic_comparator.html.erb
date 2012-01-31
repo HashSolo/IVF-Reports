@@ -105,7 +105,11 @@
 			</ul>
 		<hr>
 		<h2>Graph Type:</h2>
-			
+			<ul id="graph-type-selectable" class="jqueryui-selectable">
+				<li class="ui-selected">Vertical Bar Graph</li>
+
+				<!--<li>Horizontal Bar Graph</li>-->
+			</ul>	
 	</div>
 </div>
 
@@ -121,10 +125,30 @@
 	var statistic_visualize = "implantation_rate";
 	var cycle_type = "fresh";
 	var diagnosis = "All Diagnoses";
+	var graph_type = "vertical_bar";
 
 	$(document).ready(function(){
 		RenderGraph();
-		
+		$('#graph-type-selectable').selectable({
+			stop: function(){
+				$(".ui-selected", this).each(function(){
+					var index = $('#graph-type-selectable li').index(this);
+					if(index==0){
+						graph_type="vertical_bar";
+					}
+					else if(index==1){
+						graph_type="horizontal_bar";
+					}
+					else if(index==2){
+						graph_type="line";
+					}
+					else{
+						graph_type="vertical_bar";
+					}
+				});
+				RenderGraph();
+			}
+		});
 		$('#statistic-selectable').selectable({
 			stop: function(){
 				$( ".ui-selected", this ).each(function() {
@@ -451,12 +475,22 @@
 										if(data[k]['clinic_id']==clinic_a_id){
 											if(data[k]['age_group']==age_groups[i]){
 												key_data[1] = "Clinic A";
-												graph_data[i][1] = data[k]['statistic_visualize'];
-												cycle_data[i][1] = data[k]['cycles'];
-												imp_data[i][1] = data[k]['statistic_visualize'];
-												tooltips[i*(3)+1] = "<b>Age Group: "+ age_groups[i] +"</b><br/>";
-												tooltips[i*(3)+1] = tooltips[i*(3)+1] + "Clinic A Cycles: " + cycle_data[i][1] + "<br/>";
-												tooltips[i*(3)+1] = tooltips[i*(3)+1] + "Clinic A " + statistic_name+": " + Math.round(10*graph_data[i][1])/10;
+												if(graph_type=="horizontal_bar" || graph_type=="vertical_bar"){
+													graph_data[i][1] = data[k]['statistic_visualize'];
+													cycle_data[i][1] = data[k]['cycles'];
+													imp_data[i][1] = data[k]['statistic_visualize'];
+													tooltips[i*(3)+1] = "<b>Age Group: "+ age_groups[i] +"</b><br/>";
+													tooltips[i*(3)+1] = tooltips[i*(3)+1] + "Clinic A Cycles: " + cycle_data[i][1] + "<br/>";
+													tooltips[i*(3)+1] = tooltips[i*(3)+1] + "Clinic A " + statistic_name+": " + Math.round(10*graph_data[i][1])/10;
+												}
+												else if(graph_type=="line"){
+													graph_data[1][i] = data[k]['statistic_visualize'];
+													cycle_data[1][i] = data[k]['cycles'];
+													imp_data[1][i] = data[k]['statistic_visualize'];
+													tooltips[1][i] = "<b>Age Group: "+ age_groups[i] +"</b><br/>";
+													tooltips[1][i] = tooltips[1][i] + "Clinic A Cycles: " + cycle_data[1][i] + "<br/>";
+													tooltips[1][i] = tooltips[1][i] + "Clinic A " + statistic_name+": " + Math.round(10*graph_data[1][i])/10;
+												}
 												if(data[k]['statistic_visualize'] > y_max){
 													y_max = data[k]['statistic_visualize'];
 												}
@@ -465,12 +499,23 @@
 										if(data[k]['clinic_id']==clinic_b_id){
 											if(data[k]['age_group']==age_groups[i]){
 												key_data[2] = "Clinic B";
-												graph_data[i][2] = data[k]['statistic_visualize'];
-												cycle_data[i][2] = data[k]['cycles'];
-												imp_data[i][2] = data[k]['statistic_visualize'];
-												tooltips[i*(3)+2] = "<b>Age Group: "+ age_groups[i] +"</b><br/>";											
-												tooltips[i*(3)+2] = tooltips[i*(3)+2] + "Clinic B Cycles: " + cycle_data[i][2] + "<br/>";
-												tooltips[i*(3)+2] = tooltips[i*(3)+2] + "Clinic B "+statistic_name+": " + Math.round(10*graph_data[i][2])/10;
+												if(graph_type=="horizontal_bar" || graph_type=="vertical_bar"){
+													graph_data[i][2] = data[k]['statistic_visualize'];
+													cycle_data[i][2] = data[k]['cycles'];
+													imp_data[i][2] = data[k]['statistic_visualize'];
+													tooltips[i*(3)+2] = "<b>Age Group: "+ age_groups[i] +"</b><br/>";											
+													tooltips[i*(3)+2] = tooltips[i*(3)+2] + "Clinic B Cycles: " + cycle_data[i][2] + "<br/>";
+													tooltips[i*(3)+2] = tooltips[i*(3)+2] + "Clinic B "+statistic_name+": " + Math.round(10*graph_data[i][2])/10;
+												}
+												else if(graph_type=="line"){
+													graph_data[2][i] = data[k]['statistic_visualize'];
+													cycle_data[2][i] = data[k]['cycles'];
+													imp_data[2][i] = data[k]['statistic_visualize'];
+													tooltips[2][i] = "<b>Age Group: "+ age_groups[i] +"</b><br/>";											
+													tooltips[2][i] = tooltips[2][i] + "Clinic B Cycles: " + cycle_data[2][i] + "<br/>";
+													tooltips[2][i] = tooltips[2][i] + "Clinic B "+statistic_name+": " + Math.round(10*graph_data[2][i])/10;
+												}
+												
 												if(data[k]['statistic_visualize'] > y_max){
 													y_max = data[k]['statistic_visualize'];
 												}
@@ -479,12 +524,22 @@
 										if(data[k]['clinic_id']==384){
 											if(data[k]['age_group']==age_groups[i]){									
 												key_data[0] = data[k]['clinic_name'];
-												graph_data[i][0] = data[k]['statistic_visualize'];
-												cycle_data[i][0] = data[k]['cycles'];
-												imp_data[i][0] = data[k]['statistic_visualize'];
-												tooltips[i*(3)+0] = "<b>Age Group: "+ age_groups[i] +"</b><br/>";								
-												tooltips[i*(3)+0] = tooltips[i*(3)+0] + "National Number of Cycles: " + cycle_data[i][0] + "<br/>";
-												tooltips[i*(3)+0] = tooltips[i*(3)+0] + "National "+statistic_name+": " + Math.round(10*graph_data[i][0])/10;
+												if(graph_type=="horizontal_bar" || graph_type=="vertical_bar"){
+													graph_data[i][0] = data[k]['statistic_visualize'];
+													cycle_data[i][0] = data[k]['cycles'];
+													imp_data[i][0] = data[k]['statistic_visualize'];
+													tooltips[i*(3)+0] = "<b>Age Group: "+ age_groups[i] +"</b><br/>";								
+													tooltips[i*(3)+0] = tooltips[i*(3)+0] + "National Number of Cycles: " + cycle_data[i][0] + "<br/>";
+													tooltips[i*(3)+0] = tooltips[i*(3)+0] + "National "+statistic_name+": " + Math.round(10*graph_data[i][0])/10;
+												}
+												else if(graph_type=="line"){
+													graph_data[0][i] = data[k]['statistic_visualize'];
+													cycle_data[0][i] = data[k]['cycles'];
+													imp_data[0][i] = data[k]['statistic_visualize'];
+													tooltips[0][i] = "<b>Age Group: "+ age_groups[i] +"</b><br/>";								
+													tooltips[0][i] = tooltips[0][i] + "National Number of Cycles: " + cycle_data[0][i] + "<br/>";
+													tooltips[0][i] = tooltips[0][i] + "National "+statistic_name+": " + Math.round(10*graph_data[0][i])/10;
+												}
 												if(data[k]['statistic_visualize'] > y_max){
 													y_max = data[k]['statistic_visualize'];
 												}
@@ -500,12 +555,22 @@
 										if(data[k]['clinic_id']==clinic_a_id){
 											if(data[k]['diagnosis']==diagnoses[i]){
 												key_data[1] = "Clinic A";
-												graph_data[i][1] = data[k]['statistic_visualize'];
-												cycle_data[i][1] = data[k]['cycles'];
-												imp_data[i][1] = data[k]['statistic_visualize'];
-												tooltips[i*(3)+1] = "<b>Diagnosis: "+ diagnoses[i] +"</b><br/>";
-												tooltips[i*(3)+1] = tooltips[i*(3)+1] + "Clinic A Cycles: " + cycle_data[i][1] + "<br/>";
-												tooltips[i*(3)+1] = tooltips[i*(3)+1] + "Clinic A " + statistic_name+": " + Math.round(10*graph_data[i][1])/10;
+												if(graph_type=="horizontal_bar" || graph_type=="vertical_bar"){
+													graph_data[i][1] = data[k]['statistic_visualize'];
+													cycle_data[i][1] = data[k]['cycles'];
+													imp_data[i][1] = data[k]['statistic_visualize'];
+													tooltips[i*(3)+1] = "<b>Diagnosis: "+ diagnoses[i] +"</b><br/>";
+													tooltips[i*(3)+1] = tooltips[i*(3)+1] + "Clinic A Cycles: " + cycle_data[i][1] + "<br/>";
+													tooltips[i*(3)+1] = tooltips[i*(3)+1] + "Clinic A " + statistic_name+": " + Math.round(10*graph_data[i][1])/10;
+												}
+												else{
+													graph_data[1][i] = data[k]['statistic_visualize'];
+													cycle_data[1][i] = data[k]['cycles'];
+													imp_data[1][i] = data[k]['statistic_visualize'];
+													tooltips[1][i] = "<b>Diagnosis: "+ diagnoses[i] +"</b><br/>";
+													tooltips[1][i] = tooltips[1][i] + "Clinic A Cycles: " + cycle_data[1][i] + "<br/>";
+													tooltips[1][i] = tooltips[1][i] + "Clinic A " + statistic_name+": " + Math.round(10*graph_data[1][i])/10;
+												}
 												if(data[k]['statistic_visualize'] > y_max){
 													y_max = data[k]['statistic_visualize'];
 												}
@@ -514,12 +579,22 @@
 										if(data[k]['clinic_id']==clinic_b_id){
 											if(data[k]['diagnosis']==diagnoses[i]){
 												key_data[2] = "Clinic B";
-												graph_data[i][2] = data[k]['statistic_visualize'];
-												cycle_data[i][2] = data[k]['cycles'];
-												imp_data[i][2] = data[k]['statistic_visualize'];
-												tooltips[i*(3)+2] = "<b>Diagnosis: "+ diagnoses[i] +"</b><br/>";											
-												tooltips[i*(3)+2] = tooltips[i*(3)+2] + "Clinic B Cycles: " + cycle_data[i][2] + "<br/>";
-												tooltips[i*(3)+2] = tooltips[i*(3)+2] + "Clinic B "+statistic_name+": " + Math.round(10*graph_data[i][2])/10;
+												if(graph_type=="horizontal_bar" || graph_type=="vertical_bar"){
+													graph_data[i][2] = data[k]['statistic_visualize'];
+													cycle_data[i][2] = data[k]['cycles'];
+													imp_data[i][2] = data[k]['statistic_visualize'];
+													tooltips[i*(3)+2] = "<b>Diagnosis: "+ diagnoses[i] +"</b><br/>";											
+													tooltips[i*(3)+2] = tooltips[i*(3)+2] + "Clinic B Cycles: " + cycle_data[i][2] + "<br/>";
+													tooltips[i*(3)+2] = tooltips[i*(3)+2] + "Clinic B "+statistic_name+": " + Math.round(10*graph_data[i][2])/10;
+												}
+												else{
+													graph_data[2][i] = data[k]['statistic_visualize'];
+													cycle_data[2][i] = data[k]['cycles'];
+													imp_data[2][i] = data[k]['statistic_visualize'];
+													tooltips[2][i] = "<b>Diagnosis: "+ diagnoses[i] +"</b><br/>";
+													tooltips[2][i] = tooltips[2][i] + "Clinic A Cycles: " + cycle_data[2][i] + "<br/>";
+													tooltips[2][i] = tooltips[2][i] + "Clinic A " + statistic_name+": " + Math.round(10*graph_data[2][i])/10;
+												}
 												if(data[k]['statistic_visualize'] > y_max){
 													y_max = data[k]['statistic_visualize'];
 												}
@@ -528,12 +603,22 @@
 										if(data[k]['clinic_id']==384){
 											if(data[k]['diagnosis']==diagnoses[i]){									
 												key_data[0] = data[k]['clinic_name'];
-												graph_data[i][0] = data[k]['statistic_visualize'];
-												cycle_data[i][0] = data[k]['cycles'];
-												imp_data[i][0] = data[k]['statistic_visualize'];
-												tooltips[i*(3)+0] = "<b>Diagnosis: "+ diagnoses[i] +"</b><br/>";								
-												tooltips[i*(3)+0] = tooltips[i*(3)+0] + "National Number of Cycles: " + cycle_data[i][0] + "<br/>";
-												tooltips[i*(3)+0] = tooltips[i*(3)+0] + "National "+statistic_name+": " + Math.round(10*graph_data[i][0])/10;
+												if(graph_type=="horizontal_bar" || graph_type=="vertical_bar"){
+													graph_data[i][0] = data[k]['statistic_visualize'];
+													cycle_data[i][0] = data[k]['cycles'];
+													imp_data[i][0] = data[k]['statistic_visualize'];
+													tooltips[i*(3)+0] = "<b>Diagnosis: "+ diagnoses[i] +"</b><br/>";								
+													tooltips[i*(3)+0] = tooltips[i*(3)+0] + "National Number of Cycles: " + cycle_data[i][0] + "<br/>";
+													tooltips[i*(3)+0] = tooltips[i*(3)+0] + "National "+statistic_name+": " + Math.round(10*graph_data[i][0])/10;
+												}
+												else{
+													graph_data[0][i] = data[k]['statistic_visualize'];
+													cycle_data[0][i] = data[k]['cycles'];
+													imp_data[0][i] = data[k]['statistic_visualize'];
+													tooltips[0][i] = "<b>Diagnosis: "+ diagnoses[i] +"</b><br/>";
+													tooltips[0][i] = tooltips[0][i] + "Clinic A Cycles: " + cycle_data[0][i] + "<br/>";
+													tooltips[0][i] = tooltips[0][i] + "Clinic A " + statistic_name+": " + Math.round(10*graph_data[0][i])/10;
+												}
 												if(data[k]['statistic_visualize'] > y_max){
 													y_max = data[k]['statistic_visualize'];
 												}
@@ -549,12 +634,22 @@
 										if(data[k]['clinic_id']==clinic_a_id){
 											if(data[k]['year']==years[i]){
 												key_data[1] = "Clinic A";
-												graph_data[i][1] = data[k]['statistic_visualize'];
-												cycle_data[i][1] = data[k]['cycles'];
-												imp_data[i][1] = data[k]['statistic_visualize'];
-												tooltips[i*(3)+1] = "<b>Year: "+ years[i] +"</b><br/>";
-												tooltips[i*(3)+1] = tooltips[i*(3)+1] + "Clinic A Cycles: " + cycle_data[i][1] + "<br/>";
-												tooltips[i*(3)+1] = tooltips[i*(3)+1] + "Clinic A " + statistic_name+": " + Math.round(10*graph_data[i][1])/10;
+												if(graph_type=="horizontal_bar" || graph_type=="vertical_bar"){
+													graph_data[i][1] = data[k]['statistic_visualize'];
+													cycle_data[i][1] = data[k]['cycles'];
+													imp_data[i][1] = data[k]['statistic_visualize'];
+													tooltips[i*(3)+1] = "<b>Year: "+ years[i] +"</b><br/>";
+													tooltips[i*(3)+1] = tooltips[i*(3)+1] + "Clinic A Cycles: " + cycle_data[i][1] + "<br/>";
+													tooltips[i*(3)+1] = tooltips[i*(3)+1] + "Clinic A " + statistic_name+": " + Math.round(10*graph_data[i][1])/10;
+												}
+												else{
+													graph_data[1][i] = data[k]['statistic_visualize'];
+													cycle_data[1][i] = data[k]['cycles'];
+													imp_data[1][i] = data[k]['statistic_visualize'];
+													tooltips[1][i] = "<b>Year: "+ years[i] +"</b><br/>";
+													tooltips[1][i] = tooltips[1][i] + "Clinic A Cycles: " + cycle_data[1][i] + "<br/>";
+													tooltips[1][i] = tooltips[1][i] + "Clinic A " + statistic_name+": " + Math.round(10*graph_data[1][i])/10;
+												}
 												if(data[k]['statistic_visualize'] > y_max){
 													y_max = data[k]['statistic_visualize'];
 												}
@@ -563,12 +658,22 @@
 										if(data[k]['clinic_id']==clinic_b_id){
 											if(data[k]['year']==years[i]){
 												key_data[2] = "Clinic B";
-												graph_data[i][2] = data[k]['statistic_visualize'];
-												cycle_data[i][2] = data[k]['cycles'];
-												imp_data[i][2] = data[k]['statistic_visualize'];
-												tooltips[i*(3)+2] = "<b>Year: "+ years[i] +"</b><br/>";											
-												tooltips[i*(3)+2] = tooltips[i*(3)+2] + "Clinic B Cycles: " + cycle_data[i][2] + "<br/>";
-												tooltips[i*(3)+2] = tooltips[i*(3)+2] + "Clinic B "+statistic_name+": " + Math.round(10*graph_data[i][2])/10;
+												if(graph_type=="horizontal_bar" || graph_type=="vertical_bar"){
+													graph_data[i][2] = data[k]['statistic_visualize'];
+													cycle_data[i][2] = data[k]['cycles'];
+													imp_data[i][2] = data[k]['statistic_visualize'];
+													tooltips[i*(3)+2] = "<b>Year: "+ years[i] +"</b><br/>";											
+													tooltips[i*(3)+2] = tooltips[i*(3)+2] + "Clinic B Cycles: " + cycle_data[i][2] + "<br/>";
+													tooltips[i*(3)+2] = tooltips[i*(3)+2] + "Clinic B "+statistic_name+": " + Math.round(10*graph_data[i][2])/10;
+												}
+												else{
+													graph_data[2][i] = data[k]['statistic_visualize'];
+													cycle_data[2][i] = data[k]['cycles'];
+													imp_data[2][i] = data[k]['statistic_visualize'];
+													tooltips[2][i] = "<b>Year: "+ years[i] +"</b><br/>";
+													tooltips[2][i] = tooltips[2][i] + "Clinic A Cycles: " + cycle_data[2][i] + "<br/>";
+													tooltips[2][i] = tooltips[2][i] + "Clinic A " + statistic_name+": " + Math.round(10*graph_data[2][i])/10;													
+												}
 												if(data[k]['statistic_visualize'] > y_max){
 													y_max = data[k]['statistic_visualize'];
 												}
@@ -577,12 +682,22 @@
 										if(data[k]['clinic_id']==384){
 											if(data[k]['year']==years[i]){									
 												key_data[0] = data[k]['clinic_name'];
-												graph_data[i][0] = data[k]['statistic_visualize'];
-												cycle_data[i][0] = data[k]['cycles'];
-												imp_data[i][0] = data[k]['statistic_visualize'];
-												tooltips[i*(3)+0] = "<b>Year: "+ years[i] +"</b><br/>";								
-												tooltips[i*(3)+0] = tooltips[i*(3)+0] + "National Number of Cycles: " + cycle_data[i][0] + "<br/>";
-												tooltips[i*(3)+0] = tooltips[i*(3)+0] + "National "+statistic_name+": " + Math.round(10*graph_data[i][0])/10;
+												if(graph_type=="horizontal_bar" || graph_type=="vertical_bar"){
+													graph_data[i][0] = data[k]['statistic_visualize'];
+													cycle_data[i][0] = data[k]['cycles'];
+													imp_data[i][0] = data[k]['statistic_visualize'];
+													tooltips[i*(3)+0] = "<b>Year: "+ years[i] +"</b><br/>";								
+													tooltips[i*(3)+0] = tooltips[i*(3)+0] + "National Number of Cycles: " + cycle_data[i][0] + "<br/>";
+													tooltips[i*(3)+0] = tooltips[i*(3)+0] + "National "+statistic_name+": " + Math.round(10*graph_data[i][0])/10;
+												}
+												else{
+													graph_data[0][i] = data[k]['statistic_visualize'];
+													cycle_data[0][i] = data[k]['cycles'];
+													imp_data[0][i] = data[k]['statistic_visualize'];
+													tooltips[0][i] = "<b>Year: "+ years[i] +"</b><br/>";
+													tooltips[0][i] = tooltips[0][i] + "Clinic A Cycles: " + cycle_data[0][i] + "<br/>";
+													tooltips[0][i] = tooltips[0][i] + "Clinic A " + statistic_name+": " + Math.round(10*graph_data[0][i])/10;
+												}
 												if(data[k]['statistic_visualize'] > y_max){
 													y_max = data[k]['statistic_visualize'];
 												}
@@ -600,45 +715,72 @@
 							}
 							
 							//Instantiate the new graph
-							cycles_bar_graph = new RGraph.Bar('comparison_canvas', graph_data);
+							if(graph_type=="vertical_bar"){
+								statistic_graph = new RGraph.Bar('comparison_canvas', graph_data);
+							}
+							else if(graph_type=="line"){
+								statistic_graph = new RGraph.Line('comparison_canvas', graph_data);
+							}
+							else if(graph_type=="horizontal_bar"){
+								statistic_graph = new RGraph.HBar('comparison_canvas', graph_data);
+							}
+							
+							
 							if(statistic_across=="age_group"){
-								cycles_bar_graph.Set('chart.labels', age_groups);
+								statistic_graph.Set('chart.labels', age_groups);
 							}
 							else if(statistic_across=="diagnosis"){
-								cycles_bar_graph.Set('chart.labels', diagnoses);
+								statistic_graph.Set('chart.labels', diagnoses);
 							}
 							else{
-								cycles_bar_graph.Set('chart.labels', years);
+								statistic_graph.Set('chart.labels', years);
 							}
 							
-							cycles_bar_graph.Set('chart.key', key_data);
-					        cycles_bar_graph.Set('chart.gutter.left', 45);
-							cycles_bar_graph.Set('chart.gutter.bottom', 150);
-							cycles_bar_graph.Set('chart.text.angle', 45);
-					        cycles_bar_graph.Set('chart.key.position', 'gutter');
-					        cycles_bar_graph.Set('chart.background.barcolor1', 'white');
-					        cycles_bar_graph.Set('chart.background.barcolor2', 'ddffff');
-					        cycles_bar_graph.Set('chart.colors', ['#65BDBD', '#7895A3', '#0F5151']);
-							cycles_bar_graph.Set('chart.variant', '3d');
-							cycles_bar_graph.Set('chart.text.font', 'Trebuchet MS');
-							cycles_bar_graph.Set('chart.text.size', 10);
-							if(statistic_visualize=="avg_num_embs_transferred"){
-								
+							statistic_graph.Set('chart.key', key_data);
+							if(graph_type=="horizontal_bar" && statistic_across=="diagnosis"){
+								statistic_graph.Set('chart.gutter.left', 175);
 							}
 							else{
-								cycles_bar_graph.Set('chart.units.post', '%');
+								statistic_graph.Set('chart.gutter.left', 45);
 							}
-							cycles_bar_graph.Set('chart.tooltips', tooltips);
-							cycles_bar_graph.Set('chart.shadow', true);
-							cycles_bar_graph.Set('chart.shadow.blur', 5);
-							cycles_bar_graph.Set('chart.shadow.offsetx', 2);
-							cycles_bar_graph.Set('chart.shadow.offsety', 0);
-							cycles_bar_graph.Set('chart.shadow.color', '#0F5151');
-							cycles_bar_graph.Set('chart.background.image', "<%= asset_path 'ivfr_washout.jpg' %>");
+							statistic_graph.Set('chart.gutter.bottom', 150);
+							statistic_graph.Set('chart.text.angle', 45);
+					        statistic_graph.Set('chart.key.position', 'gutter');
+					        statistic_graph.Set('chart.background.barcolor1', 'white');
+					        statistic_graph.Set('chart.background.barcolor2', 'ddffff');
+					        statistic_graph.Set('chart.colors', ['#65BDBD', '#7895A3', '#0F5151']);
+							statistic_graph.Set('chart.variant', '3d');
+							statistic_graph.Set('chart.text.font', 'Trebuchet MS');
+							statistic_graph.Set('chart.text.size', 10);
+							
+							if(statistic_visualize=="avg_num_embs_transferred"){	
+							}
+							else{
+								statistic_graph.Set('chart.units.post', '%');
+							}
+							if(graph_type=="horizontal_bar" || graph_type=="vertical_bar"){
+								statistic_graph.Set('chart.tooltips', tooltips);
+							}
+							else if(graph_type=="line"){
+
+								statistic_graph.Set('chart.tooltips', tooltips);
+
+							}
+								
+							statistic_graph.Set('chart.shadow', true);
+							statistic_graph.Set('chart.shadow.blur', 5);
+							statistic_graph.Set('chart.shadow.offsetx', 2);
+							statistic_graph.Set('chart.shadow.offsety', 0);
+							statistic_graph.Set('chart.shadow.color', '#0F5151');
+							statistic_graph.Set('chart.background.image', "<%= asset_path 'ivfr_washout.jpg' %>");
 							
 							//Bar graph grow
-							RGraph.Effects.Bar.Wave(cycles_bar_graph);
-							
+							if(graph_type=="vertical_bar" || graph_type=="horizontal_bar"){
+								RGraph.Effects.Bar.Wave(statistic_graph);
+							}
+							else{
+								RGraph.Effects.Line.jQuery.Trace(statistic_graph);
+							}
 			}
 		});
 	}
