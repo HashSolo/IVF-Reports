@@ -1,0 +1,377 @@
+<h1>IVF Clinic Rankings</h1>
+
+<div id="tabs" class="ranking_tabs">
+	<ul id="ranking-category-tabs" class="jqueryui-ranking-tabs">
+		<li class="ranking_tab"><a href="#ranking_category_1"/>Overall Ranking</a></li>
+		<li class="ranking_tab"><a href="#ranking_category_2"/>Ranking by Age</a></li>
+		<li class="ranking_tab"><a href="#ranking_category_3"/>Ranking by Diagnosis</a></li>
+	</ul>
+		<div id='ranking_category_1' class="ranking_tab_content">
+			<h2 id="overall_title" class="age_ranking_title">Top IVF Clinics in the U.S.</h2>
+			<div id="overall_ranking_results" class="ranking_results">
+				<div class="clinic_rank_list">
+				</div>
+				<ul class='ranking_nav'><li id='overall_left_button' class='left_button'><span class='icon'>←</span></li><li id='overall_right_button' class='right_button'><span class='icon'>→</span></li></ul>
+			</div>
+		</div>
+		<div id='ranking_category_2' class="ranking_tab_content">
+			<ul id="age-selectable" class="jqueryui-ranking-subselect">
+				<li class="ui-selected">< 35</li>
+				<li>35 - 37</li>
+				<li>38 - 40</li>
+				<li>41 - 42</li>
+				<li class="last">> 42</li>								
+			</ul>
+			<div class="age_ranking_titles">
+				<h2 id="age_title_35" class="age_ranking_title">Top Clinics In Age Group < 35</h2>
+				<h2 id="age_title_35_37" class="age_ranking_title hidden">Top Clinics In Age Group 35 - 37</h2>
+				<h2 id="age_title_38_40" class="age_ranking_title hidden">Top Clinics In Age Group 38 - 40</h2>
+				<h2 id="age_title_41_42" class="age_ranking_title hidden">Top Clinics In Age Group 41 - 42</h2>			
+				<h2 id="age_title_42" class="age_ranking_title hidden">Top Clinics In Age Group > 42</h2>						
+			</div>
+			<div id="age_ranking_results" class="ranking_results">
+				<div class="clinic_rank_list">
+				</div>
+				<ul class='ranking_nav'><li id='age_left_button' class='left_button'><span class='icon'>←</span></li><li id='age_right_button' class='right_button'><span class='icon'>→</span></li></ul>
+			</div>
+		</div>
+		<div id='ranking_category_3' class="ranking_tab_content">
+			<ul id="diagnosis-selectable" class="jqueryui-ranking-subselect-diagnosis">
+				<li class="ui-selected">Endometriosis</li>
+				<li>Low Ovarian Reserve</li>
+				<li>Multiple Female Factors</li>
+				<li>Ovulatory Dysfuntion</li>
+				<li>Tubal Factor</li>
+				<li>Female and Male Factors</li>
+				<li>Male Factor</li>
+				<li>Other Factor</li>
+				<li class="last">Uterine Factor</li>
+			</ul>
+			<div class="diagnosis_ranking_titles">
+				<h2 id="diagnosis_title_endometriosis" class="age_ranking_title">Top Clinics to Treat Endometriosis Infertility</h2>
+				<h2 id="diagnosis_title_dor" class="age_ranking_title hidden">Top Clinics to Treat Diminished Ovarian Reserve</h2>
+				<h2 id="diagnosis_title_mff" class="age_ranking_title hidden">Top Clinics to Treat Multiple Female Factors</h2>
+				<h2 id="diagnosis_title_od" class="age_ranking_title hidden">Top Clinics to Treat Ovulatory Dysfunction</h2>			
+				<h2 id="diagnosis_title_tubal" class="age_ranking_title hidden">Top Clinics to Treat Tubal Factor Infertility</h2>						
+				<h2 id="diagnosis_title_fmf" class="age_ranking_title hidden">Top Clinics to Treat Female and Male Factors</h2>						
+				<h2 id="diagnosis_title_male" class="age_ranking_title hidden">Top Clinics to Treat Male Factor Infertility</h2>						
+				<h2 id="diagnosis_title_other" class="age_ranking_title hidden">Top Clinics to Treat Other Factor Infertility</h2>						
+				<h2 id="diagnosis_title_uterine" class="age_ranking_title hidden">Top Clinics to Treat Uterine Factor Infertility</h2>
+			</div>
+			<div id="diagnosis_ranking_results" class="ranking_results">
+				<div class="clinic_rank_list">
+				</div>
+				<ul class='ranking_nav'><li id='diagnosis_left_button' class='left_button'><span class='icon'>←</span></li><li id='diagnosis_right_button' class='right_button'><span class='icon'>→</span></li></ul>
+			</div>
+		</div>
+</div>
+
+<script type="text/javascript">
+var year = "2009";
+var age_group = "<35";
+var diagnosis = "Endometriosis";
+var cycle_type = "fresh";
+var overall_page = 0;
+var age_page = 0;
+var diagnosis_page = 0;
+
+$(document).ready(function(){
+	$( "#tabs" ).tabs();
+	PrintOverallRankingResults();
+	PrintAgeRankingResults();
+	PrintDiagnosisRankingResults();
+
+	$('li.left_button').click(function(){
+		var button_id = $(this).attr('id');
+		if(button_id=='overall_left_button'){
+			if(overall_page==0){
+				
+			}
+			else{
+				overall_page = overall_page - 1;
+				PrintOverallRankingResults();
+			}
+		}
+		else if(button_id=='age_left_button'){
+			if(age_page==0){
+				
+			}
+			else{
+				age_page = age_page - 1;
+				PrintAgeRankingResults();
+			}			
+			
+		}
+		else if(button_id=='diagnosis_left_button'){
+			if(diagnosis_page==0){
+				
+			}
+			else{
+				diagnosis_page = diagnosis_page - 1;
+				PrintDiagnosisRankingResults();
+			}			
+			
+		}
+	});
+	$('li.right_button').click(function(){
+		var button_id = $(this).attr('id');
+		if(button_id=='overall_right_button'){
+			overall_page = overall_page + 1;
+			PrintOverallRankingResults();			
+		}
+		else if(button_id=='age_right_button'){
+			age_page = age_page + 1;
+			PrintAgeRankingResults();
+		}
+		else if(button_id=='diagnosis_right_button'){
+			diagnosis_page = diagnosis_page + 1;
+			PrintDiagnosisRankingResults();
+		}
+	});	
+});
+
+function PrintStarIcon(score){
+	if(score>=90){
+		return " green";
+	}
+	else if(score>=80 && score<90){
+		return " blue";
+	}
+	else if(score>=70 && score<80){
+		return " yellow";
+	}
+	else{
+		return " gray";
+	}
+}
+function PrintOverallRankingResults(){
+	$('div#overall_ranking_results div.clinic_rank_list').html("");
+	$('div#overall_ranking_results div.clinic_rank_list').addClass('ajax_loading');
+	var data = {
+		year: year,
+		age_group: "All Ages",
+		diagnosis: "All Diagnoses",
+		cycle_type: cycle_type,
+		page: overall_page
+	}
+	$.ajax({
+		url: "<%= url_for(:action => 'ranking') %>",
+		dataType: 'json',
+		async: true,
+		cache: false,
+		data: data,
+		success: 	function(data){
+						//This will have to update the html of the middle section with the new clinic info...
+						$.each(data, function(k){
+								var clinic_html = "<ul class='clinic_rank";
+								if(k==9){
+									clinic_html = clinic_html + " bottom";
+								}
+								clinic_html = clinic_html + "'><li class='clinic_name'><a href='/clinics/"+data[k]['permalink']+"' target='_blank'>"+ (overall_page*10 + k + 1) + ". " + data[k]['clinic_name'] + "</a></li>";
+								clinic_html = clinic_html + "<li class='clinic_location'>" + data[k]['city'] + ", " + data[k]['state'] + "</li>";
+								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>IVF Reports Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['ivf_reports_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['ivf_reports_score']) + "'>★</span></span></li>";
+								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>Quality Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['quality_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['quality_score']) + "'>★</span></span></li>";
+								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>Safety Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['safety_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['safety_score']) + "'>★</span></span></li>";
+								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>SART Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['sart_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['sart_score']) + "'>★</span></span></li>";
+								clinic_html = clinic_html + "</ul>"
+								if(k==9){
+									
+								}
+								else{
+									
+								}
+								$('div#overall_ranking_results div.clinic_rank_list').append(clinic_html);
+						});
+					}
+	});
+	$('div#overall_ranking_results div.clinic_rank_list').removeClass('ajax_loading');
+}
+function PrintAgeRankingResults(){
+	$('div#age_ranking_results div.clinic_rank_list').html("");
+	$('div#age_ranking_results div.clinic_rank_list').addClass('ajax_loading');
+	var data = {
+		year: year,
+		age_group: age_group,
+		diagnosis: "All Diagnoses",
+		cycle_type: cycle_type,
+		page: age_page
+	}
+	$.ajax({
+		url: "<%= url_for(:action => 'ranking') %>",
+		dataType: 'json',
+		async: true,
+		cache: false,
+		data: data,
+		success: 	function(data){
+						//This will have to update the html of the middle section with the new clinic info...
+						$.each(data, function(k){
+								var clinic_html = "<ul class='clinic_rank";
+								if(k==9){
+									clinic_html = clinic_html + " bottom";
+								}								
+								clinic_html = clinic_html + "'><li class='clinic_name'><a href='/clinics/"+data[k]['permalink']+"' target='_blank'>"+ (age_page*10 + k + 1) + ". " + data[k]['clinic_name'] + "</a></li>";
+								clinic_html = clinic_html + "<li class='clinic_location'>" + data[k]['city'] + ", " + data[k]['state'] + "</li>";
+								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>IVF Reports Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['ivf_reports_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['ivf_reports_score']) + "'>★</span></span></li>";
+								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>Quality Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['quality_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['quality_score']) + "'>★</span></span></li>";
+								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>Safety Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['safety_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['safety_score']) + "'>★</span></span></li>";
+								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>SART Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['sart_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['sart_score']) + "'>★</span></span></li>";
+								clinic_html = clinic_html + "</ul>"
+								if(k==9){
+									
+								}	
+								else{
+									
+								}							
+								$('div#age_ranking_results div.clinic_rank_list').append(clinic_html);
+						});
+					}
+	});
+	$('div#age_ranking_results div.clinic_rank_list').removeClass('ajax_loading');
+}
+function PrintDiagnosisRankingResults(){
+	$('div#diagnosis_ranking_results div.clinic_rank_list').html("");
+	$('div#diagnosis_ranking_results div.clinic_rank_list').addClass('ajax_loading');
+	var data = {
+		year: year,
+		age_group: "All Ages",
+		diagnosis: diagnosis,
+		cycle_type: cycle_type,
+		page: diagnosis_page
+	}
+	$.ajax({
+		url: "<%= url_for(:action => 'ranking') %>",
+		dataType: 'json',
+		async: true,
+		cache: false,
+		data: data,
+		success: 	function(data){
+						//This will have to update the html of the middle section with the new clinic info...
+						$.each(data, function(k){
+								var clinic_html = "<ul class='clinic_rank";
+								if(k==9){
+									clinic_html = clinic_html + " bottom";
+								}
+
+								clinic_html = clinic_html + "'><li class='clinic_name'><a href='/clinics/"+data[k]['permalink']+"' target='_blank'>"+ (diagnosis_page*10 + k + 1) + ". " + data[k]['clinic_name'] + "</a></li>";
+								clinic_html = clinic_html + "<li class='clinic_location'>" + data[k]['city'] + ", " + data[k]['state'] + "</li>";
+								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>IVF Reports Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['ivf_reports_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['ivf_reports_score']) + "'>★</span></span></li>";
+								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>Quality Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['quality_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['quality_score']) + "'>★</span></span></li>";
+								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>Safety Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['safety_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['safety_score']) + "'>★</span></span></li>";
+								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>SART Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['sart_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['sart_score']) + "'>★</span></span></li>";
+								clinic_html = clinic_html + "</ul>"
+								if(k==9){
+						
+								}								
+								else{
+									
+								}
+								$('div#diagnosis_ranking_results div.clinic_rank_list').append(clinic_html);
+						});
+					}
+	});
+	$('div#diagnosis_ranking_results div.clinic_rank_list').removeClass('ajax_loading');
+}
+
+$('#diagnosis-selectable').selectable({
+	stop: function(){
+		$( ".ui-selected", this ).each(function() {
+			var index = $( "#diagnosis-selectable li" ).index( this );
+			if(index==0){
+				diagnosis="Endometriosis";
+				$('h2#diagnosis_title_endometriosis').removeClass('hidden');
+				$('h2#diagnosis_title_endometriosis').siblings().addClass('hidden');
+			}
+			else if(index==1){
+				diagnosis="Diminished Ovarian Reserve";
+				$('h2#diagnosis_title_dor').removeClass('hidden');
+				$('h2#diagnosis_title_dor').siblings().addClass('hidden');
+			}
+			else if(index==2){
+				diagnosis="Multiple Female Factors";
+				$('h2#diagnosis_title_mff').removeClass('hidden');
+				$('h2#diagnosis_title_mff').siblings().addClass('hidden');
+			}
+			else if(index==3){
+				diagnosis="Ovulatory Dysfunction";
+				$('h2#diagnosis_title_od').removeClass('hidden');
+				$('h2#diagnosis_title_od').siblings().addClass('hidden');
+			}
+			else if(index==4){
+				diagnosis="Tubal Factor";
+				$('h2#diagnosis_title_tubal').removeClass('hidden');
+				$('h2#diagnosis_title_tubal').siblings().addClass('hidden');
+			}
+			else if(index==5){
+				diagnosis="Female and Male Factors";
+				$('h2#diagnosis_title_fmf').removeClass('hidden');
+				$('h2#diagnosis_title_fmf').siblings().addClass('hidden');
+			}
+			
+			else if(index==6){
+				diagnosis="Male Factor";
+				$('h2#diagnosis_title_male').removeClass('hidden');
+				$('h2#diagnosis_title_male').siblings().addClass('hidden');
+			}
+			
+			else if(index==7){
+				diagnosis="Other Factor";
+				$('h2#diagnosis_title_other').removeClass('hidden');
+				$('h2#diagnosis_title_other').siblings().addClass('hidden');
+			}
+			
+			else if(index==8){
+				diagnosis="Uterine Factor";
+				$('h2#diagnosis_title_uterine').removeClass('hidden');
+				$('h2#diagnosis_title_uterine').siblings().addClass('hidden');
+			}
+			else{
+				diagnosis="Endometriosis";
+				$('h2#diagnosis_title_endometriosis').removeClass('hidden');
+				$('h2#diagnosis_title_endometriosis').siblings().addClass('hidden');
+			}
+		});
+		diagnosis_page = 0;
+		PrintDiagnosisRankingResults();
+	}
+});
+$('#age-selectable').selectable({
+	stop: function(){
+		$( ".ui-selected", this ).each(function() {
+			var index = $( "#age-selectable li" ).index( this );
+			if(index==0){
+				age_group="<35";
+				$('h2#age_title_35').removeClass('hidden');
+				$('h2#age_title_35').siblings().addClass('hidden');
+			}
+			else if(index==1){
+				age_group="35-37";
+				$('h2#age_title_35_37').removeClass('hidden');
+				$('h2#age_title_35_37').siblings().addClass('hidden');
+			}
+			else if(index==2){
+				age_group="38-40";
+				$('h2#age_title_38_40').removeClass('hidden');
+				$('h2#age_title_38_40').siblings().addClass('hidden');
+			}
+			else if(index==3){
+				age_group="41-42";
+				$('h2#age_title_41_42').removeClass('hidden');
+				$('h2#age_title_41_42').siblings().addClass('hidden');
+			}
+			else if(index==4){
+				age_group=">42";
+				$('h2#age_title_42').removeClass('hidden');
+				$('h2#age_title_42').siblings().addClass('hidden');
+			}
+			else{
+				age_group="<35";
+				$('h2#age_title_35').removeClass('hidden');
+				$('h2#age_title_35').siblings().addClass('hidden');
+			}
+		});
+		age_page = 0;
+		PrintAgeRankingResults();
+	}
+});
+
+</script>

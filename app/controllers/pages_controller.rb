@@ -48,6 +48,53 @@ class PagesController < ApplicationController
   end
   
   def ranking
+    @title = "IVF Clinic Rankings"
+    year = '2009'
+    age_group = 'All Ages'
+    diagnosis = 'All Diagnoses'
+    cycle_type = 'fresh'
+    page = 0 #This is what page to start on
+
+
+    
+    unless(params[:year].nil?)
+      year = params[:year]
+    end
+    unless(params[:age_group].nil?)
+      age_group = params[:age_group]
+    end
+    unless(params[:diagnosis].nil?)
+      diagnosis = params[:diagnosis]
+    end
+    unless(params[:cycle_type].nil?)
+      cycle_type = params[:cycle_type]
+    end
+    unless(params[:page].nil?)
+      page = params[:page]
+    end
+    
+    page=page.to_i
+    
+    results = 10 #The number of results per page    
+    results_start = page*results    
+    
+    @scores = Score.where(:year => year, :age_group => age_group, :diagnosis => diagnosis, :cycle_type => cycle_type).limit(results).offset(results_start)
+    @clinic_results = Array.new;
+    @scores.each do |s|
+      if(s.clinic_id==384)
+        new_score = Score.where(:year => year, :age_group => age_group, :diagnosis => diagnosis, :cycle_type => cycle_type).limit(1).offset(results_start+results)
+        @scores << new_score[0]
+      else
+        cur_clinic = Clinic.find_by_id(s.clinic_id)
+        cur_new_object = cur_new_object = {'ivf_reports_score' => s.ivf_reports_score, 'quality_score' => s.quality_score, 'safety_score' => s.safety_score, 'sart_score' => s.sart_score, 'clinic_id' => cur_clinic.id, 'clinic_name' => cur_clinic.clinic_name, 'permalink' => cur_clinic.permalink, 'city' => cur_clinic.city, 'state' => cur_clinic.state, 'address' => cur_clinic.address, 'practice_director' => cur_clinic.practice_director, 'lab_director' => cur_clinic.laboratory_director, 'medical_director' => cur_clinic.medical_director, 'zip' => cur_clinic.zip}
+        @clinic_results << cur_new_object
+      end
+    end
+    
+    respond_to do |format|
+      format.html {}
+      format.json {render :json => @clinic_results.to_json()}
+    end
   end
   
   def faqs
