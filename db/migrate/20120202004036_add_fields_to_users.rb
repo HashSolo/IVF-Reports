@@ -19,7 +19,7 @@ class AddFieldsToUsers < ActiveRecord::Migration
     #Basic Medical Information - Used to determine BMI
     add_column :users, :height_ft, :integer
     add_column :users, :height_inches, :integer
-    add_column :users, :weight, :weight
+    add_column :users, :weight, :integer
         
     #Hormonal Labs - FSH, LH, and E2 (Days 3 and 10) & Prolactin
     add_column :users, :day_3_fsh, :float
