@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120131194457) do
+ActiveRecord::Schema.define(:version => 20120202004036) do
 
   create_table "clinics", :force => true do |t|
     t.string   "clinic_name"
@@ -96,15 +96,7 @@ ActiveRecord::Schema.define(:version => 20120131194457) do
     t.datetime "updated_at"
   end
 
-  create_table "users", :force => true do |t|
-    t.string   "name"
-    t.string   "email"
-    t.string   "encrypted_password"
-    t.string   "salt"
-    t.boolean  "admin",              :default => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "insurer",            :default => false
-  end
+# Could not dump table "users" because of following StandardError
+#   Unknown type 'weight' for column 'weight'
 
 end

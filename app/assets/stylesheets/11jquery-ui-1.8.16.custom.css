@@ -479,7 +479,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
  *
  * http://docs.jquery.com/UI/Tabs#theming
  */
-.ui-tabs { position: relative; zoom: 1; } /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
+.ui-tabs {  } /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
 .ui-tabs .ui-tabs-nav { margin: 0; display:inline-block; float:left;padding:0px;width:99%;}
 .ui-tabs .ui-tabs-nav li { list-style: none; float: left; position: relative; top: 1px; border-bottom: 0 !important; padding: 0; white-space: nowrap; display:inline-block; margin-left:1px; }
 .ui-tabs .ui-tabs-nav li a { float: left; display:block; height:100%; }
