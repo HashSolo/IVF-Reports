@@ -80,11 +80,8 @@ class PagesController < ApplicationController
     
     @scores = Score.where(:year => year, :age_group => age_group, :diagnosis => diagnosis, :cycle_type => cycle_type).limit(results).offset(results_start)
     @clinic_results = Array.new;
-    @scores.each do |s|
-      if(s.clinic_id==384)
-        new_score = Score.where(:year => year, :age_group => age_group, :diagnosis => diagnosis, :cycle_type => cycle_type).limit(1).offset(results_start+results)
-        @scores << new_score[0]
-      else
+    unless @scores.empty?
+      @scores.each do |s|
         cur_clinic = Clinic.find_by_id(s.clinic_id)
         cur_new_object = cur_new_object = {'ivf_reports_score' => s.ivf_reports_score, 'quality_score' => s.quality_score, 'safety_score' => s.safety_score, 'sart_score' => s.sart_score, 'clinic_id' => cur_clinic.id, 'clinic_name' => cur_clinic.clinic_name, 'permalink' => cur_clinic.permalink, 'city' => cur_clinic.city, 'state' => cur_clinic.state, 'address' => cur_clinic.address, 'practice_director' => cur_clinic.practice_director, 'lab_director' => cur_clinic.laboratory_director, 'medical_director' => cur_clinic.medical_director, 'zip' => cur_clinic.zip}
         @clinic_results << cur_new_object

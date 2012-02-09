@@ -225,7 +225,7 @@
 				<td class="input"><%= f.select(:abo_blood_type, abo_select) %></td>
 			</tr>
 			<tr>
-				<td class="label"><%= f.label :rh_factor, "ABO Blood Type" %></td>
+				<td class="label"><%= f.label :rh_factor, "Rh Factor" %></td>
 				<%
 					if(@user.rh_factor=='+')
 						rh_select = "<option value="">-</option><option value='+' selected>Gram +</option><option value='-'>Gram -</option>"

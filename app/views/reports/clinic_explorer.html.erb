@@ -218,9 +218,13 @@ function UpdateClinics(){
 						$('div#clinic_list').removeClass('ajax_loading');
 						$.each(data, function(k){
 								var clinic_html = "<ul><li class='clinic_name'><a href='/clinics/"+data[k]['permalink']+"'>"+ (k+1) + ". " + data[k]['clinic_name'] + "</a></li>";
-								var clinic_html = clinic_html + "<li class='clinic_stats'>" + data[k]['city'] + ", " + data[k]['state'] + "</li>";
-								var clinic_html = clinic_html + "<li class='clinic_stats'>Cycles: " + data[k]['cycles'] + " | Imp Rate: " + Math.round(10*data[k]['implantation_rate'])/10 + " | Avg. Number Embryos Trx: " + data[k]['avg_num_embs_transferred'] + "</li>";
-								var clinic_html = clinic_html + "<li class='clinic_stats'>SET Rate: " + Math.round(10*data[k]['set_transfer_rate'])/10 + " | Twin Rate: " + Math.round(10*data[k]['twin_rate'])/10 + "</li></ul>";
+								clinic_html = clinic_html + "<li class='clinic_stats'>" + data[k]['city'] + ", " + data[k]['state'] + "</li>";
+								clinic_html = clinic_html + "<li class='results_table'><table class='explorer_results'>";
+								clinic_html = clinic_html + "<tr><td class='label'>Cycles:</td><td class='data'>" + data[k]['cycles'] + "</td><td class='label'>Imp Rate:</td><td class='data'>" + Math.round(10*data[k]['implantation_rate'])/10 + "</td><td class='label'>Birth Rate (Cycle):</td><td class='data'>" + Math.round(10*data[k]['birth_cycle_rate'])/10 + "</td></tr>";
+								clinic_html = clinic_html + "<tr><td class='label'>Twin Rate:</td><td class='data'>" + Math.round(10*data[k]['twin_rate'])/10 + "</td><td class='label'>Triplet Rate:</td><td class='data'>" + Math.round(10*data[k]['twin_rate'])/10 + "</td><td class='label'>Birth Rate (Retrieval):</td><td class='data'>" + Math.round(10*data[k]['birth_retrieval_rate'])/10 + "</td></tr>";
+								clinic_html = clinic_html + "<tr><td class='label'>Preg Rate:</td><td class='data'>" + Math.round(10*data[k]['pregnancy_rate'])/10 + "</td><td class='label'>SET Rate:</td><td class='data'>" + Math.round(10*data[k]['set_transfer_rate'])/10 + "</td><td class='label'>Birth Rate (Transfer):</td><td class='data'>" + Math.round(10*data[k]['birth_transfer_rate'])/10 + "</td></tr>";
+								clinic_html = clinic_html + "<tr><td class='label' colspan='3'>Avg. Number Embryos Trx:</td><td class='data'>" + data[k]['avg_num_embs_transferred'] + "</td></tr>";
+								clinic_html = clinic_html + "</table></li></ul>";
 								$('div#clinic_list').append(clinic_html);
 						});
 					}

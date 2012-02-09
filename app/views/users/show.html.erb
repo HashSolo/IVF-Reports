@@ -25,6 +25,11 @@
 <table class="personal_info">
 	<tr><td>Name</td><td><%= @user.name %></td></tr>
 	<tr><td>Email</td><td><%= link_to @user.email, @user.email %></td></tr>
+	<tr><td>Gender</td><td><%= @user.gender.capitalize unless @user.gender.nil? %></td></tr>
+	<tr><td>Ethnicity</td><td><%= @user.ethnicity.capitalize unless @user.ethnicity.nil? %></td></tr>
+	<tr><td>Age</td><td><% if @user.birthday.nil? %><% else %><%= (Date.today - @user.birthday).to_i/365 %> Years Old <% end %></td></tr>
+	<tr><td>IVF Attempts</td><td><%= @user.previous_cycles unless @user.previous_cycles.nil? %></td></tr>
+	<tr><td>Infertility Diagnosis</td><td><%= @user.infertility_diagnosis.gsub("_"," ").capitalize unless @user.infertility_diagnosis.nil? %></td></tr>
 	<tr><td>Member Since</td><td><%= @user.created_at.strftime("%B %d, %Y") %></td></tr>
 </table>
 </div>
@@ -33,9 +38,10 @@
 <h2>Personalized Clinic Recommendations</h2>
 <hr>
 <table class="personal_info">
-	<tr><td>Clinic 1</td><td>Sample Place For Clinic Name</td></tr>
-	<tr><td>Clinic 2</td><td>Sample Place For Clinic Name</td></tr>
-	<tr><td>Clinic 3</td><td>Sample Place For Clinic Name</td></tr>
+	<% @clinic_results.each do |c| %>
+		<tr><td colspan="2"><a href="../clinics/<%= c['permalink'] %>" target="_blank"><%= c['clinic_name'] %></a></td></tr>
+		<tr><td><%= c['city'] %></td><td><%= c['state'] %></td></tr>
+	<% end %>
 </table>
 </div>
 
