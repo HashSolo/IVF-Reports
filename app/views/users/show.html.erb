@@ -35,17 +35,19 @@
 </div>
 
 <div class="personal_info user_info_section">
-<h2>Personalized Clinic Recommendations</h2>
-<hr>
-<table class="personal_info">
-	<% @clinic_results.each do |c| %>
-		<tr><td colspan="2"><a href="../clinics/<%= c['permalink'] %>" target="_blank"><%= c['clinic_name'] %></a></td></tr>
-		<tr><td><%= c['city'] %></td><td><%= c['state'] %></td></tr>
-	<% end %>
-</table>
+	<h2>Personalized Clinic Recommendations</h2>
+	<hr>
+	<ul class="personal_rec_table">
+		<% 
+		count = 0
+		@clinic_results.each do |c| %>
+			<% count += 1 %>
+			<li><a class="rank_link" href="../clinics/<%= c['permalink'] %>" target="_blank"><span class="clinic_rec_rank round" ><%= count %></span></a><span class="clinic_name"><a href="../clinics/<%= c['permalink'] %>" target="_blank"><%= c['clinic_name'] %></a></span><span class="clinic_location"><%= c['city'] %>, <%= c['state'] %></span></li>
+		<% end %>
+	</ul>
 </div>
 
-<div class="personal_info user_info_section">
+<!--<div class="personal_info user_info_section">
 <h2>Cycles/Attempt Information</h2>
 <hr>
 <span class="new_cycle_button"><span class="icon">+</span>Add New Cycle/Pregnancy Attempt</span>
@@ -54,6 +56,6 @@
 	<li><span class="attempt_number">2</span><span class="clinic_name">Clinic Name Goes Here</span><span class="delete_option"><span class="icon">×</span></span><span class="clinic_info">Address, City, State, Zip</span></li>
 </ul>
 </div>
-
+-->
 
 </div>

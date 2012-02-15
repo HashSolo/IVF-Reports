@@ -15,6 +15,7 @@
 	</div>
 </div>
 
+
 <div id="tabs" class="edit_user_tabs">
 	<ul id="edit-user-tabs" class="jqueryui-user-edit-tabs">
 		<li class="edit_user_tab"><a href="#edit_user_1"/>Personal Information</a></li>
@@ -34,11 +35,11 @@
 				<td class="label"><%= f.label :gender %></td>
 				<%
 					if(@user.gender=="male")
-						gender_select = "<option value="">-</option><option value='male' selected>Male</option><option value='female'>Female</option>"
+						gender_select = "<option value=''>-</option><option value='male' selected>Male</option><option value='female'>Female</option>"
 					elsif(@user.gender=="female")
-						gender_select = "<option value="">-</option><option value='male'>Male</option><option value='female' selected>Female</option>"
+						gender_select = "<option value=''>-</option><option value='male'>Male</option><option value='female' selected>Female</option>"
 					else
-						gender_select = "<option value="" selected>-</option><option value='male'>Male</option><option value='female'>Female</option>"	
+						gender_select = "<option value='' selected>-</option><option value='male'>Male</option><option value='female'>Female</option>"	
 					end
 				%>	
 				<td class="input"><%= f.select(:gender, gender_select) %></td>
@@ -80,6 +81,10 @@
 					end
 				%>
 				<td class="input"><%= f.select(:ethnicity, ethnicity_select) %></td>
+			</tr>
+			<tr>
+				<td class="label"><%= f.label :phone, 'Phone # (Clinic Contact Only)' %></td>
+				<td class="input"><%= f.text_field :phone, :size => '20'  %></td>
 			</tr>
 		</table>
 		<div class="update_button">

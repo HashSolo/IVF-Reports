@@ -18,7 +18,7 @@ class UsersController < ApplicationController
 	  year = "2009"
 
 	  if(@user.birthday.nil?)
-	    user_age = "none"
+	    user_age = 0
     else
       user_age = ((Date.today) - (@user.birthday)).to_i/365
     end
@@ -49,7 +49,7 @@ class UsersController < ApplicationController
 	    diagnosis = "All Diagnoses"
     end
 	  
-	  if(user_age<35)
+	  if(user_age < 35)
 	    age_group = "<35"
     elsif(user_age >= 35 && user_age <= 37)
       age_group = "35-37"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120202004036) do
+ActiveRecord::Schema.define(:version => 20120214172940) do
 
   create_table "clinics", :force => true do |t|
     t.string   "clinic_name"
@@ -67,6 +67,16 @@ ActiveRecord::Schema.define(:version => 20120202004036) do
   add_index "datapoints", ["clinic_id"], :name => "index_datapoints_on_clinic_id"
   add_index "datapoints", ["diagnosis"], :name => "index_datapoints_on_diagnosis"
   add_index "datapoints", ["year"], :name => "index_datapoints_on_year"
+
+  create_table "reviews", :force => true do |t|
+    t.integer  "clinic_id"
+    t.integer  "user_id"
+    t.integer  "rating"
+    t.string   "title"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "scores", :force => true do |t|
     t.integer  "clinic_id"

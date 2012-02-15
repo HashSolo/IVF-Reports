@@ -1,6 +1,7 @@
 class Clinic < ActiveRecord::Base
   has_many :datapoints
   has_many :scores
+  has_many :reviews
   
   default_scope :order => 'state ASC'
   

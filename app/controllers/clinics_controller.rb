@@ -79,6 +79,7 @@ class ClinicsController < ApplicationController
     @scores_41_42 = @clinic.scores.where(:year => year, :age_group => "41-42", :diagnosis => diagnosis, :cycle_type => cycle_type)
     @scores_42 = @clinic.scores.where(:year => year, :age_group => ">42", :diagnosis => diagnosis, :cycle_type => cycle_type)
     @title = @clinic.clinic_name
+    @reviews = @clinic.reviews
   end
   
   def new
