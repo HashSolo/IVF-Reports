@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120214172940) do
+ActiveRecord::Schema.define(:version => 20120227204827) do
 
   create_table "clinics", :force => true do |t|
     t.string   "clinic_name"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(:version => 20120214172940) do
     t.datetime "updated_at"
     t.integer  "old_clinic_id"
     t.string   "permalink"
+    t.integer  "user_id"
   end
 
   create_table "datapoints", :force => true do |t|
@@ -67,6 +68,14 @@ ActiveRecord::Schema.define(:version => 20120214172940) do
   add_index "datapoints", ["clinic_id"], :name => "index_datapoints_on_clinic_id"
   add_index "datapoints", ["diagnosis"], :name => "index_datapoints_on_diagnosis"
   add_index "datapoints", ["year"], :name => "index_datapoints_on_year"
+
+  create_table "requests", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "clinic_id"
+    t.boolean  "visible",    :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "reviews", :force => true do |t|
     t.integer  "clinic_id"

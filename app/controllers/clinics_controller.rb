@@ -2,7 +2,8 @@ require 'csv'
 require 'json'
 
 class ClinicsController < ApplicationController
-  before_filter :admin_user, 	:except => [:index, :show, :find_clinics_in_state, :pull_clinic_data]
+  before_filter :admin_user, 	:except => [:index, :show, :find_clinics_in_state, :pull_clinic_data, :edit, :update]
+  before_filter :correct_user, :only => [:edit, :update]
   
   def index
     @title = "All Clinics"
@@ -40,6 +41,11 @@ class ClinicsController < ApplicationController
   end
   
   def show
+    @request = Request.new
+    @clinic = Clinic.find(params[:id])
+    unless @clinic.user_id.nil?
+      @clinic_user = User.find(@clinic.user_id)
+    end
     year = params[:year]
     diagnosis = params[:diagnosis]
     age_group = params[:age_group]
@@ -69,7 +75,6 @@ class ClinicsController < ApplicationController
       cycle_type = params[:cycle_type]
     end
 
-    @clinic = Clinic.find(params[:id])
     @datapoints = @clinic.datapoints.where(:year => year, :age_group => age_group, :diagnosis => diagnosis, :cycle_type => cycle_type)
     @scores = @clinic.scores.where(:year => year, :age_group => age_group, :diagnosis => diagnosis, :cycle_type => cycle_type)
     @scores_all_ages = @clinic.scores.where(:year => year, :age_group => "All Ages", :diagnosis => diagnosis, :cycle_type => cycle_type)
@@ -124,5 +129,18 @@ class ClinicsController < ApplicationController
 	  def admin_user
 	    redirect_to(root_path) unless current_user.admin?
 	  end
+		  
+    def correct_user
+      if current_user.admin?
+      elsif current_user.clinician?
+        @clinic = Clinic.find(params[:id])
+        if @clinic.user_id.nil? #The clinic has not been claimed
+          redirect_to(@clinic)
+        else
+          @clinic_user = User.find_by_id(@clinic.user_id)
+          redirect_to(root_path) unless current_user?(@clinic_user)
+        end
+  	  end
+    end
   
 end

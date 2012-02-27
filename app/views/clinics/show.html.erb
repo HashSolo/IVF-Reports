@@ -135,7 +135,6 @@
 			<div class="legend">Solid Bars Show Clinic Performance. Line Shows National Average.</div>
 			<hr>
 			<% if signed_in? %>
-			<% if admin_or_insurance_user %>
 				<h4 style="text-align:center;">Patient Diversity</h4>
 				<canvas id="rose_canvas" width="410" height="300">[No canvas support]</canvas>
 				<ul id="select-age">
@@ -146,7 +145,6 @@
 					<li>>42</li>
 				</ul>
 				<div class="legend">Graph shows the number of cycles performed for various diagnostic groups by this clinic.<br/>Click a wedge to learn more.</div>
-			<% end %>	
 			<% end %>
 		</div>	
 	</div>
