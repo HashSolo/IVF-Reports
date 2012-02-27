@@ -39,7 +39,8 @@
 		<div div id="year-selector" class="variable-selector">
 		<h2>Select a Year:</h2>
 			<ul id="year-selectable" class="jqueryui-selectable">
-				<li class="ui-selected">2009</li>
+				<li class="ui-selected">2010</li>
+				<li>2009</li>
 				<li>2008</li>
 				<li>2007</li>
 				<li>2006</li>
@@ -119,7 +120,7 @@
 	//The event listeners need to change the info when a selection is made from the clinics.
 	var clinic_a_id = 384; //The national clinic data will be used by default until clinics are selected.
 	var clinic_b_id = 384;
-	var year = 2009;
+	var year = 2010;
 	var age_group = "<35";
 	var statistic_across = "age_group";
 	var statistic_visualize = "implantation_rate";
@@ -231,22 +232,25 @@
 				$( ".ui-selected", this ).each(function() {
 					var index = $( "#year-selectable li" ).index( this );
 					if(index==0){
-						year = "2009";
+						year = "2010";
 					}
 					else if(index==1){
-						year = "2008";
+						year = "2009";
 					}
 					else if(index==2){
-						year = "2007";
+						year = "2008";
 					}
 					else if(index==3){
-						year = "2006";
+						year = "2007";
 					}
 					else if(index==4){
+						year = "2006";
+					}
+					else if(index==5){
 						year = "2005";
 					}
 					else{
-						year = "2009";
+						year = "2010";
 					}
 				});
 				RenderGraph();
@@ -384,7 +388,7 @@
 			success: 	function(data){
 							var age_groups = ['<35', '35-37', '38-40', '41-42', '>42'];
 							var diagnoses = ["All Diagnoses", "Endometriosis", "Diminished Ovarian Reserve", "Multiple Female Factors", "Ovulatory Dysfunction", "Tubal Factor", "Female and Male Factors", "Male Factor", "Other Factor", "Unknown Factor", "Uterine Factor"]
-							var years = [2005, 2006, 2007, 2008, 2009]
+							var years = [2005, 2006, 2007, 2008, 2009, 2010]
 							
 							
 							//This is the array data for the graph
@@ -403,10 +407,10 @@
 							}
 							else{
 								
-								var graph_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array());
-								var cycle_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array());
-								var imp_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array());
-								var tooltips = new Array(new Array(), new Array(), new Array(), new Array(), new Array());
+								var graph_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array(), new Array());
+								var cycle_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array(), new Array());
+								var imp_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array(), new Array());
+								var tooltips = new Array(new Array(), new Array(), new Array(), new Array(), new Array(), new Array());
 							}
 							var cur_age_index = 0;
 							var y_max = 0;
@@ -630,7 +634,7 @@
 							
 							else if(statistic_across=="year"){
 								$.each(data, function(k){
-									for(var i = 0; i < 5; i++){
+									for(var i = 0; i < 6; i++){
 										if(data[k]['clinic_id']==clinic_a_id){
 											if(data[k]['year']==years[i]){
 												key_data[1] = "Clinic A";

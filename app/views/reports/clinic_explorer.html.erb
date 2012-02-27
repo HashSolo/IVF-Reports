@@ -27,7 +27,8 @@
 		<hr>
 		<h2>Select a Year</h2>
 			<ul id="year-selectable" class="jqueryui-selectable">
-				<li class="ui-selected">2009</li>
+				<li class="ui-selected">2010</li>
+				<li>2009</li>
 				<li>2008</li>
 				<li>2007</li>
 				<li>2006</li>
@@ -117,7 +118,7 @@
 
 <script type="text/javascript">
 //Global Variables
-var year = 2009;
+var year = 2010;
 var age_group = "<35";
 var diagnosis = "All Diagnoses";
 var cycles_lower = 1;
@@ -245,20 +246,23 @@ $(document).ready(function(){
 			$( ".ui-selected", this ).each(function() {
 				var index = $( "#year-selectable li" ).index( this );
 				if(index==0){
-					year = "2009";
+					year = "2010";
 				}
 				else if(index==1){
-					year = "2008";
+					year = "2009";
 				}
 				else if(index==2){
-					year = "2007";
+					year = "2008";
 				}
 				else if(index==3){
-					year = "2006";
+					year = "2007";
 				}
 				else if(index==4){
-					year = "2005";
+					year = "2006";
 				}
+				else if(index==5){
+					year = "2005";
+				}				
 				else{
 					year = "2009";
 				}

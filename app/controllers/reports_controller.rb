@@ -31,7 +31,7 @@ class ReportsController < ApplicationController
     clinic_a_id = 384
     clinic_b_id = 384
     age_group = "<35"
-    year = "2009"
+    year = "2010"
     diagnosis = "All Diagnoses"
     statistic_visualize = "implantation_rate"
     compare_across = "age_group"
@@ -98,7 +98,7 @@ class ReportsController < ApplicationController
     #default diagnosis is all
     #default age group is <35
     #default year is 2009 (might not allow this to change)
-    query_year = "2009"
+    query_year = "2010"
     age = "<35"
     diagnosis = "All Diagnoses"
     cycles_lower = 0

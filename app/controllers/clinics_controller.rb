@@ -46,7 +46,7 @@ class ClinicsController < ApplicationController
     cycle_type = params[:cycle_type]
     
     if(year.nil?)
-      year = '2009'
+      year = '2010'
     else
       year = params[:year]
     end
