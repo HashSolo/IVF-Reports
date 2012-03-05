@@ -2,10 +2,10 @@ require 'csv'
 
 namespace :db do
   desc "Fill database with Chromosome data."
-  task :admin_data => :environment do
+  task :add_admin_users => :environment do
 	
-	#create administrative user
-	admin = User.create!(:name => "alexbiz",
+	  #create administrative user
+	  admin = User.create!(:name => "alexbiz",
                          :email => "alex@alx.bz",
                          :password => "foobar",
                          :password_confirmation => "foobar")

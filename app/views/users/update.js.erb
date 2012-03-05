@@ -1,0 +1,18 @@
+<% if(@response.count==0) %>
+	$('div.update_results').html('Profile Successfully Updated.');
+	$('div.update_results').addClass('success');
+	$('div.update_results').removeClass('hidden');
+	setTimeout("$('div.update_results').addClass('hidden');",2000);
+	setTimeout("$('div.update_results').removeClass('success');",2000);	
+<% else %>
+	var html = "";
+	<% @response.each do |attr, msg| %>
+		html = html + '<%= attr.capitalize %>';
+		html = html + " <%= msg %>.<br/>";
+	<% end %>
+	$('div.update_results').html(html);
+	$('div.update_results').addClass('error');
+	$('div.update_results').removeClass('hidden');
+	setTimeout("$('div.update_results').addClass('hidden');",2000);
+	setTimeout("$('div.update_results').removeClass('error');",2000);		
+<% end %>

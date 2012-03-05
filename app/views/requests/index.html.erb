@@ -1,0 +1,18 @@
+<% if !params[:clinic_id].nil? #If the user is a clinician..or Admin in a clinic's nested request resource %>
+<h1>Viewing Leads for <%= @clinic .clinic_name %></h1>
+<% elsif !params[:user_id].nil? #IF the user is a user.. %>
+<h1>Viewing Clinics You Have Contacted</h1>
+<% elsif current_user.admin? #If the user is an admin a.k.a. all leads view %>
+<h1>Viewing All Leads</h1>
+<% end %>
+
+<ul class="request_list">
+	<% @requests.each do |r| %>
+	<% user_info = User.find_by_id(r.user_id) %>
+		<% if r.visible? #Show full information if they have paid for the lead. %>
+		<li>Lead Paid For. Email: <%= user_info.email %></li>		
+		<% else #Show limited..teaser info if the lead is not paid for%>
+		<li>Lead not Paid for.</li>
+		<% end %>
+	<% end %>
+</ul>

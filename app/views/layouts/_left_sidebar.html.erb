@@ -2,12 +2,22 @@
 <ul class="sidebar_module">
 	<li class="header">Reports</li>
 	<li><%= link_to "The IVF Process", {:controller => 'reports', :action => 'the_ivf_process'} %></li>
+	<li><%= link_to "Infertility Diagnoses", {:controller => 'reports', :action => 'infertility_diagnoses'} %></li>
 	<li><%= link_to "The CDC vs SART", {:controller => 'reports', :action => 'cdc_vs_sart'} %></li>
 	<li><%= link_to "Fertility News", {:controller => 'reports', :action => 'fertility_news'} %></li>
 	<li><%= link_to "Other Technologies", {:controller => 'reports', :action => 'other_technologies'} %></li>
-	<li><%= link_to "Clinic Explorer", {:controller => 'reports', :action => 'clinic_explorer'} %></li>
 	<li class="bottom"><%= link_to "Clinics By State", {:controller => 'clinics', :action => 'index'} %></li>
 </ul>
+
+<% if signed_in? %>	
+	<% if current_user.admin? || current_user.insurer? %>
+	<ul class="sidebar_module">
+		<li class="header">Optum Health</li>
+		<li><%= link_to "Clinic Explorer", {:controller => 'reports', :action => 'clinic_explorer'} %></li>
+		<li class="bottom"><%= link_to "Clinic Comparator", {:controller => 'reports', :action => 'clinic_comparator'} %></li>
+	</ul>
+	<% end %>
+<% end %>
 
 <ul class="sidebar_module">
 <li class="header">Social Media</li>

@@ -10,9 +10,9 @@
 		<span class="authentication">
 			<ul>
 				<% if signed_in? %>
-					<li><%= link_to "Sign Out", signout_path %></li>
-					<li><%= link_to "Settings", edit_user_path(current_user), :class => is_active?("users#edit") %></li>
-					<li><%= link_to "Profile", user_path(current_user), :class=> is_active?("users#show") %></li>
+					<li><%= link_to signout_path do %><span class='icon'>⊝</span> Sign Out<% end %></li>
+					<li><%= link_to edit_user_path(current_user), :class => is_active?("users#edit") do %><span class='icon'>⚙</span> Settings<% end %></li>
+					<li><%= link_to user_path(current_user), :class=> is_active?("users#show") do %><span class='icon'>u</span> <%= current_user.name %><% end %></li>
 				<% else %>	
 					<li><%= link_to "Register", register_path, :class => is_active?("users#new") %></li>
 					<li class="divider">|</li>

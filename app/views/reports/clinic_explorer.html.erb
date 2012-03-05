@@ -1,113 +1,124 @@
-	<h1>The IVF Reports Clinic Explorer</h1>
-	<div class="grid_3 alpha">
-		<div class="left_sidebar">
-			<h2>Select an Age Group</h2>
-				<ul id="age-selectable">
-					<li class="ui-selected"><35</li>
-					<li>35-37</li>
-					<li>38-40</li>
-					<li>41-42</li>
-					<li>>42</li>
-				</ul>
-			<hr>
-			<h2>Select a Diagnosis</h2>
-				<ul id="diagnosis-selectable">
-					<li class="ui-selected">All Diagnoses</li>
-					<li>Endometriosis</li>
-					<li>Diminished Ovarian Reserve</li>
-					<li>Multiple Female Factors</li>
-					<li>Ovulatory Dysfunction</li>
-					<li>Tubal Factor</li>
-					<li>Female and Male Factors</li>
-					<li>Male Factor</li>
-					<li>Other Factor</li>
-					<li>Uterine Factor</li>
-					<li>Unknown Factor</li>
-				</ul>
-			<hr>
+<h1>The IVF Reports Clinic Explorer</h1>
+<div class="grid_3 alpha">
+	<div class="left_sidebar">
+		<h2>Select an Age Group</h2>
+			<ul id="age-selectable" class="jqueryui-selectable">
+				<li class="ui-selected"><35</li>
+				<li>35-37</li>
+				<li>38-40</li>
+				<li>41-42</li>
+				<li>>42</li>
+			</ul>
+		<hr>
+		<h2>Select a Diagnosis</h2>
+			<ul id="diagnosis-selectable" class="jqueryui-selectable">
+				<li class="ui-selected">All Diagnoses</li>
+				<li>Endometriosis</li>
+				<li>Diminished Ovarian Reserve</li>
+				<li>Multiple Female Factors</li>
+				<li>Ovulatory Dysfunction</li>
+				<li>Tubal Factor</li>
+				<li>Female and Male Factors</li>
+				<li>Male Factor</li>
+				<li>Other Factor</li>
+				<li>Uterine Factor</li>
+				<li>Unknown Factor</li>
+			</ul>
+		<hr>
+		<h2>Select a Year</h2>
+			<ul id="year-selectable" class="jqueryui-selectable">
+				<li class="ui-selected">2010</li>
+				<li>2009</li>
+				<li>2008</li>
+				<li>2007</li>
+				<li>2006</li>
+				<li>2005</li>
+			</ul>
+		<h2>Download Options</h2>			
+			<div class="download_button">
+				Download Results
+			</div>		
+	</div>
+</div>
+<div class="grid_6">
+	<div class="middle_content">
+	<div class="explorer_center">
+		<h2>Results</h2>
+		<div id="clinic_list">
 		</div>
 	</div>
-	<div class="grid_6">
-		<div class="middle_content">
-		<div class="explorer_center">
-			<h2>Results</h2>
-			<div id="clinic_list">
-			</div>
-		</div>
-		</div>
 	</div>
+</div>
 
-	<div class="grid_3 omega">
-		<div class="right_sidebar">
-			<h2 style="margin-bottom:10px;">Select Parameters</h2>
-			<ul class="parameter">
-				<li class="label">Cycles</li>
-				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="x_small" checked />&nbsp;&nbsp;1-25 Cycles</li>
-				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="small" />&nbsp;&nbsp;26-100 Cycles</li>
-				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="medium" />&nbsp;&nbsp;101-200 Cycles</li>
-				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="large" />&nbsp;&nbsp;201-300 Cycles</li>
-				<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="x_large" />&nbsp;&nbsp;>300 Cycles</li>
-				<li id="cycles-slider-value" class="value"></li>
-				<li class="slider"><div id="cycles-slider"></div></li>
-			</ul>
-			<ul class="parameter">
-				<li class="label">Single Embryo Transfer Rate</li>
-				<li id="set-value" class="value"></li>
-				<li class="slider"><div id="set-slider"></div></li>
-			</ul>
-			<ul class="parameter">
-				<li class="label">Implantation Rate</li>
-				<li id="implantation-value" class="value"></li>
-				<li class="slider"><div id="implantation-slider"></div></li>
-			</ul>
-			<ul class="parameter">
-				<li class="label">Avg. Number Embryos Transferred</li>
-				<li id="avg-emb-trx-value" class="value"></li>
-				<li class="slider"><div id="avg-emb-trx-slider"></div></li>
-			</ul>			
-			<ul class="parameter">
-				<li class="label">Pregnancy Rate per Cycle</li>
-				<li id="pregnancy-value" class="value"></li>
-				<li class="slider"><div id="pregnancy-slider"></div></li>
-			</ul>
-			<ul class="parameter">
-				<li class="label">Birth Rate per Cycle</li>
-				<li id="birth-cycle-value" class="value"></li>
-				<li class="slider"><div id="birth-cycle-slider"></div></li>
-			</ul>
-			<ul class="parameter">
-				<li class="label">Birth Rate per Retrieval</li>
-				<li id="birth-retrieval-value" class="value"></li>
-				<li class="slider"><div id="birth-retrieval-slider"></div></li>
-			</ul>
-			<ul class="parameter">
-				<li class="label">Birth Rate per Transfer</li>
-				<li id="birth-transfer-value" class="value"></li>
-				<li class="slider"><div id="birth-transfer-slider"></div></li>
-			</ul>
-			<ul class="parameter">
-				<li class="label">Cancellation Rate</li>
-				<li id="cancellation-value" class="value"></li>
-				<li class="slider"><div id="cancellation-slider"></div></li>
-			</ul>
-			<ul class="parameter">
-				<li class="label">Twin Rate</li>
-				<li id="twin-value" class="value"></li>
-				<li class="slider"><div id="twin-slider"></div></li>
-			</ul>
-			
-			<ul class="parameter">
-				<li class="label">Triplet Rate</li>
-				<li id="triplet-value" class="value"></li>
-				<li class="slider"><div id="triplet-slider"></div></li>
-			</ul>
-		</div>
+<div class="grid_3 omega">
+	<div class="right_sidebar">
+		<h2 style="margin-bottom:10px;">Select Parameters</h2>
+		<ul class="parameter">
+			<li class="label">Cycles</li>
+			<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="x_small" checked />&nbsp;&nbsp;1-25 Cycles</li>
+			<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="small" />&nbsp;&nbsp;26-100 Cycles</li>
+			<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="medium" />&nbsp;&nbsp;101-200 Cycles</li>
+			<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="large" />&nbsp;&nbsp;201-300 Cycles</li>
+			<li id="cycles-value" class="value"><input type="radio" id="cycles_radio_button" name="cycles_radio" value="x_large" />&nbsp;&nbsp;>300 Cycles</li>
+			<li id="cycles-slider-value" class="value"><input type="text" id="cycles-lower-input" class="input-value" value="1"/> - <input type="text" id="cycles-upper-input" class="input-value" value="25"/></li>
+			<li class="slider"><div id="cycles-slider"></div></li>
+		</ul>
+		<ul class="parameter">
+			<li class="label">Single Embryo Transfer Rate</li>
+			<li id="set-value" class="value"><input type="text" id="set-lower-input" class="input-value" value="0"/>% - <input type="text" id="set-upper-input" class="input-value" value="100"/>%</li>
+			<li class="slider"><div id="set-slider"></div></li>
+		</ul>
+		<ul class="parameter">
+			<li class="label">Implantation Rate</li>
+			<li id="implantation-value" class="value"><input type="text" id="implantation-lower-input" class="input-value" value="0"/>% - <input type="text" id="implantation-upper-input" class="input-value" value="100"/>%</li>
+			<li class="slider"><div id="implantation-slider"></div></li>
+		</ul>
+		<ul class="parameter">
+			<li class="label">Avg. Number Embryos Transferred</li>
+			<li id="avg-emb-trx-value" class="value"><input type="text" id="avg-emb-trx-lower-input" class="input-value" value="0"/> - <input type="text" id="avg-emb-trx-upper-input" class="input-value" value="7"/></li>
+			<li class="slider"><div id="avg-emb-trx-slider"></div></li>
+		</ul>			
+		<ul class="parameter">
+			<li class="label">Pregnancy Rate per Cycle</li>
+			<li id="pregnancy-value" class="value"><input type="text" id="pregnancy-lower-input" class="input-value" value="0"/>% - <input type="text" id="pregnancy-upper-input" class="input-value" value="100"/>%</li>
+			<li class="slider"><div id="pregnancy-slider"></div></li>
+		</ul>
+		<ul class="parameter">
+			<li class="label">Birth Rate per Cycle</li>
+			<li id="birth-cycle-value" class="value"><input type="text" id="birth-cycle-lower-input" class="input-value" value="0"/>% - <input type="text" id="birth-cycle-upper-input" class="input-value" value="100"/>%</li>
+			<li class="slider"><div id="birth-cycle-slider"></div></li>
+		</ul>
+		<ul class="parameter">
+			<li class="label">Birth Rate per Retrieval</li>
+			<li id="birth-retrieval-value" class="value"><input type="text" id="birth-retrieval-lower-input" class="input-value" value="0"/>% - <input type="text" id="birth-retrieval-upper-input" class="input-value" value="100"/>%</li>
+			<li class="slider"><div id="birth-retrieval-slider"></div></li>
+		</ul>
+		<ul class="parameter">
+			<li class="label">Birth Rate per Transfer</li>
+			<li id="birth-transfer-value" class="value"><input type="text" id="birth-transfer-lower-input" class="input-value" value="0"/>% - <input type="text" id="birth-transfer-upper-input" class="input-value" value="100"/>%</li>
+			<li class="slider"><div id="birth-transfer-slider"></div></li>
+		</ul>
+		<ul class="parameter">
+			<li class="label">Cancellation Rate</li>
+			<li id="cancellation-value" class="value"><input type="text" id="cancellation-lower-input" class="input-value" value="0"/>% - <input type="text" id="cancellation-upper-input" class="input-value" value="100"/>%</li>
+			<li class="slider"><div id="cancellation-slider"></div></li>
+		</ul>
+		<ul class="parameter">
+			<li class="label">Twin Rate</li>
+			<li id="twin-value" class="value"><input type="text" id="twin-lower-input" class="input-value" value="0"/>% - <input type="text" id="twin-upper-input" class="input-value" value="100"/>%</li>
+			<li class="slider"><div id="twin-slider"></div></li>
+		</ul>		
+		<ul class="parameter">
+			<li class="label">Triplet Rate</li>
+			<li id="trip-value" class="value"><input type="text" id="trip-lower-input" class="input-value" value="0"/>% - <input type="text" id="trip-upper-input" class="input-value" value="100"/>%</li>
+			<li class="slider"><div id="trip-slider"></div></li>
+		</ul>
 	</div>
-
+</div>
 
 <script type="text/javascript">
 //Global Variables
-var year = 2009;
+var year = 2010;
 var age_group = "<35";
 var diagnosis = "All Diagnoses";
 var cycles_lower = 1;
@@ -132,6 +143,41 @@ var twin_lower = 0;
 var twin_upper = 100;
 var trip_lower = 0;
 var trip_upper = 100;
+
+function DownloadClinics(){
+	var data = {
+		year: year,
+		age: age_group,
+		diagnosis: diagnosis,
+		cycles_lower: cycles_lower,
+		cycles_upper: cycles_upper,
+		emb_trx_lower: emb_trx_lower,
+		emb_trx_upper: emb_trx_upper,
+		implantation_lower: implantation_lower,
+		implantation_upper: implantation_upper,
+		preg_lower: preg_lower,
+		preg_upper: preg_upper,
+		birth_cycle_lower: birth_cycle_lower,
+		birth_cycle_upper: birth_cycle_upper,
+		birth_retrieval_lower: birth_retrieval_lower,
+		birth_retrieval_upper: birth_retrieval_upper,
+		birth_trx_lower: birth_trx_lower,
+		birth_trx_upper: birth_trx_upper,
+		set_lower: set_lower,
+		set_upper: set_upper,
+		cancellation_lower: cancellation_lower,
+		cancellation_upper: cancellation_upper,
+		twin_lower: twin_lower,
+		twin_upper: twin_upper,
+		trip_lower: trip_lower,
+		trip_upper: trip_upper
+	}
+	
+	var x = window.open("<%= url_for('clinic-explorer.csv') %>?year="+year+"&age="+age_group+"&diagnosis="+diagnosis+"&cycles_lower="+cycles_lower+"&cycles_upper="+cycles_upper+"&emb_trx_lower="+emb_trx_lower+"&emb_trx_upper="+emb_trx_upper+"&implantation_lower="+implantation_lower+"&implantation_upper="+implantation_upper+"&preg_lower="+preg_lower+"&preg_upper="+preg_upper+"&birth_cycle_lower="+birth_cycle_lower+"&birth_cycle_upper="+birth_cycle_upper+"&birth_retrieval_lower="+birth_retrieval_lower+"&birth_retrieval_upper="+birth_retrieval_upper+"&birth_trx_lower="+birth_trx_lower+"&birth_trx_upper="+birth_trx_upper+"&set_lower="+set_lower+"&set_upper="+set_upper+"&cancellation_lower="+cancellation_lower+"&cancellation_upper="+cancellation_upper+"&twin_lower="+twin_lower+"&twin_upper="+twin_upper+"&trip_lower="+trip_lower+"&trip_upper="+trip_upper, "MyWindow");
+	x.focus();
+
+}
+
 
 function UpdateClinics(){
 	$('div#clinic_list').html("");
@@ -173,9 +219,13 @@ function UpdateClinics(){
 						$('div#clinic_list').removeClass('ajax_loading');
 						$.each(data, function(k){
 								var clinic_html = "<ul><li class='clinic_name'><a href='/clinics/"+data[k]['permalink']+"'>"+ (k+1) + ". " + data[k]['clinic_name'] + "</a></li>";
-								var clinic_html = clinic_html + "<li class='clinic_stats'>" + data[k]['city'] + ", " + data[k]['state'] + "</li>";
-								var clinic_html = clinic_html + "<li class='clinic_stats'>Cycles: " + data[k]['cycles'] + " | Imp Rate: " + Math.round(10*data[k]['implantation_rate'])/10 + " | Avg. Number Embryos Trx: " + data[k]['avg_num_embs_transferred'] + "</li>";
-								var clinic_html = clinic_html + "<li class='clinic_stats'>SET Rate: " + Math.round(10*data[k]['set_transfer_rate'])/10 + " | Twin Rate: " + Math.round(10*data[k]['twin_rate'])/10 + "</li></ul>";
+								clinic_html = clinic_html + "<li class='clinic_stats'>" + data[k]['city'] + ", " + data[k]['state'] + "</li>";
+								clinic_html = clinic_html + "<li class='results_table'><table class='explorer_results'>";
+								clinic_html = clinic_html + "<tr><td class='label'>Cycles:</td><td class='data'>" + data[k]['cycles'] + "</td><td class='label'>Imp Rate:</td><td class='data'>" + Math.round(10*data[k]['implantation_rate'])/10 + "</td><td class='label'>Birth Rate (Cycle):</td><td class='data'>" + Math.round(10*data[k]['birth_cycle_rate'])/10 + "</td></tr>";
+								clinic_html = clinic_html + "<tr><td class='label'>Twin Rate:</td><td class='data'>" + Math.round(10*data[k]['twin_rate'])/10 + "</td><td class='label'>Triplet Rate:</td><td class='data'>" + Math.round(10*data[k]['trip_rate'])/10 + "</td><td class='label'>Birth Rate (Retrieval):</td><td class='data'>" + Math.round(10*data[k]['birth_retrieval_rate'])/10 + "</td></tr>";
+								clinic_html = clinic_html + "<tr><td class='label'>Preg Rate:</td><td class='data'>" + Math.round(10*data[k]['pregnancy_rate'])/10 + "</td><td class='label'>SET Rate:</td><td class='data'>" + Math.round(10*data[k]['set_transfer_rate'])/10 + "</td><td class='label'>Birth Rate (Transfer):</td><td class='data'>" + Math.round(10*data[k]['birth_transfer_rate'])/10 + "</td></tr>";
+								clinic_html = clinic_html + "<tr><td class='label' colspan='3'>Avg. Number Embryos Trx:</td><td class='data'>" + data[k]['avg_num_embs_transferred'] + "</td></tr>";
+								clinic_html = clinic_html + "</table></li></ul>";
 								$('div#clinic_list').append(clinic_html);
 						});
 					}
@@ -183,9 +233,43 @@ function UpdateClinics(){
 }
 
 $(document).ready(function(){
+	$('div.download_button').click(function(){
+		DownloadClinics();
+	});
+	
 	UpdateClinics();
 	//Governs the age selectable
-	$( "#cycles-slider-value" ).html( "1 - 25" );
+	$('#year-selectable').selectable({
+		stop: function(){
+			$('div#clinic_list').html("");
+			$('div#clinic_list').addClass('ajax_loading');
+			$( ".ui-selected", this ).each(function() {
+				var index = $( "#year-selectable li" ).index( this );
+				if(index==0){
+					year = "2010";
+				}
+				else if(index==1){
+					year = "2009";
+				}
+				else if(index==2){
+					year = "2008";
+				}
+				else if(index==3){
+					year = "2007";
+				}
+				else if(index==4){
+					year = "2006";
+				}
+				else if(index==5){
+					year = "2005";
+				}				
+				else{
+					year = "2009";
+				}
+			});
+			UpdateClinics();
+		}
+	});
 	$('#age-selectable').selectable({
 		stop: function(){
 			$('div#clinic_list').html("");
@@ -261,6 +345,8 @@ $(document).ready(function(){
 			UpdateClinics();
 		}
 	});
+	
+	//Cycles Stuff 
 	//Governs the cycles radio buttons
 	$('input#cycles_radio_button').click(function(){
 		var radiovalue = $('input:radio[name=cycles_radio]:checked').val();
@@ -269,35 +355,40 @@ $(document).ready(function(){
 			cycles_upper=25;
 			$('#cycles-slider').slider("values", 0, cycles_lower);
 			$('#cycles-slider').slider("values", 1, cycles_upper);
-			$( "#cycles-slider-value" ).html( cycles_lower + " - " + cycles_upper );
+			$( "#cycles-slider-value input#cycles-lower-input" ).val( cycles_lower );
+			$( "#cycles-slider-value input#cycles-upper-input" ).val( cycles_upper );
 		}
 		else if(radiovalue=="small"){
 			cycles_lower=26;
 			cycles_upper=100;
 			$('#cycles-slider').slider("values", 0, cycles_lower);
 			$('#cycles-slider').slider("values", 1, cycles_upper);
-			$( "#cycles-slider-value" ).html( cycles_lower + " - " + cycles_upper );
+			$( "#cycles-slider-value input#cycles-lower-input" ).val( cycles_lower );
+			$( "#cycles-slider-value input#cycles-upper-input" ).val( cycles_upper );
 		}
 		else if(radiovalue=="medium"){
 			cycles_lower=101;
 			cycles_upper=200;
 			$('#cycles-slider').slider("values", 0, cycles_lower);
 			$('#cycles-slider').slider("values", 1, cycles_upper);
-			$( "#cycles-slider-value" ).html( cycles_lower + " - " + cycles_upper );
+			$( "#cycles-slider-value input#cycles-lower-input" ).val( cycles_lower );
+			$( "#cycles-slider-value input#cycles-upper-input" ).val( cycles_upper );
 		}
 		else if(radiovalue=="large"){
 			cycles_lower=201;
 			cycles_upper=300;
 			$('#cycles-slider').slider("values", 0, cycles_lower);
 			$('#cycles-slider').slider("values", 1, cycles_upper);
-			$( "#cycles-slider-value" ).html( cycles_lower + " - " + cycles_upper );
+			$( "#cycles-slider-value input#cycles-lower-input" ).val( cycles_lower );
+			$( "#cycles-slider-value input#cycles-upper-input" ).val( cycles_upper );
 		}
 		else if(radiovalue=="x_large"){			
 			cycles_lower=301;
 			cycles_upper=5000;
 			$('#cycles-slider').slider("values", 0, 300);
 			$('#cycles-slider').slider("values", 1, 300);
-			$( "#cycles-slider-value" ).html( " > 300" );
+			$( "#cycles-slider-value input#cycles-lower-input" ).val( "301" );
+			$( "#cycles-slider-value input#cycles-upper-input" ).val( "∞" );
 		}
 		$('div#clinic_list').html("");
 		$('div#clinic_list').addClass('ajax_loading');
@@ -314,12 +405,14 @@ $(document).ready(function(){
 			var cycles_start_value = ui.values[0];
 			var cycles_end_value = ui.values[1];
 			if(cycles_end_value==300){
-				$( "#cycles-slider-value" ).html( ui.values[ 0 ] + " - >" + ui.values[ 1 ] );
+				$( "#cycles-slider-value input#cycles-lower-input" ).val( cycles_start_value );
+				$( "#cycles-slider-value input#cycles-upper-input" ).val( ">"+cycles_end_value );
 				$('div#clinic_list').html("");
 				$('div#clinic_list').addClass('ajax_loading');
 			}
 			else{
-				$( "#cycles-slider-value" ).html( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+				$( "#cycles-slider-value input#cycles-lower-input" ).val( cycles_start_value );
+				$( "#cycles-slider-value input#cycles-upper-input" ).val( cycles_end_value );
 				$('div#clinic_list').html("");
 				$('div#clinic_list').addClass('ajax_loading');
 			}
@@ -339,6 +432,67 @@ $(document).ready(function(){
 			}
 		}
 	});
+	//Governs the cycles input fields
+	$("input#cycles-lower-input").blur(function(){
+		cycles_lower=parseInt($("input#cycles-lower-input").val());
+		if(isNaN(cycles_lower)){
+			cycles_lower=1;
+		}
+		if(cycles_lower>cycles_upper){
+			cycles_lower = cycles_upper;
+			$( "#cycles-slider-value input#cycles-lower-input" ).val( cycles_lower );			
+			$('#cycles-slider').slider("values", 0, cycles_lower);
+			$('#cycles-slider').slider("values", 1, cycles_upper);
+		}
+		else{	
+			$( "#cycles-slider-value input#cycles-lower-input" ).val( cycles_lower );
+			$('#cycles-slider').slider("values", 0, cycles_lower);
+			$('#cycles-slider').slider("values", 1, cycles_upper);
+		}
+		UpdateClinics();
+	});
+	$("input#cycles-upper-input").blur(function(){
+		cycles_upper=parseInt($("input#cycles-upper-input").val());
+		if(isNaN(cycles_upper)){
+			cycles_upper=">300";
+		}
+		if(cycles_upper==">300"){
+			cycles_upper=5000;
+			if(cycles_lower>cycles_upper){
+				cycles_upper = cycles_lower;
+				$( "#cycles-slider-value input#cycles-upper-input" ).val(cycles_upper);			
+				$('#cycles-slider').slider("values", 0, cycles_lower);
+				$('#cycles-slider').slider("values", 1, 300);
+			}
+			else{	
+				$( "#cycles-slider-value input#cycles-upper-input" ).val(">300");
+				$('#cycles-slider').slider("values", 0, cycles_lower);
+				$('#cycles-slider').slider("values", 1, 300);
+			}
+		}
+		else{
+			
+		
+			if(cycles_lower>cycles_upper){
+				cycles_upper = cycles_lower;
+				$( "#cycles-slider-value input#cycles-upper-input" ).val( cycles_upper );			
+				$('#cycles-slider').slider("values", 0, cycles_lower);
+				$('#cycles-slider').slider("values", 1, cycles_upper);
+			}
+			else{	
+				$( "#cycles-slider-value input#cycles-upper-input" ).val( cycles_upper );
+				$('#cycles-slider').slider("values", 0, cycles_lower);
+				$('#cycles-slider').slider("values", 1, cycles_upper);
+			}
+		}
+		UpdateClinics();
+	});
+	
+	
+	
+	
+	
+	
 	//Governs the avg num embryos trx slider
 	$('#avg-emb-trx-slider').slider({
 		range: true,
@@ -347,7 +501,8 @@ $(document).ready(function(){
 		step: .1,
 		values: [ 0, 7 ],
 		slide: function( event, ui ) {
-			$( "#avg-emb-trx-value" ).html( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+			$( "#avg-emb-trx-value input#avg-emb-trx-lower-input" ).val( ui.values[ 0 ] );
+			$( "#avg-emb-trx-value input#avg-emb-trx-upper-input" ).val( ui.values[ 1 ] );
 			$('div#clinic_list').html("");
 			$('div#clinic_list').addClass('ajax_loading');
 		},
@@ -357,7 +512,50 @@ $(document).ready(function(){
 			UpdateClinics();
 		}
 	});
-	$( "#avg-emb-trx-value" ).html( $( "#avg-emb-trx-slider" ).slider( "values", 0 ) + " - " + $( "#avg-emb-trx-slider" ).slider( "values", 1 ) );
+	$( "#avg-emb-trx-value input#avg-emb-trx-lower-value" ).val( $( "#avg-emb-trx-slider" ).slider( "values", 0 ) );
+	$( "#avg-emb-trx-value input#avg-emb-trx-upper-value" ).val( $( "#avg-emb-trx-slider" ).slider( "values", 1 ) );
+	//Governs the emb_trx input fields
+	$("input#avg-emb-trx-lower-input").blur(function(){
+		emb_trx_lower=parseFloat($("input#avg-emb-trx-lower-input").val());
+		if(isNaN(emb_trx_lower)){
+			emb_trx_lower=0;
+		}
+		if(emb_trx_lower>emb_trx_upper){
+			emb_trx_lower = emb_trx_upper;
+			$( "#avg-emb-trx-value input#avg-emb-trx-lower-input" ).val( emb_trx_lower );			
+			$('#avg-emb-trx-slider').slider("values", 0, emb_trx_lower);
+			$('#avg-emb-trx-slider').slider("values", 1, emb_trx_upper);
+		}
+		else{	
+			$( "#avg-emb-trx-value input#avg-emb-trx-lower-input" ).val( emb_trx_lower );
+			$('#avg-emb-trx-slider').slider("values", 0, emb_trx_lower);
+			$('#avg-emb-trx-slider').slider("values", 1, emb_trx_upper);
+		}
+		UpdateClinics();
+	});
+	$("input#avg-emb-trx-upper-input").blur(function(){
+		emb_trx_upper=parseFloat($("input#avg-emb-trx-upper-input").val());
+		if(isNaN(emb_trx_upper)){
+			emb_trx_upper=7;
+		}
+		if(emb_trx_lower>emb_trx_upper){
+			emb_trx_upper = emb_trx_lower;
+			$( "#avg-emb-trx-value input#avg-emb-trx-upper-input" ).val( emb_trx_upper );			
+			$('#avg-emb-trx-slider').slider("values", 0, emb_trx_lower);
+			$('#avg-emb-trx-slider').slider("values", 1, emb_trx_upper);
+		}
+		else{	
+			$( "#avg-emb-trx-value input#avg-emb-trx-upper-input" ).val( emb_trx_upper );
+			$('#avg-emb-trx-slider').slider("values", 0, emb_trx_lower);
+			$('#avg-emb-trx-slider').slider("values", 1, emb_trx_upper);
+		}
+		UpdateClinics();
+	});	
+	
+	
+	
+	
+	
 	//Governs the implantation rate slider
 	$('#implantation-slider').slider({
 		range: true,
@@ -365,7 +563,8 @@ $(document).ready(function(){
 		max: 100,
 		values: [ 0, 100 ],
 		slide: function( event, ui ) {
-			$( "#implantation-value" ).html( ui.values[ 0 ] + "% - " + ui.values[ 1 ] + "%" );
+			$( "#implantation-value input#implantation-lower-input" ).val( ui.values[ 0 ] );
+			$( "#implantation-value input#implantation-upper-input" ).val( ui.values[ 1 ] );
 			$('div#clinic_list').html("");
 			$('div#clinic_list').addClass('ajax_loading');
 		},
@@ -375,7 +574,50 @@ $(document).ready(function(){
 			UpdateClinics();
 		}
 	});
-	$( "#implantation-value" ).html( $( "#implantation-slider" ).slider( "values", 0 ) + "% - " + $( "#implantation-slider" ).slider( "values", 1 ) + "%" );
+	$( "#implantation-value input#implantation-lower-value" ).val( $( "#implantation-slider" ).slider( "values", 0 ) );
+	$( "#implantation-value input#implantation-upper-value" ).val( $( "#implantation-slider" ).slider( "values", 1 ) );
+	//Governs the implantation input fields
+	$("input#implantation-lower-input").blur(function(){
+		implantation_lower=parseFloat($("input#implantation-lower-input").val());
+		if(isNaN(implantation_lower)){
+			implantation_lower=0;
+		}
+		if(implantation_lower>implantation_upper){
+			implantation_lower = implantation_upper;
+			$( "#implantation-value input#implantation-lower-input" ).val( implantation_lower );			
+			$('#implantation-slider').slider("values", 0, implantation_lower);
+			$('#implantation-slider').slider("values", 1, implantation_upper);
+		}
+		else{	
+			$( "#implantation-value input#implantation-lower-input" ).val( implantation_lower );
+			$('#implantation-slider').slider("values", 0, implantation_lower);
+			$('#implantation-slider').slider("values", 1, implantation_upper);
+		}
+		UpdateClinics();
+	});
+	$("input#implantation-upper-input").blur(function(){
+		implantation_upper=parseFloat($("input#implantation-upper-input").val());
+		if(isNaN(implantation_upper)){
+			implantation_upper=100;
+		}
+		if(implantation_lower>implantation_upper){
+			implantation_upper = implantation_lower;
+			$( "#implantation-value input#implantation-upper-input" ).val( implantation_upper );			
+			$('#implantation-slider').slider("values", 0, implantation_lower);
+			$('#implantation-slider').slider("values", 1, implantation_upper);
+		}
+		else{	
+			$( "#implantation-value input#implantation-upper-input" ).val( implantation_upper );
+			$('#implantation-slider').slider("values", 0, implantation_lower);
+			$('#implantation-slider').slider("values", 1, implantation_upper);
+		}
+		UpdateClinics();
+	});	
+	
+	
+	
+	
+	
 	//Governs the Pregnancy Per Cycle Slider
 	$('#pregnancy-slider').slider({
 		range: true,
@@ -383,7 +625,8 @@ $(document).ready(function(){
 		max: 100,
 		values: [ 0, 100 ],
 		slide: function( event, ui ) {
-			$( "#pregnancy-value" ).html( ui.values[ 0 ] + "% - " + ui.values[ 1 ] + "%" );
+			$( "#pregnancy-value input#pregnancy-lower-input" ).val( ui.values[ 0 ] );
+			$( "#pregnancy-value input#pregnancy-upper-input" ).val( ui.values[ 1 ] );
 			$('div#clinic_list').html("");
 			$('div#clinic_list').addClass('ajax_loading');
 		},
@@ -393,7 +636,50 @@ $(document).ready(function(){
 			UpdateClinics();
 		}
 	});
-	$( "#pregnancy-value" ).html( $( "#pregnancy-slider" ).slider( "values", 0 ) + "% - " + $( "#pregnancy-slider" ).slider( "values", 1 ) + "%" );
+	$( "#pregnancy-value input#pregnancy-lower-value" ).val( $( "#pregnancy-slider" ).slider( "values", 0 ) );
+	$( "#pregnancy-value input#pregnancy-upper-value" ).val( $( "#pregnancy-slider" ).slider( "values", 1 ) );
+	//Governs the pregnancy input fields
+	$("input#pregnancy-lower-input").blur(function(){
+		preg_lower=parseFloat($("input#pregnancy-lower-input").val());
+		if(isNaN(preg_lower)){
+			preg_lower=0;
+		}
+		if(preg_lower>preg_upper){
+			preg_lower = preg_upper;
+			$( "#pregnancy-value input#pregnancy-lower-input" ).val( preg_lower );			
+			$('#pregnancy-slider').slider("values", 0, preg_lower);
+			$('#pregnancy-slider').slider("values", 1, preg_upper);
+		}
+		else{	
+			$( "#pregnancy-value input#pregnancy-lower-input" ).val( preg_lower );
+			$('#pregnancy-slider').slider("values", 0, preg_lower);
+			$('#pregnancy-slider').slider("values", 1, preg_upper);
+		}
+		UpdateClinics();
+	});
+	$("input#pregnancy-upper-input").blur(function(){
+		preg_upper=parseFloat($("input#pregnancy-upper-input").val());
+		if(isNaN(preg_upper)){
+			preg_upper=100;
+		}
+		if(preg_lower>preg_upper){
+			preg_upper = preg_lower;
+			$( "#pregnancy-value input#pregnancy-upper-input" ).val( preg_upper );			
+			$('#pregnancy-slider').slider("values", 0, preg_lower);
+			$('#pregnancy-slider').slider("values", 1, preg_upper);
+		}
+		else{	
+			$( "#pregnancy-value input#pregnancy-upper-input" ).val( preg_upper );
+			$('#pregnancy-slider').slider("values", 0, preg_lower);
+			$('#pregnancy-slider').slider("values", 1, preg_upper);
+		}
+		UpdateClinics();
+	});
+
+
+
+
+
 	//Governs the Birth Per Cycle Slider
 	$('#birth-cycle-slider').slider({
 		range: true,
@@ -401,17 +687,63 @@ $(document).ready(function(){
 		max: 100,
 		values: [ 0, 100 ],
 		slide: function( event, ui ) {
-			$( "#birth-cycle-value" ).html( ui.values[ 0 ] + "% - " + ui.values[ 1 ] + "%" );
-			$('div#clinic_list').html("");
-			$('div#clinic_list').addClass('ajax_loading');
+					$( "#birth-cycle-value input#birth-cycle-lower-input" ).val( ui.values[ 0 ] );
+					$( "#birth-cycle-value input#birth-cycle-upper-input" ).val( ui.values[ 1 ] );
+					$('div#clinic_list').html("");
+					$('div#clinic_list').addClass('ajax_loading');
 		},
 		stop: function(event, ui){
-			birth_cycle_lower = ui.values[0];
-			birth_cycle_upper = ui.values[1];
-			UpdateClinics();
+					birth_cycle_lower = ui.values[0];
+					birth_cycle_upper = ui.values[1];
+					UpdateClinics();
 		}
 	});
-	$( "#birth-cycle-value" ).html( $( "#birth-cycle-slider" ).slider( "values", 0 ) + "% - " + $( "#birth-cycle-slider" ).slider( "values", 1 ) + "%" );
+	$( "#birth-cycle-value input#birth-cycle-lower-value" ).val( $( "#birth-cycle-slider" ).slider( "values", 0 ) );
+	$( "#birth-cycle-value input#birth-cycle-upper-value" ).val( $( "#birth-cycle-slider" ).slider( "values", 1 ) );
+	//Governs the birth-cycle input fields
+	$("input#birth-cycle-lower-input").blur(function(){
+		birth_cycle_lower=parseFloat($("input#birth-cycle-lower-input").val());
+		if(isNaN(birth_cycle_lower)){
+			birth_cycle_lower=0;
+		}
+		if(birth_cycle_lower>birth_cycle_upper){
+			birth_cycle_lower = birth_cycle_upper;
+			$( "#birth-cycle-value input#birth-cycle-lower-input" ).val( birth_cycle_lower );			
+			$('#birth-cycle-slider').slider("values", 0, birth_cycle_lower);
+			$('#birth-cycle-slider').slider("values", 1, birth_cycle_upper);
+		}
+		else{	
+			$( "#birth-cycle-value input#birth-cycle-lower-input" ).val( birth_cycle_lower );
+			$('#birth-cycle-slider').slider("values", 0, birth_cycle_lower);
+			$('#birth-cycle-slider').slider("values", 1, birth_cycle_upper);
+		}
+		UpdateClinics();
+	});
+	$("input#birth-cycle-upper-input").blur(function(){
+		birth_cycle_upper=parseFloat($("input#birth-cycle-upper-input").val());
+		if(isNaN(birth_cycle_upper)){
+			birth_cycle_upper=100;
+		}
+		if(birth_cycle_lower>birth_cycle_upper){
+			birth_cycle_upper = birth_cycle_lower;
+			$( "#birth-cycle-value input#birth-cycle-upper-input" ).val( birth_cycle_upper );			
+			$('#birth-cycle-slider').slider("values", 0, birth_cycle_lower);
+			$('#birth-cycle-slider').slider("values", 1, birth_cycle_upper);
+		}
+		else{	
+			$( "#birth-cycle-value input#birth-cycle-upper-input" ).val( birth_cycle_upper );
+			$('#birth-cycle-slider').slider("values", 0, birth_cycle_lower);
+			$('#birth-cycle-slider').slider("values", 1, birth_cycle_upper);
+		}
+		UpdateClinics();
+	});
+
+
+
+
+
+
+
 	//Governs the birth per retrieval slider
 	$('#birth-retrieval-slider').slider({
 		range: true,
@@ -419,7 +751,8 @@ $(document).ready(function(){
 		max: 100,
 		values: [ 0, 100 ],
 		slide: function( event, ui ) {
-			$( "#birth-retrieval-value" ).html( ui.values[ 0 ] + "% - " + ui.values[ 1 ] + "%" );
+			$( "#birth-retrieval-value input#birth-retrieval-lower-input" ).val( ui.values[ 0 ] );
+			$( "#birth-retrieval-value input#birth-retrieval-upper-input" ).val( ui.values[ 1 ] );
 			$('div#clinic_list').html("");
 			$('div#clinic_list').addClass('ajax_loading');
 		},
@@ -429,7 +762,51 @@ $(document).ready(function(){
 			UpdateClinics();
 		}
 	});
-	$( "#birth-retrieval-value" ).html( $( "#birth-retrieval-slider" ).slider( "values", 0 ) + "% - " + $( "#birth-retrieval-slider" ).slider( "values", 1 ) + "%" );
+	$( "#birth-retrieval-value input#birth-retrieval-lower-value" ).val( $( "#birth-retrieval-slider" ).slider( "values", 0 ) );
+	$( "#birth-retrieval-value input#birth-retrieval-upper-value" ).val( $( "#birth-retrieval-slider" ).slider( "values", 1 ) );
+	//Governs the birth-retrieval input fields
+	$("input#birth-retrieval-lower-input").blur(function(){
+		birth_retrieval_lower=parseFloat($("input#birth-retrieval-lower-input").val());
+		if(isNaN(birth_retrieval_lower)){
+			birth_retrieval_lower=0;
+		}
+		if(birth_retrieval_lower>birth_retrieval_upper){
+			birth_retrieval_lower = birth_retrieval_upper;
+			$( "#birth-retrieval-value input#birth-retrieval-lower-input" ).val( birth_retrieval_lower );			
+			$('#birth-retrieval-slider').slider("values", 0, birth_retrieval_lower);
+			$('#birth-retrieval-slider').slider("values", 1, birth_retrieval_upper);
+		}
+		else{	
+			$( "#birth-retrieval-value input#birth-retrieval-lower-input" ).val( birth_retrieval_lower );
+			$('#birth-retrieval-slider').slider("values", 0, birth_retrieval_lower);
+			$('#birth-retrieval-slider').slider("values", 1, birth_retrieval_upper);
+		}
+		UpdateClinics();
+	});
+	$("input#birth-retrieval-upper-input").blur(function(){
+		birth_retrieval_upper=parseFloat($("input#birth-retrieval-upper-input").val());
+		if(isNaN(birth_retrieval_upper)){
+			birth_retrieval_upper=100;
+		}
+		if(birth_retrieval_lower>birth_retrieval_upper){
+			birth_retrieval_upper = birth_retrieval_lower;
+			$( "#birth-retrieval-value input#birth-retrieval-upper-input" ).val( birth_retrieval_upper );			
+			$('#birth-retrieval-slider').slider("values", 0, birth_retrieval_lower);
+			$('#birth-retrieval-slider').slider("values", 1, birth_retrieval_upper);
+		}
+		else{	
+			$( "#birth-retrieval-value input#birth-retrieval-upper-input" ).val( birth_retrieval_upper );
+			$('#birth-retrieval-slider').slider("values", 0, birth_retrieval_lower);
+			$('#birth-retrieval-slider').slider("values", 1, birth_retrieval_upper);
+		}
+		UpdateClinics();
+	});
+
+
+
+
+
+
 	//Governs the birth transfer slider
 	$('#birth-transfer-slider').slider({
 		range: true,
@@ -437,7 +814,8 @@ $(document).ready(function(){
 		max: 100,
 		values: [ 0, 100 ],
 		slide: function( event, ui ) {
-			$( "#birth-transfer-value" ).html( ui.values[ 0 ] + "% - " + ui.values[ 1 ] + "%" );
+			$( "#birth-transfer-value input#birth-transfer-lower-input" ).val( ui.values[ 0 ] );
+			$( "#birth-transfer-value input#birth-transfer-upper-input" ).val( ui.values[ 1 ] );
 			$('div#clinic_list').html("");
 			$('div#clinic_list').addClass('ajax_loading');
 		},
@@ -447,7 +825,49 @@ $(document).ready(function(){
 			UpdateClinics();
 		}
 	});
-	$( "#birth-transfer-value" ).html( $( "#birth-transfer-slider" ).slider( "values", 0 ) + "% - " + $( "#birth-transfer-slider" ).slider( "values", 1 ) + "%" );
+	$( "#birth-transfer-value input#birth-transfer-lower-value" ).val( $( "#birth-transfer-slider" ).slider( "values", 0 ) );
+	$( "#birth-transfer-value input#birth-transfer-upper-value" ).val( $( "#birth-transfer-slider" ).slider( "values", 1 ) );
+	//Governs the birth-transfer input fields
+	$("input#birth-transfer-lower-input").blur(function(){
+		birth_trx_lower=parseFloat($("input#birth-transfer-lower-input").val());
+		if(isNaN(birth_trx_lower)){
+			birth_trx_lower=0;
+		}
+		if(birth_trx_lower>birth_trx_upper){
+			birth_trx_lower = birth_trx_upper;
+			$( "#birth-transfer-value input#birth-transfer-lower-input" ).val( birth_trx_lower );			
+			$('#birth-transfer-slider').slider("values", 0, birth_trx_lower);
+			$('#birth-transfer-slider').slider("values", 1, birth_trx_upper);
+		}
+		else{	
+			$( "#birth-transfer-value input#birth-transfer-lower-input" ).val( birth_trx_lower );
+			$('#birth-transfer-slider').slider("values", 0, birth_trx_lower);
+			$('#birth-transfer-slider').slider("values", 1, birth_trx_upper);
+		}
+		UpdateClinics();
+	});
+	$("input#birth-transfer-upper-input").blur(function(){
+		birth_trx_upper=parseFloat($("input#birth-transfer-upper-input").val());
+		if(isNaN(birth_trx_upper)){
+			birth_trx_upper=100;
+		}
+		if(birth_trx_lower>birth_trx_upper){
+			birth_trx_upper = birth_trx_lower;
+			$( "#birth-transfer-value input#birth-transfer-upper-input" ).val( birth_trx_upper );			
+			$('#birth-transfer-slider').slider("values", 0, birth_trx_lower);
+			$('#birth-transfer-slider').slider("values", 1, birth_trx_upper);
+		}
+		else{	
+			$( "#birth-transfer-value input#birth-transfer-upper-input" ).val( birth_trx_upper );
+			$('#birth-transfer-slider').slider("values", 0, birth_trx_lower);
+			$('#birth-transfer-slider').slider("values", 1, birth_trx_upper);
+		}
+		UpdateClinics();
+	});
+
+
+
+
 	//Governs the SET slider
 	$('#set-slider').slider({
 		range: true,
@@ -455,7 +875,8 @@ $(document).ready(function(){
 		max: 100,
 		values: [ 0, 100 ],
 		slide: function( event, ui ) {
-			$( "#set-value" ).html( ui.values[ 0 ] + "% - " + ui.values[ 1 ] + "%" );
+			$( "#set-value input#set-lower-input" ).val( ui.values[ 0 ] );
+			$( "#set-value input#set-upper-input" ).val( ui.values[ 1 ] );
 			$('div#clinic_list').html("");
 			$('div#clinic_list').addClass('ajax_loading');
 		},
@@ -465,7 +886,51 @@ $(document).ready(function(){
 			UpdateClinics();
 		}
 	});
-	$( "#set-value" ).html( $( "#set-slider" ).slider( "values", 0 ) + "% - " + $( "#set-slider" ).slider( "values", 1 ) + "%" );
+	$( "#set-value input#set-lower-value" ).val( $( "#set-slider" ).slider( "values", 0 ) );
+	$( "#set-value input#set-upper-value" ).val( $( "#set-slider" ).slider( "values", 1 ) );
+	//Governs the set input fields
+	$("input#set-lower-input").blur(function(){
+		set_lower=parseFloat($("input#set-lower-input").val());
+		if(isNaN(set_lower)){
+			set_lower=0;
+		}
+		if(set_lower>set_upper){
+			set_lower = set_upper;
+			$( "#set-value input#set-lower-input" ).val( set_lower );			
+			$('#set-slider').slider("values", 0, set_lower);
+			$('#set-slider').slider("values", 1, set_upper);
+		}
+		else{	
+			$( "#set-value input#set-lower-input" ).val( set_lower );
+			$('#set-slider').slider("values", 0, set_lower);
+			$('#set-slider').slider("values", 1, set_upper);
+		}
+		UpdateClinics();
+	});
+	$("input#set-upper-input").blur(function(){
+		set_upper=parseFloat($("input#set-upper-input").val());
+		if(isNaN(set_upper)){
+			set_upper=100;
+		}
+		if(set_lower>set_upper){
+			set_upper = set_lower;
+			$( "#set-value input#set-upper-input" ).val( set_upper );			
+			$('#set-slider').slider("values", 0, set_lower);
+			$('#set-slider').slider("values", 1, set_upper);
+		}
+		else{	
+			$( "#set-value input#set-upper-input" ).val( set_upper );
+			$('#set-slider').slider("values", 0, set_lower);
+			$('#set-slider').slider("values", 1, set_upper);
+		}
+		UpdateClinics();
+	});
+
+
+
+
+
+
 	//Governs the cancellation rate slider
 	$('#cancellation-slider').slider({
 		range: true,
@@ -473,7 +938,8 @@ $(document).ready(function(){
 		max: 100,
 		values: [ 0, 100 ],
 		slide: function( event, ui ) {
-			$( "#cancellation-value" ).html( ui.values[ 0 ] + "% - " + ui.values[ 1 ] + "%" );
+			$( "#cancellation-value input#cancellation-lower-input" ).val( ui.values[ 0 ] );
+			$( "#cancellation-value input#cancellation-upper-input" ).val( ui.values[ 1 ] );
 			$('div#clinic_list').html("");
 			$('div#clinic_list').addClass('ajax_loading');
 		},
@@ -483,7 +949,51 @@ $(document).ready(function(){
 			UpdateClinics();
 		}
 	});
-	$( "#cancellation-value" ).html( $( "#cancellation-slider" ).slider( "values", 0 ) + "% - " + $( "#cancellation-slider" ).slider( "values", 1 ) + "%" );
+	$( "#cancellation-value input#cancellation-lower-value" ).val( $( "#cancellation-slider" ).slider( "values", 0 ) );
+	$( "#cancellation-value input#cancellation-upper-value" ).val( $( "#cancellation-slider" ).slider( "values", 1 ) );
+	//Governs the cancellation input fields
+	$("input#cancellation-lower-input").blur(function(){
+		cancellation_lower=parseFloat($("input#cancellation-lower-input").val());
+		if(isNaN(cancellation_lower)){
+			cancellation_lower=0;
+		}
+		if(cancellation_lower>cancellation_upper){
+			cancellation_lower = cancellation_upper;
+			$( "#cancellation-value input#cancellation-lower-input" ).val( cancellation_lower );			
+			$('#cancellation-slider').slider("values", 0, cancellation_lower);
+			$('#cancellation-slider').slider("values", 1, cancellation_upper);
+		}
+		else{	
+			$( "#cancellation-value input#cancellation-lower-input" ).val( cancellation_lower );
+			$('#cancellation-slider').slider("values", 0, cancellation_lower);
+			$('#cancellation-slider').slider("values", 1, cancellation_upper);
+		}
+		UpdateClinics();
+	});
+	$("input#cancellation-upper-input").blur(function(){
+		cancellation_upper=parseFloat($("input#cancellation-upper-input").val());
+		if(isNaN(cancellation_upper)){
+			cancellation_upper=100;
+		}
+		
+		if(cancellation_lower>cancellation_upper){
+			cancellation_upper = cancellation_lower;
+			$( "#cancellation-value input#cancellation-upper-input" ).val( cancellation_upper );
+			$('#cancellation-slider').slider("values", 0, cancellation_lower);
+			$('#cancellation-slider').slider("values", 1, cancellation_upper);
+		}
+		else{	
+			$( "#cancellation-value input#cancellation-upper-input" ).val( cancellation_upper );
+			$('#cancellation-slider').slider("values", 0, cancellation_lower);
+			$('#cancellation-slider').slider("values", 1, cancellation_upper);
+		}
+		UpdateClinics();
+	});
+	
+	
+	
+	
+	
 	//Twin Slider
 	$('#twin-slider').slider({
 		range: true,
@@ -491,7 +1001,8 @@ $(document).ready(function(){
 		max: 100,
 		values: [ 0, 100 ],
 		slide: function( event, ui ) {
-			$( "#twin-value" ).html( ui.values[ 0 ] + "% - " + ui.values[ 1 ] + "%" );
+			$( "#twin-value input#twin-lower-input" ).val( ui.values[ 0 ] );
+			$( "#twin-value input#twin-upper-input" ).val( ui.values[ 1 ] );
 			$('div#clinic_list').html("");
 			$('div#clinic_list').addClass('ajax_loading');
 		},
@@ -501,15 +1012,61 @@ $(document).ready(function(){
 			UpdateClinics();
 		}
 	});
-	$( "#twin-value" ).html( $( "#twin-slider" ).slider( "values", 0 ) + "% - " + $( "#twin-slider" ).slider( "values", 1 ) + "%" );
+	$( "#twin-value input#twin-lower-value" ).val( $( "#twin-slider" ).slider( "values", 0 ) );
+	$( "#twin-value input#twin-upper-value" ).val( $( "#twin-slider" ).slider( "values", 1 ) );
+	//Governs the twin input fields
+	$("input#twin-lower-input").blur(function(){
+		twin_lower=parseFloat($("input#twin-lower-input").val());
+		if(isNaN(twin_lower)){
+			twin_lower=0;
+		}
+		
+		if(twin_lower>twin_upper){
+			twin_lower = twin_upper;
+			$( "#twin-value input#twin-lower-input" ).val( twin_lower );			
+			$('#twin-slider').slider("values", 0, twin_lower);
+			$('#twin-slider').slider("values", 1, twin_upper);
+		}
+		else{	
+			$( "#twin-value input#twin-lower-input" ).val( twin_lower );
+			$('#twin-slider').slider("values", 0, twin_lower);
+			$('#twin-slider').slider("values", 1, twin_upper);
+		}
+		UpdateClinics();
+	});
+	$("input#twin-upper-input").blur(function(){
+		twin_upper=parseFloat($("input#twin-upper-input").val());
+		if(isNaN(twin_upper)){
+			twin_upper=100;
+		}
+		if(twin_lower>twin_upper){
+			twin_upper = twin_lower;
+			$( "#twin-value input#twin-upper-input" ).val( twin_upper );
+			$('#twin-slider').slider("values", 0, twin_lower);
+			$('#twin-slider').slider("values", 1, twin_upper);
+		}
+		else{	
+			$( "#twin-value input#twin-upper-input" ).val( twin_upper );
+			$('#twin-slider').slider("values", 0, twin_lower);
+			$('#twin-slider').slider("values", 1, twin_upper);
+		}
+		UpdateClinics();
+	});
+
+
+
+
+
+
 	//Triplet Slider
-	$('#triplet-slider').slider({
+	$('#trip-slider').slider({
 		range: true,
 		min: 0,
 		max: 100,
 		values: [ 0, 100 ],
 		slide: function( event, ui ) {
-			$( "#triplet-value" ).html( ui.values[ 0 ] + "% - " + ui.values[ 1 ] + "%" );
+			$( "#trip-value input#trip-lower-input" ).val( ui.values[ 0 ] );
+			$( "#trip-value input#trip-upper-input" ).val( ui.values[ 1 ] );
 			$('div#clinic_list').html("");
 			$('div#clinic_list').addClass('ajax_loading');
 		},
@@ -519,6 +1076,46 @@ $(document).ready(function(){
 			UpdateClinics();
 		}
 	});
-	$( "#triplet-value" ).html( $( "#triplet-slider" ).slider( "values", 0 ) + "% - " + $( "#triplet-slider" ).slider( "values", 1 ) + "%" );
+	$( "#trip-value input#twin-lower-value" ).val( $( "#trip-slider" ).slider( "values", 0 ) );
+	$( "#trip-value input#twin-upper-value" ).val( $( "#trip-slider" ).slider( "values", 1 ) );
+	//Governs the trip input fields
+	$("input#trip-lower-input").blur(function(){
+		trip_lower=parseFloat($("input#trip-lower-input").val());
+		if(isNaN(trip_lower)){
+			trip_lower=0;
+		}
+		
+		if(trip_lower>trip_upper){
+			trip_lower = trip_upper;
+			$( "#trip-value input#trip-lower-input" ).val( trip_lower );			
+			$('#trip-slider').slider("values", 0, trip_lower);
+			$('#trip-slider').slider("values", 1, trip_upper);
+		}
+		else{	
+			$( "#trip-value input#trip-lower-input" ).val( trip_lower );
+			$('#trip-slider').slider("values", 0, trip_lower);
+			$('#trip-slider').slider("values", 1, trip_upper);
+		}
+		UpdateClinics();
+	});
+	$("input#trip-upper-input").blur(function(){
+		trip_upper=parseFloat($("input#trip-upper-input").val());
+		if(isNaN(trip_upper)){
+			trip_upper=100;
+		}
+		
+		if(trip_lower>trip_upper){
+			trip_upper = trip_lower;
+			$( "#trip-value input#trip-upper-input" ).val( trip_upper );
+			$('#trip-slider').slider("values", 0, trip_lower);
+			$('#trip-slider').slider("values", 1, trip_upper);
+		}
+		else{	
+			$( "#trip-value input#trip-upper-input" ).val( trip_upper );
+			$('#trip-slider').slider("values", 0, trip_lower);
+			$('#trip-slider').slider("values", 1, trip_upper);
+		}
+		UpdateClinics();
+	});
 });
 </script>

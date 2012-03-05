@@ -1,4 +1,32 @@
 <div class="right_sidebar">
+	<% if is_controller?('clinics') && is_action?('show') %>
+	<ul class="sidebar_module">
+		<li class="header">Contact this Clinic</li>
+		<% if signed_in? %>
+			<% if @clinic.requests.where(:user_id => current_user.id).count == 1 %>
+				<li class="request_button bottom"><a href="#"><span class="request_button_old">Contact Request Sent</span></a></li>
+			<% else %>
+				<li class="request_button bottom"><%= form_for @request, :remote => :true do |f| %><%= f.hidden_field :user_id, :value => current_user.id %><%= f.hidden_field :clinic_id, :value => @clinic.id %><%= f.submit :value => 'Click Here to Contact' %><% end %></li>
+			<% end %>
+		<% else %>
+			<li class="request_button bottom"><%= link_to 'Register to Contact', new_user_path %></li>
+		<% end %>
+	</ul>
+	<% else # Nothing else displayed... %>
+
+	<% end %>
+
+	<% if is_controller?('clinics') && is_action?('show') %>
+	<% if signed_in? && (current_user?(@clinic_user) || current_user.admin?)%>
+	<ul class="sidebar_module">
+		<li class="header">Manage My Clinic Info</li>
+				<li><%= link_to 'Edit Clinic Info', edit_clinic_path(@clinic) %></li>
+				<li class="bottom"><%= link_to 'View Patient Leads', [@clinic, :requests] %></li>
+	</ul>
+	<% end %>
+	<% else # Nothing else displayed... %>
+	<% end %>
+
 <ul class="sidebar_module">
 	<li class="header">Links</li>
 	<li><%= link_to "The CDC", 'http://www.cdc.gov/art/', :target => "_blank" %></li>
@@ -9,3 +37,4 @@
 	<li class="bottom"><%= link_to "American College of Embryology", 'http://embcol.org/', :target => "_blank" %></li>
 </ul>
 </div>
+

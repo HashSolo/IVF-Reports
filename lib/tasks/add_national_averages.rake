@@ -5,13 +5,13 @@ namespace :db do
   task :add_national_averages => :environment do
     #This needs to, for each year, determine the national average statistics...
     #The national_average will be identified by a clinic_id of 9999
-	  years = [2005, 2006, 2007, 2008, 2009]
+	  years = [2005, 2006, 2007, 2008, 2009, 2010]
 	  age_groups = ["<35","35-37","38-40","41-42",">42", "All Ages"]
 	  diagnoses = ["All Diagnoses", "Endometriosis", "Diminished Ovarian Reserve", "Multiple Female Factors", "Ovulatory Dysfunction", "Tubal Factor", "Female and Male Factors", "Male Factor", "Other Factor", "Unknown Factor", "Uterine Factor"]
 	  clinics = Clinic.all
 	  
-	  year_index = 0	  
-	  while(year_index < 5)
+	  year_index = 5 #Just loading 2010	  
+	  while(year_index < 6)
 	    age_group_index = 0
 	    while(age_group_index < 6)
 	      diagnosis_index = 0
@@ -123,25 +123,24 @@ namespace :db do
 	            #If the datapoint is null do nothing
 	          
 	            unless cur_datapoint.empty?
-                #No bearing on the national average if there is no data...
-	              #Add this to the running total...for weighted average, multiply by either cycles or cycles AND avg num embryos depending on statistic (per transfer statistics also weighte dby average number of embryos transfferred, avg number of embryos transferred is weighted based on the number of cycles)
+                  #No bearing on the national average if there is no data...
+	                #Add this to the running total...for weighted average, multiply by either cycles or cycles AND avg num embryos depending on statistic (per transfer statistics also weighte dby average number of embryos transfferred, avg number of embryos transferred is weighted based on the number of cycles)
+                  #update denominators
+                  total_cycles += (cur_datapoint[0].cycles)
+                  total_embryos += (cur_datapoint[0].cycles*cur_datapoint[0].avg_num_embs_transferred)
+                  total_pregnancies += (cur_datapoint[0].cycles*(cur_datapoint[0].pregs_per_cycle/100.0))
               
-                #update denominators
-                total_cycles += (cur_datapoint[0].cycles)
-                total_embryos += (cur_datapoint[0].cycles*cur_datapoint[0].avg_num_embs_transferred)
-                total_pregnancies += (cur_datapoint[0].cycles*(cur_datapoint[0].pregs_per_cycle/100.0))
-              
-                #update weighting factors
-                weight_preg_rate += (cur_datapoint[0].pregs_per_cycle * cur_datapoint[0].cycles)
-                weight_birth_per_cycle += (cur_datapoint[0].births_per_cycle * cur_datapoint[0].cycles)
-                weight_birth_per_retrieval += (cur_datapoint[0].births_per_retrieval * cur_datapoint[0].cycles)
-                weight_birth_per_transfer += (cur_datapoint[0].births_per_transfer * cur_datapoint[0].cycles)
-                weight_set_rate += (cur_datapoint[0].set_transfer_rate * cur_datapoint[0].cycles)
-                weight_cancellation_rate += (cur_datapoint[0].cancellation_rate * cur_datapoint[0].cycles)
-                weight_imp_rate += (cur_datapoint[0].implantation_rate * cur_datapoint[0].cycles * cur_datapoint[0].avg_num_embs_transferred)
-                weight_avg_num_embryos_trx += (cur_datapoint[0].avg_num_embs_transferred * cur_datapoint[0].cycles)
-                weight_twin_rate += (cur_datapoint[0].twin_rate * cur_datapoint[0].cycles * (cur_datapoint[0].pregs_per_cycle/100.0))
-                weight_trip_rate += (cur_datapoint[0].trip_rate * cur_datapoint[0].cycles * (cur_datapoint[0].pregs_per_cycle/100.0))
+                  #update weighting factors
+                  weight_preg_rate += (cur_datapoint[0].pregs_per_cycle * cur_datapoint[0].cycles)
+                  weight_birth_per_cycle += (cur_datapoint[0].births_per_cycle * cur_datapoint[0].cycles)
+                  weight_birth_per_retrieval += (cur_datapoint[0].births_per_retrieval * cur_datapoint[0].cycles)
+                  weight_birth_per_transfer += (cur_datapoint[0].births_per_transfer * cur_datapoint[0].cycles)
+                  weight_set_rate += (cur_datapoint[0].set_transfer_rate * cur_datapoint[0].cycles)
+                  weight_cancellation_rate += (cur_datapoint[0].cancellation_rate * cur_datapoint[0].cycles)
+                  weight_imp_rate += (cur_datapoint[0].implantation_rate * cur_datapoint[0].cycles * cur_datapoint[0].avg_num_embs_transferred)
+                  weight_avg_num_embryos_trx += (cur_datapoint[0].avg_num_embs_transferred * cur_datapoint[0].cycles)
+                  weight_twin_rate += (cur_datapoint[0].twin_rate * cur_datapoint[0].cycles * (cur_datapoint[0].pregs_per_cycle/100.0))
+                  weight_trip_rate += (cur_datapoint[0].trip_rate * cur_datapoint[0].cycles * (cur_datapoint[0].pregs_per_cycle/100.0))
               end
   	        end
 	        
@@ -165,7 +164,7 @@ namespace :db do
   
           #Here the variables need to be inserted into the database        
           Datapoint.create!(	
-          	:clinic_id => 9999,
+          	:clinic_id => 384,
           	:age_group => age_groups[age_group_index],
           	:year => years[year_index],
           	:diagnosis => diagnoses[diagnosis_index],

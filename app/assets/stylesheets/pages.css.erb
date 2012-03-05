@@ -8,11 +8,11 @@ span.logo {background: url("<%= asset_path 'logo.png' %>") no-repeat center left
 span.logo a {display:block;height:100px;}
 span.authentication {display:inline-block;width:400px;float:right;height:100px;text-align:right;}
 span.authentication ul {display:inline-block;width:100%;margin:0px;padding:0px;float:right;}
-span.authentication ul li {display:inline-block;width:15%;margin:0px;padding:0px;list-style-type:none;height:40px;margin-left:5px;text-align:center;line-height:40px;float:right;}
+span.authentication ul li {display:inline-block;width:25%;margin:0px;padding:0px;list-style-type:none;height:40px;margin-left:5px;text-align:center;line-height:40px;float:right;overflow:hidden;}
+span.authentication ul li span.icon {line-height:50px;}
 span.authentication ul li.divider {width:10px;}
 span.authentication ul li a {text-decoration:none;color:#325d64;font-size:13px;}
 span.authentication ul li a:hover {color:#7895a3;}
-
 div.header_nav {display:block;}
 nav.header ul {display:inline-block;width:100%;margin:0px;padding:0px;float:left;}
 nav.header ul li {display:inline-block;width:16%;height:40px;line-height:40px;text-align:center;float:left;list-style-type:none;}
@@ -28,6 +28,61 @@ nav.header ul li.search:hover {color:#cccccc;}
 
 /* Google Map Stuff */
 div.google_map_canvas {border:2px solid #325d64;width:100%;height:350px;}
+div.gmap_score_section ul.gmap {margin:0px;display:inline-block;float:left;width:100%;padding:0px;margin-bottom:20px;}
+div.gmap_score_section ul.gmap li {list-style-type:none;margin:0px;padding:0px;display:inline-block;float:left;width:80%;height:25px;line-height:25px;border-bottom:1px solid #bbbbff;}
+div.gmap_score_section ul.gmap li span.score{display:inline-block;float:right;}
+div#zip_input {display:inline-block;width:46%;margin-left:27%;margin-right:27%;margin-bottom:0px;float:left;}
+div.zip_explanation {text-align:center;margin-bottom:30px;font-size:12px;margin-top:10px;display:inline-block;float:left;width:100%;}
+
+
+/*Ranking Page*/
+div.ranking_tabs {border:0px solid #ffffff;display:inline-block;width:100%;}
+div.ranking_tabs ul.jqueryui-ranking-tabs {width:431px;background:#E6E6E6 url(images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;display:inline-block;}
+div.ranking_tabs ul.jqueryui-ranking-tabs li.ranking_tab {height:30px;line-height:30px;text-align:center;width:140px;display:inline-block;}
+div.ranking_tabs ul.jqueryui-ranking-tabs li.ranking_tab a {text-align:center;display:inline-block;width:100%;}
+
+/*Ranking - Age Subselect*/
+.jqueryui-ranking-subselect {padding:0px;margin:0px;display:inline-block;width:431px;font-size:12px;border-left:1px solid #bcbcbc;border-right:1px solid #bcbcbc;}
+.jqueryui-ranking-subselect li {padding:0px;margin:0px;list-style-type:none;display:inline-block;width:83px;text-align:center;height:30px;line-height:30px;cursor:pointer;padding-right:0px;}
+.jqueryui-ranking-subselect .ui-selectee {color:#325d64; }
+.jqueryui-ranking-subselect .ui-selecting { background: #FECA40; }
+.jqueryui-ranking-subselect .ui-selected { background: #7895a3; color: white; height:30px;}
+
+/*Ranking - Diagnosis Subselect*/
+.jqueryui-ranking-subselect-diagnosis {padding:0px;margin:0px;display:inline-block;width:431px;font-size:12px;border-left:1px solid #bcbcbc;border-right:1px solid #bcbcbc;}
+.jqueryui-ranking-subselect-diagnosis li {padding:0px;margin:0px;list-style-type:none;display:inline-block;width:140px;text-align:center;height:30px;line-height:30px;cursor:pointer;padding-right:0px;}
+.jqueryui-ranking-subselect-diagnosis .ui-selectee {color:#325d64; }
+.jqueryui-ranking-subselect-diagnosis .ui-selecting { background: #FECA40; }
+.jqueryui-ranking-subselect-diagnosis .ui-selected { background: #7895a3; color: white; height:30px;}
+
+/*Ranking Display*/
+ul.clinic_rank {border-bottom:1px solid #bcbcbc;margin:0px;padding:0px;display:inline-block;float:left;width:410px;margin:10px;padding-top:10px;padding-bottom:20px;margin-bottom:0px;}
+ul.clinic_rank.bottom {border-bottom:0px solid #ffffff;}
+ul.clinic_rank li {list-style-type:none;display:inline-block;margin:0px;padding:0px;float:left;width:410px;}
+ul.clinic_rank li.clinic_name {padding-left:0px;height:25px;line-height:25px;}
+ul.clinic_rank li.clinic_name a {display:block;text-decoration:none;color:#325d5d;height:25px;line-height:25px;}
+ul.clinic_rank li.clinic_name a:hover {color:#103b3b;}
+ul.clinic_rank li.clinic_location {color:#666666;margin-bottom:10px;margin-left:20px;font-size:11px;}
+ul.clinic_rank li.clinic_stats {padding-left:20px;width:60%;font-size:12px;padding-bottom:3px;padding-top:3px;}
+ul.clinic_rank li.clinic_stats span.score_type {display:inline-block;float:left;}
+ul.clinic_rank li.clinic_stats span.score_result {display:inline-block;float:right;}
+ul.clinic_rank li.clinic_stats span.score_result span.icon {display:inline-block;padding-left:5px;font-size:16px;}
+
+div.ranking_tab_content {padding:0px;margin:0px;width:100%;display:inline-block;}
+h2.age_ranking_title {padding:0px;margin:0px;width:431px;float:left;display:inline-block;text-align:center;background:#7895a3;border:1px solid #bcbcbc;border-top:0px solid #7895a3;color:#ffffff;height:30px;line-height:30px;border-bottom:0px solid #7895a3;}
+h2.age_ranking_title.hidden {display:none;}
+div.ranking_results {background:#f5f5f5;min-height:500px;display:inline-block;width:431px;border:1px solid #bcbcbc;border-top:0px solid #e5e5e5;}
+div.ranking_results div.clinic_rank_list {display:inline-block;width:100%;min-height:500px;}
+
+/*Ranking Nav*/
+ul.ranking_nav {width:100%;padding:0px;margin:0px;height:30px;float:left;display:inline-block;background:#7895a3;}
+ul.ranking_nav li {list-style-type:none;padding:0px;margin:0px;height:30px;display:inline-block;width:10%;color:#ffffff;font-size:20px;line-height:30px;padding-left:15px;padding-right:15px;cursor:pointer;}
+ul.ranking_nav li span.icon {cursor:pointer;}
+ul.ranking_nav li:hover {color:#cccccc;}
+ul.ranking_nav li.left_button {float:left;text-align:left;}
+ul.ranking_nav li.right_button {float:right;text-align:right;}
+
+
 
 /*contact_info*/
 ul.contact_info {margin:0px;padding:0px;display:inline-block;width:100%;margin-top:20px;}
@@ -36,7 +91,7 @@ ul.contact_info li {margin:0px;padding:0px;display:inline-block;width:100%;list-
 /*page-body-content*/
 section.page-body-content {}
 div.body_content {background:url(" <%= asset_path 'contentwrapper.png' %> ") repeat-y center;padding-top:10px;}
-.middle_content {padding-left:10px;padding-right:10px;}
+.middle_content {padding-left:3%;padding-right:3%;display:inline-block;width:94%;float:left;}
 .middle_content h1 {text-align:left;font-weight:normal;font-family:'Trebuchet MS', Arial, sans-serif;color:#00345c;font-size:20px;margin-bottom:10px;}
 .middle_content p {text-align:justify;margin-bottom:15px;font-size:14px;}
 .middle_content h2 {font-family:'Trebuchet MS', Arial, sans-serif;}
@@ -96,13 +151,3 @@ dark-green-gradient{
 
 /*Hidden*/
 .hidden {display:none;}
-
-/*Register Page*/
-ul.content_list {width:100%;margin-bottom:20px;}
-ul.content_list li {margin-left:20px;font-size:14px;width:100%;margin-bottom:5px;}
-h2.register_blurb {color:#00345c;font-size:16px;text-align:center;}
-table.register_form {display:inline-block;width:90%;text-align:center;border:1px solid #C2CFD6;margin-left:5%;margin-right:5%;padding-top:10%;padding-bottom:5%;}
-table.register_form tr {width:100%;}
-table.register_form tr td {width:55%;}
-table.register_form tr td.label {text-align:right;font-size:14px;padding-right:10px;width:45%;}
-table.register_form tr td.submit {padding-top:20px;}

@@ -1,5 +1,11 @@
 <h1 style="text-align:center;">Find a Clinic In Your Area</h1>
 
+<div id="zip_input">
+<input type="text" id="zip_code" onkeypress="return findZip(event)"/>
+<input id="zip_submit" type="submit" value="Find!"/>
+</div>
+<div class="zip_explanation">Enter Your Zip Code</div>
+
 <div id="map_canvas" class="google_map_canvas"></div>
 
 
@@ -8,7 +14,9 @@
 
 <script type="text/javascript">
 	var map;
+	var geocoder;
   	function initializeMap() {
+		geocoder = new google.maps.Geocoder();
 		var latlng = new google.maps.LatLng(37.769,-97.211);
     	var myOptions = {
       		zoom: 3,
@@ -18,13 +26,27 @@
      	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
   	}
 
+	function moveToLatLng(lat, long){
+		var latlong = new google.maps.LatLng(lat, long);
+		map.setCenter(latlong);
+		map.setZoom(7);
+	}
+
 	function plotClinics(clinic_data){
 		$.each(clinic_data, function(k){
 			
 			//Create all content needed for the clinic infobox
-			var contentString = '<div id="content" style="width:80%;">'+
+			var contentString = '<div id="content">'+
 			    '<h2><a href="/clinics/'+clinic_data[k].permalink+'" >'+ clinic_data[k].clinic_name +'</a></h2>'+
-			    '<div id="bodyContent">'+
+			    '<div class="gmap_score_section">'+
+				'<ul class="gmap">'+
+				'<li>IVF Reports Score: ' + '<span class="score">' + Math.round((clinic_data[k].ivf_reports_score)*100)/100 + '</span></li>'+
+				'<li>Quality Score: ' + '<span class="score">' + Math.round((clinic_data[k].quality_score)*100)/100 + '</span></li>'+
+				'<li>Safety Score: ' + '<span class="score">' + Math.round((clinic_data[k].safety_score)*100)/100 + '</span></li>'+
+				'<li>SART Score: ' + '<span class="score">' + Math.round((clinic_data[k].sart_score)*100)/100 + '</span></li>'+
+				'</ul>' + 
+				'</div>'+
+				'<div id="bodyContent">'+
 			    '<p>'+ clinic_data[k].info +'</p>'+
 			    '</div>'+
 			    '</div>';
@@ -35,7 +57,18 @@
 			});
 			
 			//plot the clinic marker
-			var icon_image = new google.maps.MarkerImage('http://labs.google.com/ridefinder/images/mm_20_gray.png');
+			if(clinic_data[k].ivf_reports_score >= 90){
+				var icon_image = new google.maps.MarkerImage('http://labs.google.com/ridefinder/images/mm_20_green.png');
+			}
+			else if(clinic_data[k].ivf_reports_score >= 80 && clinic_data[k].ivf_reports_score < 90){
+				var icon_image = new google.maps.MarkerImage('http://labs.google.com/ridefinder/images/mm_20_blue.png');
+			}
+			else if(clinic_data[k].ivf_reports_score >= 70 && clinic_data[k].ivf_reports_score < 80){
+				var icon_image = new google.maps.MarkerImage('http://labs.google.com/ridefinder/images/mm_20_yellow.png');				
+			}
+			else{
+				var icon_image = new google.maps.MarkerImage('http://labs.google.com/ridefinder/images/mm_20_gray.png');
+			}
 			var myLatLng = new google.maps.LatLng(clinic_data[k].latitude, clinic_data[k].longitude);
 			var clinicMarker = new google.maps.Marker({
 		      	position: myLatLng,
@@ -50,18 +83,54 @@
 			});
 		});
 	}
-
+	
+	function findZip(e){
+		if (e.keyCode == 13) {
+			var zip_code = $('input#zip_code').val();
+			var lat = '';
+			var lng = '';
+			var address = zip_code;
+			geocoder.geocode({'address': address}, function(results, status){
+				if (status == google.maps.GeocoderStatus.OK) {
+					lat = results[0].geometry.location.lat();
+					lng = results[0].geometry.location.lng();
+					moveToLatLng(lat, lng);
+				} 
+				else {
+					alert("Geocode was not successful for the following reason: " + status);
+				}
+			});
+		}
+	}
+	
 	$(document).ready(function(){
 		initializeMap();
 		$.ajax({
-			url: "<%= url_for(:controller => 'clinics', :action => 'index') %>",
+			url: "<%= url_for(:action => 'clinicfind') %>",
 			dataType: 'json',
 			async: true,
+			cache: false,
 			success: 	function(data){
 							plotClinics(data);
 						}
 		});
-	})
+		$('input#zip_submit').click(function(){
+			var zip_code = $('input#zip_code').val();
+			var lat = '';
+			var lng = '';
+			var address = zip_code;
+			geocoder.geocode({'address': address}, function(results, status){
+				if (status == google.maps.GeocoderStatus.OK) {
+					lat = results[0].geometry.location.lat();
+					lng = results[0].geometry.location.lng();
+					moveToLatLng(lat, lng);
+				} 
+				else {
+					alert("Geocode was not successful for the following reason: " + status);
+				}
+			});
+		});
+	});
 
 </script>
 

@@ -29,6 +29,14 @@ module SessionsHelper
 	  redirect_to(root_path) unless current_user.admin?
 	end
 	
+	def insurance_user
+	  redirect_to(root_path) unless current_user.insurer?
+  end
+  
+  def admin_or_insurance_user
+    redirect_to(root_path) unless (current_user.insurer? || current_user.admin?)
+  end
+	
 	def deny_access
 		store_location
 		redirect_to signin_path, :notice => "Please sign in to access this page."

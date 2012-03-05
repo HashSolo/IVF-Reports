@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111213162245) do
+ActiveRecord::Schema.define(:version => 20120227204827) do
 
   create_table "clinics", :force => true do |t|
     t.string   "clinic_name"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(:version => 20111213162245) do
     t.datetime "updated_at"
     t.integer  "old_clinic_id"
     t.string   "permalink"
+    t.integer  "user_id"
   end
 
   create_table "datapoints", :force => true do |t|
@@ -63,6 +64,48 @@ ActiveRecord::Schema.define(:version => 20111213162245) do
     t.datetime "updated_at"
   end
 
+  add_index "datapoints", ["age_group"], :name => "index_datapoints_on_age_group"
+  add_index "datapoints", ["clinic_id"], :name => "index_datapoints_on_clinic_id"
+  add_index "datapoints", ["diagnosis"], :name => "index_datapoints_on_diagnosis"
+  add_index "datapoints", ["year"], :name => "index_datapoints_on_year"
+
+  create_table "requests", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "clinic_id"
+    t.boolean  "visible",    :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "reviews", :force => true do |t|
+    t.integer  "clinic_id"
+    t.integer  "user_id"
+    t.integer  "rating"
+    t.string   "title"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "scores", :force => true do |t|
+    t.integer  "clinic_id"
+    t.string   "year"
+    t.string   "age_group"
+    t.string   "diagnosis"
+    t.string   "cycle_type"
+    t.float    "ivf_reports_score"
+    t.float    "quality_score"
+    t.float    "safety_score"
+    t.float    "sart_score"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "scores", ["age_group"], :name => "index_scores_on_age_group"
+  add_index "scores", ["clinic_id"], :name => "index_scores_on_clinic_id"
+  add_index "scores", ["diagnosis"], :name => "index_scores_on_diagnosis"
+  add_index "scores", ["year"], :name => "index_scores_on_year"
+
   create_table "states", :force => true do |t|
     t.string   "abbrev"
     t.string   "name"
@@ -72,14 +115,7 @@ ActiveRecord::Schema.define(:version => 20111213162245) do
     t.datetime "updated_at"
   end
 
-  create_table "users", :force => true do |t|
-    t.string   "name"
-    t.string   "email"
-    t.string   "encrypted_password"
-    t.string   "salt"
-    t.boolean  "admin"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+# Could not dump table "users" because of following StandardError
+#   Unknown type 'weight' for column 'weight'
 
 end

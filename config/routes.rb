@@ -1,12 +1,21 @@
 Transit::Application.routes.draw do
-  resources :users
+  resources :scores
+
+  resources :users do 
+    resources :requests
+  end
+  
 	resources :sessions, :only => [:new, :create, :destroy]
+	
 	resources :clinics do
 	  get 'find_clinics_in_state', :on => :collection
 	  get 'pull_clinic_data', :on => :collection
 	  resources :datapoints
+	  resources :requests
   end
-	
+  
+	resources :reviews
+	resources :requests
 	
 	resources :datapoints
 	match '/register', :to => 'users#new'
@@ -26,11 +35,13 @@ Transit::Application.routes.draw do
   match "/clinicians", :to => "pages#clinicians"
   
   match "/reports/the-ivf-process", :to => "reports#the_ivf_process"
+  match "/reports/infertility-diagnoses", :to => "reports#infertility_diagnoses"
   match "/reports/cdc-vs-sart", :to => "reports#cdc_vs_sart"
   match "/reports/fertility-news", :to => "reports#fertility_news"
   match "/reports/other-technologies", :to => "reports#other_technologies"
   match "/reports/clinics-by-region", :to => "reports#clinics_by_region"
   match "/reports/clinic-explorer", :to => "reports#clinic_explorer"
+  match "/reports/clinic-comparator", :to => "reports#clinic_comparator"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,0 +1,39 @@
+<h1>Listing scores</h1>
+
+<table>
+  <tr>
+    <th>Clinic</th>
+    <th>Year</th>
+    <th>Age group</th>
+    <th>Diagnosis</th>
+    <th>Cycle type</th>
+    <th>Ivf reports score</th>
+    <th>Quality score</th>
+    <th>Safety score</th>
+    <th>Sart score</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @scores.each do |score| %>
+  <tr>
+    <td><%= score.clinic_id %></td>
+    <td><%= score.year %></td>
+    <td><%= score.age_group %></td>
+    <td><%= score.diagnosis %></td>
+    <td><%= score.cycle_type %></td>
+    <td><%= score.ivf_reports_score %></td>
+    <td><%= score.quality_score %></td>
+    <td><%= score.safety_score %></td>
+    <td><%= score.sart_score %></td>
+    <td><%= link_to 'Show', score %></td>
+    <td><%= link_to 'Edit', edit_score_path(score) %></td>
+    <td><%= link_to 'Destroy', score, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Score', new_score_path %>

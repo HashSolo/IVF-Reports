@@ -1,24 +1,109 @@
 <h1><%= @clinic.clinic_name %></h1>
+<div class="page_subtitle"><%= @clinic.city %>, <%= @clinic.state %></div>
 
 
 <h2>Ranking Information</h2>
 <div id='tabs'>
 	
 	<ul class="ranking_tabs">
-		<li><a href='#tabs-1'>Overall</a></li>
-		<li><a href='#tabs-2'><35</a></li>
-		<li><a href='#tabs-3'>35-37</a></li>
-		<li><a href='#tabs-4'>38-40</a></li>
-		<li><a href='#tabs-5'>41-42</a></li>
-		<li><a href='#tabs-6'>>42</a></li>
+		<li><a href='#rankingtabs_1'>Overall</a></li>
+		<li><a href='#rankingtabs_2'><35</a></li>
+		<li><a href='#rankingtabs_3'>35-37</a></li>
+		<li><a href='#rankingtabs_4'>38-40</a></li>
+		<li><a href='#rankingtabs_5'>41-42</a></li>
+		<li><a href='#rankingtabs_6'>>42</a></li>
 	</ul>
 	
-	<div id='tabs-1' class="tab_content">Overall Ranking Data</div>
-	<div id='tabs-2' class="tab_content"><35 Ranking Data</div>
-	<div id='tabs-3' class="tab_content">35-37 Ranking Data</div>
-	<div id='tabs-4' class="tab_content">38-40 Ranking Data</div>
-	<div id='tabs-5' class="tab_content">41-42 Ranking Data</div>
-	<div id='tabs-6' class="tab_content">>42 Ranking Data</div>
+	<div id='rankingtabs_1' class="tab_content">
+		<table class="score_table">
+			<% if(@scores_all_ages.empty?) %>
+				<tr><td class="score_label ivfr_score">IVF Reports Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label quality_score">Quality Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label safety_score">Safety Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label sart_score">SART Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+			<% else %>
+				<tr><td class="score_label ivfr_score">IVF Reports Score</td><td class="score_result"><%= number_with_precision(@scores_all_ages[0].ivf_reports_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_all_ages[0].ivf_reports_score) %>'>★</span></td></tr>
+				<tr><td class="score_label quality_score">Quality Score</td><td class="score_result"><%= number_with_precision(@scores_all_ages[0].quality_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_all_ages[0].quality_score) %>'>★</span></td></tr>
+				<tr><td class="score_label safety_score">Safety Score</td><td class="score_result"><%= number_with_precision(@scores_all_ages[0].safety_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_all_ages[0].safety_score) %>'>★</span></td></tr>
+				<tr><td class="score_label sart_score">SART Score</td><td class="score_result"><%= number_with_precision(@scores_all_ages[0].sart_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_all_ages[0].sart_score) %>'>★</span></td></tr>			
+			<% end %>
+		</table>
+	</div>
+	<div id='rankingtabs_2' class="tab_content">
+		<table class="score_table">
+			<% if(@scores_35.empty?) %>
+				<tr><td class="score_label ivfr_score">IVF Reports Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label quality_score">Quality Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label safety_score">Safety Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label sart_score">SART Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+			<% else %>
+				<tr><td class="score_label ivfr_score">IVF Reports Score</td><td class="score_result"><%= number_with_precision(@scores_35[0].ivf_reports_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_35[0].ivf_reports_score) %>'>★</span></td></tr>
+				<tr><td class="score_label quality_score">Quality Score</td><td class="score_result"><%= number_with_precision(@scores_35[0].quality_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_35[0].quality_score) %>'>★</span></td></tr>
+				<tr><td class="score_label safety_score">Safety Score</td><td class="score_result"><%= number_with_precision(@scores_35[0].safety_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_35[0].safety_score) %>'>★</span></td></tr>
+				<tr><td class="score_label sart_score">SART Score</td><td class="score_result"><%= number_with_precision(@scores_35[0].sart_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_35[0].sart_score) %>'>★</span></td></tr>			
+			<% end %>
+		</table>
+	</div>
+	<div id='rankingtabs_3' class="tab_content">
+		<table class="score_table">	
+			<% if(@scores_35_37.empty?) %>
+				<tr><td class="score_label ivfr_score">IVF Reports Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label quality_score">Quality Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label safety_score">Safety Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label sart_score">SART Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+			<% else %>
+				<tr><td class="score_label ivfr_score">IVF Reports Score</td><td class="score_result"><%= number_with_precision(@scores_35_37[0].ivf_reports_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_35_37[0].ivf_reports_score) %>'>★</span></td></tr>
+				<tr><td class="score_label quality_score">Quality Score</td><td class="score_result"><%= number_with_precision(@scores_35_37[0].quality_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_35_37[0].quality_score) %>'>★</span></td></tr>
+				<tr><td class="score_label safety_score">Safety Score</td><td class="score_result"><%= number_with_precision(@scores_35_37[0].safety_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_35_37[0].safety_score) %>'>★</span></td></tr>
+				<tr><td class="score_label sart_score">SART Score</td><td class="score_result"><%= number_with_precision(@scores_35_37[0].sart_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_35_37[0].sart_score) %>'>★</span></td></tr>
+			<% end %>
+		</table>
+	</div>	
+	<div id='rankingtabs_4' class="tab_content">
+		<table class="score_table">	
+			<% if(@scores_38_40.empty?) %>
+				<tr><td class="score_label ivfr_score">IVF Reports Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label quality_score">Quality Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label safety_score">Safety Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label sart_score">SART Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+			<% else %>
+				<tr><td class="score_label ivfr_score">IVF Reports Score</td><td class="score_result"><%= number_with_precision(@scores_38_40[0].ivf_reports_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_38_40[0].ivf_reports_score) %>'>★</span></td></tr>
+				<tr><td class="score_label quality_score">Quality Score</td><td class="score_result"><%= number_with_precision(@scores_38_40[0].quality_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_38_40[0].quality_score) %>'>★</span></td></tr>
+				<tr><td class="score_label safety_score">Safety Score</td><td class="score_result"><%= number_with_precision(@scores_38_40[0].safety_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_38_40[0].safety_score) %>'>★</span></td></tr>
+				<tr><td class="score_label sart_score">SART Score</td><td class="score_result"><%= number_with_precision(@scores_38_40[0].sart_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_38_40[0].sart_score) %>'>★</span></td></tr>			
+			<% end %>
+		</table>
+	</div>
+	<div id='rankingtabs_5' class="tab_content">
+		<table class="score_table">
+			<% if(@scores_41_42.empty?) %>
+				<tr><td class="score_label ivfr_score">IVF Reports Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label quality_score">Quality Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label safety_score">Safety Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label sart_score">SART Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+			<% else %>
+				<tr><td class="score_label ivfr_score">IVF Reports Score</td><td class="score_result"><%= number_with_precision(@scores_41_42[0].ivf_reports_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_41_42[0].ivf_reports_score) %>'>★</span></td></tr>
+				<tr><td class="score_label quality_score">Quality Score</td><td class="score_result"><%= number_with_precision(@scores_41_42[0].quality_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_41_42[0].quality_score) %>'>★</span></td></tr>
+				<tr><td class="score_label safety_score">Safety Score</td><td class="score_result"><%= number_with_precision(@scores_41_42[0].safety_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_41_42[0].safety_score) %>'>★</span></td></tr>
+				<tr><td class="score_label sart_score">SART Score</td><td class="score_result"><%= number_with_precision(@scores_41_42[0].sart_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_41_42[0].sart_score) %>'>★</span></td></tr>			
+			<% end %>
+		</table>
+	</div>
+	<div id='rankingtabs_6' class="tab_content">
+		<table class="score_table">
+			<% if(@scores_42.empty?) %>
+				<tr><td class="score_label ivfr_score">IVF Reports Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label quality_score">Quality Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label safety_score">Safety Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+				<tr><td class="score_label sart_score">SART Score</td><td class="score_result">No Ranking Data <span class='icon score_icon <%= print_score_color(0.0) %>'>★</span></td></tr>
+			<% else %>
+				<tr><td class="score_label ivfr_score">IVF Reports Score</td><td class="score_result"><%= number_with_precision(@scores_42[0].ivf_reports_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_42[0].ivf_reports_score) %>'>★</span></td></tr>
+				<tr><td class="score_label quality_score">Quality Score</td><td class="score_result"><%= number_with_precision(@scores_42[0].quality_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_42[0].quality_score) %>'>★</span></td></tr>
+				<tr><td class="score_label safety_score">Safety Score</td><td class="score_result"><%= number_with_precision(@scores_42[0].safety_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_42[0].safety_score) %>'>★</span></td></tr>
+				<tr><td class="score_label sart_score">SART Score</td><td class="score_result"><%= number_with_precision(@scores_42[0].sart_score, :precision => 2, :separator => '.') %> <span class='icon score_icon <%= print_score_color(@scores_42[0].sart_score) %>'>★</span></td></tr>			
+			<% end %>
+		</table>
+	</div>
 	
 </div>
 
@@ -49,26 +134,63 @@
 			<canvas id="stat_canvas" width="410" height="300">[No canvas support]</canvas>
 			<div class="legend">Solid Bars Show Clinic Performance. Line Shows National Average.</div>
 			<hr>
-			<h4 style="text-align:center;">Patient Diversity</h4>
-			<canvas id="rose_canvas" width="410" height="300">[No canvas support]</canvas>
-			<ul id="select-age">
-				<li class="ui-selected"><35</li>
-				<li>35-37</li>
-				<li>38-40</li>
-				<li>41-42</li>
-				<li>>42</li>
-			</ul>
-			<div class="legend">Graph shows the number of cycles performed for various diagnostic groups by this clinic.<br/>Click a wedge to learn more.</div>
+			<% if signed_in? %>
+				<h4 style="text-align:center;">Patient Diversity</h4>
+				<canvas id="rose_canvas" width="410" height="300">[No canvas support]</canvas>
+				<ul id="select-age">
+					<li class="ui-selected"><35</li>
+					<li>35-37</li>
+					<li>38-40</li>
+					<li>41-42</li>
+					<li>>42</li>
+				</ul>
+				<div class="legend">Graph shows the number of cycles performed for various diagnostic groups by this clinic.<br/>Click a wedge to learn more.</div>
+			<% end %>
 		</div>	
 	</div>
 	
+	<div id="reviews_box" class="infobox hidden">
+		<h3>Clinic Reviews</h3>
+		<% if @reviews.empty? %>
+			<p>This clinic does not currently have any reviews. Be the first!</p>
+		<% else %>
+			<% @reviews.each do |r| %>
+			<p></p>
+			<% end %>
+		<% end %>
+	</div>
+
+	<div id="contact_box" class="infobox hidden">
+		<h3>Clinic Contact Information</h3>
+		<hr>
+			<h4>Address</h4>
+			<p><%= @clinic.address %><br/>
+			<%= @clinic.city %>, <%= @clinic.state %></p>
+		<hr>
+			<h4>Staff</h4>
+			<p><b>Practice Director: </b><%= @clinic.practice_director %><br/>
+			<b>Medical Director: </b><%= @clinic.medical_director %><br/>
+			<b>Laboratory Director: </b><%= @clinic.laboratory_director %></p>
+		<hr>
+			<h4>Contact Info</h4>
+			<p><b>Phone: </b><%= @clinic.phone %><br/>
+			<b>Website: </b>
+			<% if @clinic.website=="N/A" %><br/>
+			N/A
+			<% else %>
+			<a href="<%= @clinic.website %>" target="_blank"/><%= @clinic.website %></a><br/>
+			<% end %>
+			<b>Email: </b><%= @clinic.email %></p>
+	</div>
+
+</div>
 	
 	<script type="text/javascript">
 	var global_age_group = '<35';
 	
 	function LoadInitialStatsGraph(){
 		var data = {
-			year: 2009,
+			year: 2010,
 			statistic: 'cycles',
 			cycle_type: 'fresh',
 			clinic_id: <%= @clinic.id %>,
@@ -90,6 +212,8 @@
 							
 							var cur_age_index = 0;
 							
+							var y_max = 0;
+							
 							//Load the cycle data into the graph
 							$.each(data, function(k){
 								for(var i = 0; i < 5; i++){
@@ -97,29 +221,38 @@
 										graph_data[i] = data[k]['implantation_rate'];
 										cycle_data[i] = data[k]['cycles'];
 										imp_data[i] = data[k]['implantation_rate'];
+										if(data[k]['implantation_rate'] > y_max){
+											y_max = data[k]['implantation_rate'];
+										}
 									}
 								}
 							});
 							
 							//Instantiate the new graph
-							var cycles_bar_graph = new RGraph.Bar('stat_canvas', graph_data);
+							cycles_bar_graph = new RGraph.Bar('stat_canvas', graph_data);
 							cycles_bar_graph.Set('chart.labels', age_groups);
 					        cycles_bar_graph.Set('chart.gutter.left', 45);
 					        cycles_bar_graph.Set('chart.background.barcolor1', 'white');
 					        cycles_bar_graph.Set('chart.background.barcolor2', 'white');
 					        cycles_bar_graph.Set('chart.background.grid', true);
 					        cycles_bar_graph.Set('chart.colors', ['#7895A3']);
-							cycles_bar_graph.Set('chart.shadow', true);
+							cycles_bar_graph.Set('chart.variant', '3d');
+							cycles_bar_graph.Set('chart.shadow', true);							
 							cycles_bar_graph.Set('chart.shadow.blur', 5);
 							cycles_bar_graph.Set('chart.shadow.offsetx', 2);
 							cycles_bar_graph.Set('chart.shadow.offsety', 0);
 							cycles_bar_graph.Set('chart.shadow.color', '#0F5151');
 							cycles_bar_graph.Set('chart.text.font', 'Trebuchet MS');
-							cycles_bar_graph.Set('chart.ymax', 100);
+							cycles_bar_graph.Set('chart.units.post', '%');
+							
+
+							
+							//RGraph.Effects.Fade.In(cycles_bar_graph);
+							//RGraph.Effects.Bar.Wave(cycles_bar_graph);
 							
 							//Render the national averages line
 							var data = {
-								year: 2009,
+								year: 2010,
 								statistic: 'cycles',
 								cycle_type: 'fresh',
 								clinic_id: '384',
@@ -140,26 +273,31 @@
 												tooltips[i] = tooltips[i] + "Cycles: " + cycle_data[i] + "<br/>";
 												tooltips[i] = tooltips[i] + "Imp Rate: " + Math.round(10*graph_data[i])/10 + "<br/>";
 												tooltips[i] = tooltips[i] + "National Avg: " + Math.round(10*graph_data2[i])/10;
+												if(data[l]['implantation_rate'] > y_max){
+													y_max = data[l]['implantation_rate'];
+												}
 											}
 										}
 									});
+									
+									y_max = y_max + 5;
+									if(y_max > 100.0){
+										y_max = 100;
+									}
 							
-									var imprate_line_graph = new RGraph.Line('stat_canvas', graph_data2);
+									imprate_line_graph = new RGraph.Line('stat_canvas', graph_data2);
 									imprate_line_graph.Set('chart.background.grid', false);
 									imprate_line_graph.Set('chart.linewidth', 2);
 									imprate_line_graph.Set('chart.colors', ['#0F5151']);
 									imprate_line_graph.Set('chart.tickmarks', 'circle');
 									imprate_line_graph.Set('chart.highlight.fill', 'black');
-									imprate_line_graph.Set('chart.noaxes', true);
-									imprate_line_graph.Set('chart.ylabels', false);
-							
+									imprate_line_graph.Set('chart.ylabels', false);																					
+									cycles_bar_graph.Set('chart.ymax', y_max);
 									imprate_line_graph.Set('chart.tooltips', tooltips);
-							
-							
+
+
 									cycles_bar_graph.Set('chart.line', imprate_line_graph);
-							
-									RGraph.Effects.Fade.In(cycles_bar_graph);
-									RGraph.Effects.Bar.Grow(cycles_bar_graph);
+									cycles_bar_graph.Draw();
 								}
 							});
 							
@@ -174,7 +312,7 @@
 		canvas_context_rose.clearRect(0, 0, canvas_rose.width, canvas_rose.height);
 		
 		var data = {
-			year: 2009,
+			year: 2010,
 			statistic: 'cycles',
 			cycle_type: 'fresh',
 			clinic_id: <%= @clinic.id %>,
@@ -248,44 +386,13 @@
 
 							
 							//Render the graph
-							diagnoses_rose_chart.Draw();
+							RGraph.Effects.Fade.In(diagnoses_rose_chart);
 							
 			}
 		});
 	}
 	
 	</script>
-	
-
-	<div id="reviews_box" class="infobox hidden">
-		<h3>Clinic Reviews</h3>
-		<p>There are no reviews currently in the system.</p>
-	</div>
-
-	<div id="contact_box" class="infobox hidden">
-		<h3>Clinic Contact Information</h3>
-		<hr>
-			<h4>Address</h4>
-			<p><%= @clinic.address %><br/>
-			<%= @clinic.city %>, <%= @clinic.state %></p>
-		<hr>
-			<h4>Staff</h4>
-			<p><b>Practice Director: </b><%= @clinic.practice_director %><br/>
-			<b>Medical Director: </b><%= @clinic.medical_director %><br/>
-			<b>Laboratory Director: </b><%= @clinic.laboratory_director %></p>
-		<hr>
-			<h4>Contact Info</h4>
-			<p><b>Phone: </b><%= @clinic.phone %><br/>
-			<b>Website: </b>
-			<% if @clinic.website=="N/A" %><br/>
-			N/A
-			<% else %>
-			<a href="<%= @clinic.website %>" target="_blank"/><%= @clinic.website %></a><br/>
-			<% end %>
-			<b>Email: </b><%= @clinic.email %></p>
-	</div>
-
-</div>
 
 
 <script type="text/javascript">
