@@ -1,5 +1,6 @@
 <div class="right_sidebar">
 	<% if is_controller?('clinics') && is_action?('show') %>
+	<% unless signed_in? && current_user.clinician? %>
 	<ul class="sidebar_module">
 		<li class="header">Contact this Clinic</li>
 		<% if signed_in? %>
@@ -12,8 +13,7 @@
 			<li class="request_button bottom"><%= link_to 'Register to Contact', new_user_path %></li>
 		<% end %>
 	</ul>
-	<% else # Nothing else displayed... %>
-
+	<% end %>
 	<% end %>
 
 	<% if is_controller?('clinics') && is_action?('show') %>
@@ -36,5 +36,28 @@
 	<li><%= link_to "RBM Online", 'http://www.rbmojournal.com/', :target => "_blank" %></li>
 	<li class="bottom"><%= link_to "American College of Embryology", 'http://embcol.org/', :target => "_blank" %></li>
 </ul>
+
+	<% if is_controller?('pages') && is_action?('ranking') %>
+		<ul class="sidebar_module">
+			<li class="header">Select States</li>
+			<li>Select All States <input checked type="checkbox" class="select_all_state_checkbox" name="select_all_states" value="all_states" style="float:right;margin-top:9px;margin-right:10px;"></li>
+
+			<li>Unselect All States <input type="checkbox" class="unselect_all_state_checkbox" name="unselect_all_states" value="no_states" style="float:right;margin-top:9px;margin-right:10px;"></li>
+			<% @states.each_with_index do |s, index| %>
+				<% if index%2 == 0 %>
+				<li class="state">
+				<span class="state_span">
+					<%= s.name %><input checked class="state_checkbox" type="checkbox" name="state" value="<%= s.name %>">
+				</span>
+				<% else %>
+				<span class="state_span">
+					<%= s.name %><input checked class="state_checkbox" type="checkbox" name="state" value="<%= s.name %>">
+				</span>
+				</li>
+				<% end %>
+			<% end %>
+		</ul>
+	<% end %>
+
 </div>
 

@@ -7,8 +7,9 @@
 		<li class="ranking_tab"><a href="#ranking_category_3"/>Ranking by Diagnosis</a></li>
 	</ul>
 		<div id='ranking_category_1' class="ranking_tab_content">
-			<h2 id="overall_title" class="age_ranking_title">Top IVF Clinics in the U.S.</h2>
+			<h2 id="overall_title" class="age_ranking_title">IVF Reports Overall Clinic Scores</h2>
 			<div id="overall_ranking_results" class="ranking_results">
+				<ul class='ranking_nav'><li id='overall_left_button' class='left_button'><span class='icon'>←</span></li><li id='overall_right_button' class='right_button'><span class='icon'>→</span></li></ul>
 				<div class="clinic_rank_list">
 				</div>
 				<ul class='ranking_nav'><li id='overall_left_button' class='left_button'><span class='icon'>←</span></li><li id='overall_right_button' class='right_button'><span class='icon'>→</span></li></ul>
@@ -23,13 +24,14 @@
 				<li class="last">> 42</li>								
 			</ul>
 			<div class="age_ranking_titles">
-				<h2 id="age_title_35" class="age_ranking_title">Top Clinics In Age Group < 35</h2>
-				<h2 id="age_title_35_37" class="age_ranking_title hidden">Top Clinics In Age Group 35 - 37</h2>
-				<h2 id="age_title_38_40" class="age_ranking_title hidden">Top Clinics In Age Group 38 - 40</h2>
-				<h2 id="age_title_41_42" class="age_ranking_title hidden">Top Clinics In Age Group 41 - 42</h2>			
-				<h2 id="age_title_42" class="age_ranking_title hidden">Top Clinics In Age Group > 42</h2>						
+				<h2 id="age_title_35" class="age_ranking_title">Clinic Scores In Age Group < 35</h2>
+				<h2 id="age_title_35_37" class="age_ranking_title hidden">Clinic Scores In Age Group 35 - 37</h2>
+				<h2 id="age_title_38_40" class="age_ranking_title hidden">Clinic Scores In Age Group 38 - 40</h2>
+				<h2 id="age_title_41_42" class="age_ranking_title hidden">Clinic Scores In Age Group 41 - 42</h2>			
+				<h2 id="age_title_42" class="age_ranking_title hidden">Clinic Scores In Age Group > 42</h2>						
 			</div>
 			<div id="age_ranking_results" class="ranking_results">
+				<ul class='ranking_nav'><li id='age_left_button' class='left_button'><span class='icon'>←</span></li><li id='age_right_button' class='right_button'><span class='icon'>→</span></li></ul>				
 				<div class="clinic_rank_list">
 				</div>
 				<ul class='ranking_nav'><li id='age_left_button' class='left_button'><span class='icon'>←</span></li><li id='age_right_button' class='right_button'><span class='icon'>→</span></li></ul>
@@ -48,17 +50,18 @@
 				<li class="last">Uterine Factor</li>
 			</ul>
 			<div class="diagnosis_ranking_titles">
-				<h2 id="diagnosis_title_endometriosis" class="age_ranking_title">Top Clinics to Treat Endometriosis Infertility</h2>
-				<h2 id="diagnosis_title_dor" class="age_ranking_title hidden">Top Clinics to Treat Diminished Ovarian Reserve</h2>
-				<h2 id="diagnosis_title_mff" class="age_ranking_title hidden">Top Clinics to Treat Multiple Female Factors</h2>
-				<h2 id="diagnosis_title_od" class="age_ranking_title hidden">Top Clinics to Treat Ovulatory Dysfunction</h2>			
-				<h2 id="diagnosis_title_tubal" class="age_ranking_title hidden">Top Clinics to Treat Tubal Factor Infertility</h2>						
-				<h2 id="diagnosis_title_fmf" class="age_ranking_title hidden">Top Clinics to Treat Female and Male Factors</h2>						
-				<h2 id="diagnosis_title_male" class="age_ranking_title hidden">Top Clinics to Treat Male Factor Infertility</h2>						
-				<h2 id="diagnosis_title_other" class="age_ranking_title hidden">Top Clinics to Treat Other Factor Infertility</h2>						
-				<h2 id="diagnosis_title_uterine" class="age_ranking_title hidden">Top Clinics to Treat Uterine Factor Infertility</h2>
+				<h2 id="diagnosis_title_endometriosis" class="age_ranking_title">Clinic Scores for Endometriosis</h2>
+				<h2 id="diagnosis_title_dor" class="age_ranking_title hidden">Clinic Scores for Diminished Ovarian Reserve</h2>
+				<h2 id="diagnosis_title_mff" class="age_ranking_title hidden">Clinic Scores for Multiple Female Factors</h2>
+				<h2 id="diagnosis_title_od" class="age_ranking_title hidden">Clinic Scores for Ovulatory Dysfunction</h2>			
+				<h2 id="diagnosis_title_tubal" class="age_ranking_title hidden">Clinic Scores for Tubal Factor</h2>						
+				<h2 id="diagnosis_title_fmf" class="age_ranking_title hidden">Clinic Scores for Female and Male Factors</h2>						
+				<h2 id="diagnosis_title_male" class="age_ranking_title hidden">Clinic Scores for Male Factor</h2>						
+				<h2 id="diagnosis_title_other" class="age_ranking_title hidden">Clinic Scores for Other Factor</h2>						
+				<h2 id="diagnosis_title_uterine" class="age_ranking_title hidden">Clinic Scores for Uterine Factor</h2>
 			</div>
 			<div id="diagnosis_ranking_results" class="ranking_results">
+				<ul class='ranking_nav'><li id='diagnosis_left_button' class='left_button'><span class='icon'>←</span></li><li id='diagnosis_right_button' class='right_button'><span class='icon'>→</span></li></ul>
 				<div class="clinic_rank_list">
 				</div>
 				<ul class='ranking_nav'><li id='diagnosis_left_button' class='left_button'><span class='icon'>←</span></li><li id='diagnosis_right_button' class='right_button'><span class='icon'>→</span></li></ul>
@@ -74,6 +77,15 @@ var cycle_type = "fresh";
 var overall_page = 0;
 var age_page = 0;
 var diagnosis_page = 0;
+var states = [
+<% @states.each_with_index do |s, index| %>
+<% if index==50 %>
+"<%= s.name %>"
+<% else %>
+"<%= s.name %>",
+<% end %>
+<% end %>
+];
 
 $(document).ready(function(){
 	$( "#tabs" ).tabs();
@@ -128,6 +140,54 @@ $(document).ready(function(){
 			PrintDiagnosisRankingResults();
 		}
 	});	
+	
+	$('input.state_checkbox').click(function(){
+		if($(this).is(':checked')){
+			//Add the value to the states array
+			states.push($(this).val());
+			$('input.unselect_all_state_checkbox').attr('checked', false);			
+		}
+		else{
+			var abrvindex = states.indexOf($(this).val());
+			if(abrvindex!=-1){
+				$('input.select_all_state_checkbox').attr('checked', false);				
+				states.splice(abrvindex,1);
+			}
+		}
+		//Finall, call the print function for the proper (or all?) ranking results...pages and numbers need to be reset anyways
+		PrintOverallRankingResults();
+		PrintAgeRankingResults();
+		PrintDiagnosisRankingResults();
+	});
+	$('input.select_all_state_checkbox').click(function(){
+		$('input.state_checkbox').attr('checked', true);
+		$('input.unselect_all_state_checkbox').attr('checked', false);
+		//Next update the array of states.
+		
+		states = [
+		<% @states.each_with_index do |s, index| %>
+		<% if index==50 %>
+		"<%= s.name %>"
+		<% else %>
+		"<%= s.name %>",
+		<% end %>
+		<% end %>
+		];
+		
+		PrintOverallRankingResults();
+		PrintAgeRankingResults();
+		PrintDiagnosisRankingResults();
+	});
+	$('input.unselect_all_state_checkbox').click(function(){
+		$('input.state_checkbox').attr('checked', false);
+		$('input.select_all_state_checkbox').attr('checked', false);
+		//Next update the array of states.
+		states = [];
+				
+		PrintOverallRankingResults();
+		PrintAgeRankingResults();
+		PrintDiagnosisRankingResults();
+	});
 });
 
 function PrintStarIcon(score){
@@ -152,7 +212,8 @@ function PrintOverallRankingResults(){
 		age_group: "All Ages",
 		diagnosis: "All Diagnoses",
 		cycle_type: cycle_type,
-		page: overall_page
+		page: overall_page,
+		states: states
 	}
 	$.ajax({
 		url: "<%= url_for(:action => 'ranking') %>",
@@ -194,7 +255,8 @@ function PrintAgeRankingResults(){
 		age_group: age_group,
 		diagnosis: "All Diagnoses",
 		cycle_type: cycle_type,
-		page: age_page
+		page: age_page,
+		states: states
 	}
 	$.ajax({
 		url: "<%= url_for(:action => 'ranking') %>",
@@ -236,7 +298,8 @@ function PrintDiagnosisRankingResults(){
 		age_group: "All Ages",
 		diagnosis: diagnosis,
 		cycle_type: cycle_type,
-		page: diagnosis_page
+		page: diagnosis_page,
+		states: states
 	}
 	$.ajax({
 		url: "<%= url_for(:action => 'ranking') %>",
