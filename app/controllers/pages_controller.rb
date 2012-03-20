@@ -54,7 +54,7 @@ class PagesController < ApplicationController
     diagnosis = 'All Diagnoses'
     cycle_type = 'fresh'
     page = 0 #This is what page to start on
-
+    @states = State.all
 
     
     unless(params[:year].nil?)
@@ -72,13 +72,15 @@ class PagesController < ApplicationController
     unless(params[:page].nil?)
       page = params[:page]
     end
+  
+    states = params[:states]
     
     page=page.to_i
     
     results = 10 #The number of results per page    
     results_start = page*results    
     
-    @scores = Score.where(:year => year, :age_group => age_group, :diagnosis => diagnosis, :cycle_type => cycle_type).limit(results).offset(results_start)
+    @scores = Score.where(:year => year, :age_group => age_group, :diagnosis => diagnosis, :cycle_type => cycle_type).joins(:clinic).where(:clinics => {:state => states}).limit(results).offset(results_start)
     @clinic_results = Array.new;
     unless @scores.empty?
       @scores.each do |s|
