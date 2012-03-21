@@ -16,7 +16,7 @@
 	<% end %>
 	<% end %>
 
-	<% if is_controller?('clinics') && is_action?('show') %>
+	<% if (is_controller?('clinics') && is_action?('show')) %>
 	<% if signed_in? && (current_user?(@clinic_user) || current_user.admin?)%>
 	<ul class="sidebar_module">
 		<li class="header">Manage My Clinic Info</li>
