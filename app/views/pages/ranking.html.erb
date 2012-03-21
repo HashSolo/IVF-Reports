@@ -285,7 +285,10 @@ function PrintOverallRankingResults(){
 										}
 									});
 								<% else #Need to add text and link about: Register to Contact %>
-								
+								clinic_html = clinic_html + '<span class="register_to_contact round"><%= link_to register_path do |l| %>Register<br/>to<br/>Contact<% end %></span>';
+								clinic_html = clinic_html + "</div>";
+
+								$('div#overall_ranking_results div.clinic_rank_list').append(clinic_html);
 								<% end %>
 						});
 					}
@@ -370,7 +373,10 @@ function PrintAgeRankingResults(){
 										}
 									});
 								<% else #Need to add text and link about: Register to Contact %>
-								
+								clinic_html = clinic_html + '<span class="register_to_contact round"><%= link_to register_path do |l| %>Register<br/>to<br/>Contact<% end %></span>';
+								clinic_html = clinic_html + "</div>";
+
+								$('div#age_ranking_results div.clinic_rank_list').append(clinic_html);
 								<% end %>
 						});
 					}
@@ -456,7 +462,10 @@ function PrintDiagnosisRankingResults(){
 										}
 									});
 								<% else #Need to add text and link about: Register to Contact %>
-								
+								clinic_html = clinic_html + '<span class="register_to_contact round"><%= link_to register_path do |l| %>Register<br/>to<br/>Contact<% end %></span>';
+								clinic_html = clinic_html + "</div>";
+
+								$('div#diagnosis_ranking_results div.clinic_rank_list').append(clinic_html);
 								<% end %>
 						});
 					}
