@@ -13,6 +13,9 @@
 					<li><%= link_to signout_path do %><span class='icon'>⊝</span> Sign Out<% end %></li>
 					<li><%= link_to edit_user_path(current_user), :class => is_active?("users#edit") do %><span class='icon'>⚙</span> Settings<% end %></li>
 					<li><%= link_to user_path(current_user), :class=> is_active?("users#show") do %><span class='icon'>u</span> <%= current_user.name %><% end %></li>
+					<% if current_user.clinician? %>
+						<li><%= link_to clinic_path(current_user.clinics.first) do %><span class='icon'>⌂</span> My Clinic<% end %></li>
+					<% end %>
 				<% else %>	
 					<li><%= link_to "Register", register_path, :class => is_active?("users#new") %></li>
 					<li class="divider">|</li>
