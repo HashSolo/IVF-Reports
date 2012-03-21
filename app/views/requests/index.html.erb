@@ -13,7 +13,7 @@
 		<% if r.visible? #Show full information if they have paid for the lead. %>
 		<li>Lead Paid For. Email: <%= user_info.email %></li>		
 		<% else #Show limited..teaser info if the lead is not paid for%>
-		<li><span class="username"><%= user_info.name %></span><span class="age"><% if user_info.birthday.nil? %>-<% else %><%= (Date.today - user_info.birthday).to_i/365 %><% end %></span><span class="previousivf"><% if user_info.previous_cycles.nil? %>-<% else %><%= user_info.previous_cycles %><% end %></span><span class="ethnicity"><% if user_info.ethnicity.nil? %>-<% else %><%= user_info.ethnicity.capitalize %><% end %></span><span class="view_button icon">E</span></li>
+		<li><span class="username"><%= user_info.name %></span><span class="age"><% if user_info.birthday.nil? %>-<% else %><%= (Date.today - user_info.birthday).to_i/365 %><% end %></span><span class="previousivf"><% if user_info.previous_cycles.nil? %>-<% else %><%= user_info.previous_cycles %><% end %></span><span class="ethnicity"><% if user_info.ethnicity.nil? %>-<% else %><%= user_info.ethnicity.capitalize %><% end %></span><%= link_to @request do |r| %><span class="view_button icon">E</span><% end %></li>
 		<% end %>
 	<% end %>
 </ul>
