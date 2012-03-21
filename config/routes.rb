@@ -15,7 +15,9 @@ Transit::Application.routes.draw do
   end
   
 	resources :reviews
-	resources :requests
+	resources :requests do
+	  get 'test', :on => :collection
+  end
 	
 	resources :datapoints
 	match '/register', :to => 'users#new'

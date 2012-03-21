@@ -159,6 +159,7 @@ $(document).ready(function(){
 		PrintAgeRankingResults();
 		PrintDiagnosisRankingResults();
 	});
+	
 	$('input.select_all_state_checkbox').click(function(){
 		$('input.state_checkbox').attr('checked', true);
 		$('input.unselect_all_state_checkbox').attr('checked', false);
@@ -178,6 +179,7 @@ $(document).ready(function(){
 		PrintAgeRankingResults();
 		PrintDiagnosisRankingResults();
 	});
+	
 	$('input.unselect_all_state_checkbox').click(function(){
 		$('input.state_checkbox').attr('checked', false);
 		$('input.select_all_state_checkbox').attr('checked', false);
@@ -204,6 +206,7 @@ function PrintStarIcon(score){
 		return " gray";
 	}
 }
+
 function PrintOverallRankingResults(){
 	$('div#overall_ranking_results div.clinic_rank_list').html("");
 	$('div#overall_ranking_results div.clinic_rank_list').addClass('ajax_loading');
@@ -224,7 +227,7 @@ function PrintOverallRankingResults(){
 		success: 	function(data){
 						//This will have to update the html of the middle section with the new clinic info...
 						$.each(data, function(k){
-								var clinic_html = "<ul class='clinic_rank";
+								var clinic_html = "<div class='clinic_rank_item'><ul class='clinic_rank";
 								if(k==9){
 									clinic_html = clinic_html + " bottom";
 								}
@@ -234,14 +237,56 @@ function PrintOverallRankingResults(){
 								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>Quality Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['quality_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['quality_score']) + "'>★</span></span></li>";
 								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>Safety Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['safety_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['safety_score']) + "'>★</span></span></li>";
 								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>SART Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['sart_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['sart_score']) + "'>★</span></span></li>";
-								clinic_html = clinic_html + "</ul>"
-								if(k==9){
-									
-								}
-								else{
-									
-								}
-								$('div#overall_ranking_results div.clinic_rank_list').append(clinic_html);
+								clinic_html = clinic_html + "</ul>";
+								<% if signed_in? %>
+									var current_user_id = <%= current_user.id %>;
+									var current_span_id = "span#"+ current_user_id + "o" + data[k]['clinic_id'];									
+									var check_data = {
+										user_id: current_user_id,
+										clinic_id: data[k]['clinic_id']
+									}
+									$.ajax({ //Need to check if a database entry exists for this userid clinicid combo via ajax in the requests table
+										url: "<%= url_for(:controller => 'requests', :action => 'test') %>",
+										dataType: 'json',
+										async: false,
+										data: check_data,
+										success: function(check_data){
+											if(check_data[0]==undefined){
+												clinic_html = clinic_html + '<span id="'+ current_user_id + 'o' + data[k]['clinic_id']+'" class="clinic_contact_button round">Contact<br/>this<br/>Clinic</span>';
+												clinic_html = clinic_html + "</div>";
+
+												$('div#overall_ranking_results div.clinic_rank_list').append(clinic_html).find(current_span_id).bind("click", function(){
+													var id_values = $(this).attr('id');
+													var id_arrays = id_values.split('o');
+													var user_id = id_arrays[0];
+													var clinic_id = id_arrays[1];
+													var data = {
+														user_id: user_id,
+														clinic_id: clinic_id
+													}
+													$.ajax({
+														url: "<%= url_for(:controller => 'requests', :action => 'create') %>",
+														type: 'POST',
+														dataType: 'json',
+														async: true,
+														data: data
+													});
+													$(this).addClass('already_contacted',1000);
+													$(this).removeClass('clinic_contact_button',1000);
+													$(this).html('Contact<br/>Request<br/>Sent',1000);
+												});
+											}
+											else{
+												clinic_html = clinic_html + '<span id="'+ current_user_id + 'o' + data[k]['clinic_id']+'" class="already_contacted round">Contact<br/>Request<br/>Sent</span>';
+												clinic_html = clinic_html + "</div>";
+
+												$('div#overall_ranking_results div.clinic_rank_list').append(clinic_html);
+											}
+										}
+									});
+								<% else #Need to add text and link about: Register to Contact %>
+								
+								<% end %>
 						});
 					}
 	});
@@ -267,7 +312,7 @@ function PrintAgeRankingResults(){
 		success: 	function(data){
 						//This will have to update the html of the middle section with the new clinic info...
 						$.each(data, function(k){
-								var clinic_html = "<ul class='clinic_rank";
+								var clinic_html = "<div class='clinic_rank_item'><ul class='clinic_rank";
 								if(k==9){
 									clinic_html = clinic_html + " bottom";
 								}								
@@ -278,13 +323,55 @@ function PrintAgeRankingResults(){
 								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>Safety Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['safety_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['safety_score']) + "'>★</span></span></li>";
 								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>SART Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['sart_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['sart_score']) + "'>★</span></span></li>";
 								clinic_html = clinic_html + "</ul>"
-								if(k==9){
-									
-								}	
-								else{
-									
-								}							
-								$('div#age_ranking_results div.clinic_rank_list').append(clinic_html);
+								<% if signed_in? %>
+									var current_user_id = <%= current_user.id %>;
+									var current_span_id = "span#"+ current_user_id + "o" + data[k]['clinic_id'];									
+									var check_data = {
+										user_id: current_user_id,
+										clinic_id: data[k]['clinic_id']
+									}
+									$.ajax({ //Need to check if a database entry exists for this userid clinicid combo via ajax in the requests table
+										url: "<%= url_for(:controller => 'requests', :action => 'test') %>",
+										dataType: 'json',
+										async: false,
+										data: check_data,
+										success: function(check_data){
+											if(check_data[0]==undefined){
+												clinic_html = clinic_html + '<span id="'+ current_user_id + 'o' + data[k]['clinic_id']+'" class="clinic_contact_button round">Contact<br/>this<br/>Clinic</span>';
+												clinic_html = clinic_html + "</div>";
+
+												$('div#age_ranking_results div.clinic_rank_list').append(clinic_html).find(current_span_id).bind("click", function(){
+													var id_values = $(this).attr('id');
+													var id_arrays = id_values.split('o');
+													var user_id = id_arrays[0];
+													var clinic_id = id_arrays[1];
+													var data = {
+														user_id: user_id,
+														clinic_id: clinic_id
+													}
+													$.ajax({
+														url: "<%= url_for(:controller => 'requests', :action => 'create') %>",
+														type: 'POST',
+														dataType: 'json',
+														async: true,
+														data: data
+													});
+													$(this).addClass('already_contacted',1000);
+													$(this).removeClass('clinic_contact_button',1000);
+													$(this).html('Contact<br/>Request<br/>Sent',1000);
+												});
+											}
+											else{
+												clinic_html = clinic_html + '<span id="'+ current_user_id + 'o' + data[k]['clinic_id']+'" class="already_contacted round">Contact<br/>Request<br/>Sent</span>';
+												clinic_html = clinic_html + "</div>";
+
+												$('div#age_ranking_results div.clinic_rank_list').append(clinic_html);
+											}
+										}
+									});
+								<% else #Need to add text and link about: Register to Contact %>
+								
+								<% end %>
 						});
 					}
 	});
@@ -310,7 +397,7 @@ function PrintDiagnosisRankingResults(){
 		success: 	function(data){
 						//This will have to update the html of the middle section with the new clinic info...
 						$.each(data, function(k){
-								var clinic_html = "<ul class='clinic_rank";
+								var clinic_html = "<div class='clinic_rank_item'><ul class='clinic_rank";
 								if(k==9){
 									clinic_html = clinic_html + " bottom";
 								}
@@ -322,13 +409,55 @@ function PrintDiagnosisRankingResults(){
 								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>Safety Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['safety_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['safety_score']) + "'>★</span></span></li>";
 								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>SART Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['sart_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['sart_score']) + "'>★</span></span></li>";
 								clinic_html = clinic_html + "</ul>"
-								if(k==9){
-						
-								}								
-								else{
-									
-								}
-								$('div#diagnosis_ranking_results div.clinic_rank_list').append(clinic_html);
+								<% if signed_in? %>
+									var current_user_id = <%= current_user.id %>;
+									var current_span_id = "span#"+ current_user_id + "o" + data[k]['clinic_id'];									
+									var check_data = {
+										user_id: current_user_id,
+										clinic_id: data[k]['clinic_id']
+									}
+									$.ajax({ //Need to check if a database entry exists for this userid clinicid combo via ajax in the requests table
+										url: "<%= url_for(:controller => 'requests', :action => 'test') %>",
+										dataType: 'json',
+										async: false,
+										data: check_data,
+										success: function(check_data){
+											if(check_data[0]==undefined){
+												clinic_html = clinic_html + '<span id="'+ current_user_id + 'o' + data[k]['clinic_id']+'" class="clinic_contact_button round">Contact<br/>this<br/>Clinic</span>';
+												clinic_html = clinic_html + "</div>";
+
+												$('div#diagnosis_ranking_results div.clinic_rank_list').append(clinic_html).find(current_span_id).bind("click", function(){
+													var id_values = $(this).attr('id');
+													var id_arrays = id_values.split('o');
+													var user_id = id_arrays[0];
+													var clinic_id = id_arrays[1];
+													var data = {
+														user_id: user_id,
+														clinic_id: clinic_id
+													}
+													$.ajax({
+														url: "<%= url_for(:controller => 'requests', :action => 'create') %>",
+														type: 'POST',
+														dataType: 'json',
+														async: true,
+														data: data
+													});
+													$(this).addClass('already_contacted',1000);
+													$(this).removeClass('clinic_contact_button',1000);
+													$(this).html('Contact<br/>Request<br/>Sent',1000);
+												});
+											}
+											else{
+												clinic_html = clinic_html + '<span id="'+ current_user_id + 'o' + data[k]['clinic_id']+'" class="already_contacted round">Contact<br/>Request<br/>Sent</span>';
+												clinic_html = clinic_html + "</div>";
+
+												$('div#diagnosis_ranking_results div.clinic_rank_list').append(clinic_html);
+											}
+										}
+									});
+								<% else #Need to add text and link about: Register to Contact %>
+								
+								<% end %>
 						});
 					}
 	});

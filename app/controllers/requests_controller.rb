@@ -27,6 +27,18 @@ class RequestsController < ApplicationController
       @request = Request.find(params[:id])
       @request_user = User.find(@request.user_id)
     end
+    
+    respond_to do |format|
+      format.html {}
+    end
+  end
+  
+  def test
+    @request = Request.where(:clinic_id => params[:clinic_id], :user_id => params[:user_id])
+    
+    respond_to do |format|
+      format.json {render :json => @request.to_json()}
+    end    
   end
   
   def purchase #This will be the method for purchasing the lead after reviewing the information
@@ -34,9 +46,15 @@ class RequestsController < ApplicationController
   end
   
   def create
-    @request = Request.new(params[:request])
-    @request.save
-	  @response = @request.errors
+    if(params[:request].nil?)
+      params[:request] = {:user_id => params[:user_id], :clinic_id => params[:clinic_id]}
+    end
+    @clinic = Clinic.find(params[:request][:clinic_id])
+    if Request.where(:clinic_id => params[:request][:clinic_id], :user_id => params[:request][:user_id]).empty?
+      @request = Request.new(params[:request])
+      @request.save
+	    @response = @request.errors
+    end
     respond_to do |format|
       format.js {render :layout => false}
     end

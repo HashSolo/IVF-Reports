@@ -40,9 +40,9 @@
 	<% if is_controller?('pages') && is_action?('ranking') %>
 		<ul class="sidebar_module">
 			<li class="header">Select States</li>
-			<li>Select All States <input checked type="checkbox" class="select_all_state_checkbox" name="select_all_states" value="all_states" style="float:right;margin-top:9px;margin-right:10px;"></li>
+			<li><span class="all_state_label">Select All States</span><input checked type="checkbox" class="select_all_state_checkbox" name="select_all_states" value="all_states" style="float:right;margin-top:9px;margin-right:10px;"></li>
 
-			<li>Unselect All States <input type="checkbox" class="unselect_all_state_checkbox" name="unselect_all_states" value="no_states" style="float:right;margin-top:9px;margin-right:10px;"></li>
+			<li><span class="all_state_label">Unselect All States</span><input type="checkbox" class="unselect_all_state_checkbox" name="unselect_all_states" value="no_states" style="float:right;margin-top:9px;margin-right:10px;"></li>
 			<% @states.each_with_index do |s, index| %>
 				<% if index%2 == 0 %>
 				<li class="state">
