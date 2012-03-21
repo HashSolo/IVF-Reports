@@ -1,6 +1,56 @@
 <h1><%= @clinic.clinic_name %></h1>
 <div class="page_subtitle"><%= @clinic.city %>, <%= @clinic.state %></div>
-
+<div class="review_dark_bg hidden"><span class="close_button icon">X</span></div>
+<div class="review_form round hidden">
+	<h2>Review this Clinic</h2>
+	<% if signed_in? %>
+	<%= form_for @review do |f| %>
+	<%= f.hidden_field :user_id, :value => current_user.id %>
+	<%= f.hidden_field :clinic_id, :value => @clinic.id %>
+	<%= f.hidden_field :rating, :value => 0 %>
+	<ul class="star_rating"><li><span class="star_label">Rate This Clinic</span><span class="stars"><span id="star1" class="icon star_icon">★</span><span id="star2" class="icon star_icon">★</span><span id="star3" class="icon star_icon">★</span><span id="star4" class="icon star_icon">★</span><span id="star5" class="icon star_icon">★</span></span></li></ul>
+	<ul class="star_rating"><li><span class="star_label">Write a Title</span><span class="stars"><%= f.text_field :title %></span></li></ul>
+	<ul class="star_rating"><li class="review_space"><span class="star_label">Write a Review</span><span class="stars"><%= f.text_area :content %></span></li></ul>	
+	<div class="update_button"><%= f.submit :value => 'Submit Review' %></div>
+	<% end %>
+	<% end %>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('span.star_icon').hover(
+			function(){
+				var cur_id = $(this).attr('id').split('star');
+				var star_num = cur_id[1];
+				for(var i = 0; i < (star_num); i++){
+					var cur_change_icon = "span#star"+(i+1);
+					$(cur_change_icon).addClass('yellow');
+				}
+			},
+			function(){
+				$('span.star_icon').removeClass('yellow');
+			}
+		);
+		$('span.star_icon').click(function(){
+			$('span.star_icon').removeClass('permyellow');
+			var cur_id = $(this).attr('id').split('star');
+			var star_num = cur_id[1];
+			for(var i = 0; i < (star_num); i++){
+				var cur_change_icon = "span#star"+(i+1);
+				$(cur_change_icon).addClass('permyellow');
+			}
+			//Need to update the hidden field for the form to finalize the rank.
+			$('input#review_rating').val(star_num);
+		});
+		$('span.close_button').click(function(){
+			$('div.review_dark_bg').hide('slow');
+			$('div.review_form').hide('slow');
+		});
+		$('span.write_a_review').click(function(){			
+			$('div.review_dark_bg').show('slow');
+			$('div.review_form').show('slow');
+		});
+	});
+</script>
+</div>
 
 <h2>Ranking Information</h2>
 <div id='tabs'>
@@ -151,11 +201,18 @@
 	
 	<div id="reviews_box" class="infobox hidden">
 		<h3>Clinic Reviews</h3>
+		<div class="write_button"><span class="write_a_review">Write a Review</span></div>
 		<% if @reviews.empty? %>
-			<p>This clinic does not currently have any reviews. Be the first!</p>
+			<p>This clinic does not currently have any reviews. <span class="write_a_review">Be the first!</span></p>
 		<% else %>
 			<% @reviews.each do |r| %>
-			<p></p>
+			<% cur_user = User.find_by_id(r.user_id) %>
+			<div class="single_review">
+			<div><span class="review_title"><%= r.title %></span><span class="review_stars"><span class="star5 icon <%= 'permyellow' unless r.rating < 5 %>">★</span><span class="star4 icon <%= 'permyellow' unless r.rating < 4 %>">★</span><span class="star3 icon <%= 'permyellow' unless r.rating < 3 %>">★</span><span class="star2 icon <%= 'permyellow' unless r.rating < 2 %>">★</span><span class="star1 icon <%= 'permyellow' unless r.rating < 1 %>">★</span></span></div>
+			<div><span class="review_author">Posted by: <%= link_to cur_user.name, cur_user %></span></div>
+			<div><span class="review_date"><%= r.created_at.strftime("%B %d, %Y @ %I:%M %p") %></span></div>
+			<div class="review_content"><%= r.content %></div>
+			</div>
 			<% end %>
 		<% end %>
 	</div>

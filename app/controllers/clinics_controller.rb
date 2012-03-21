@@ -42,6 +42,7 @@ class ClinicsController < ApplicationController
   
   def show
     @request = Request.new
+    @review = Review.new
     @clinic = Clinic.find(params[:id])
     unless @clinic.user_id.nil?
       @clinic_user = User.find(@clinic.user_id)
