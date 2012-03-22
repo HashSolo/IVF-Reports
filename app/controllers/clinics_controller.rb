@@ -87,6 +87,15 @@ class ClinicsController < ApplicationController
     @reviews = @clinic.reviews
   end
   
+  def edit
+    
+    @clinic = Clinic.find(params[:id])
+    unless @clinic.user_id.nil?
+      @clinic_user = User.find(@clinic.user_id)
+    end
+    
+  end
+  
   def new
 	  @title = "Add a New Clinic"
 	  @clinic = Clinic.new
