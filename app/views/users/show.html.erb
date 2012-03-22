@@ -22,8 +22,11 @@
 
 <% if current_user?(@user) && current_user.clinician? %>
 <ul class="clinic_account_options">
-		<li><%= link_to edit_clinic_path(current_user.clinics.first) do |l| %><span class="clinic_rec_rank round" ><span class="icon">⌂</span></span>Edit My Clinic<% end %></li>
+		<li><%= link_to clinic_path(current_user.clinics.first) do |l| %><span class="clinic_rec_rank round" ><span class="icon">⌂</span></span>View My Clinic<% end %></li>
+		<li><%= link_to edit_clinic_path(current_user.clinics.first) do |l| %><span class="clinic_rec_rank round" ><span class="icon">⚙</span></span>Edit My Clinic<% end %></li>
+		<li><%= link_to clinic_requests_path(Clinic.find_by_user_id(current_user.id)) do |l| %><span class="clinic_rec_rank round"><span class="icon">u</span></span>View My Clinic's Leads<% end %></li>
 		<li><%= link_to edit_user_path(current_user) do |l| %><span class="clinic_rec_rank round"><span class="icon">⚙</span></span>Edit My Account<% end %></li>
+		<li>
 </ul>
 <% else %>
 
@@ -32,7 +35,7 @@
 <hr>
 <table class="personal_info">
 	<tr><td>Name</td><td><%= @user.name %></td></tr>
-	<tr><td>Email</td><td><%= link_to @user.email, @user.email %></td></tr>
+	<% if current_user?(@user) %><tr><td>Email</td><td><%= link_to @user.email, @user.email %></td></tr><% end %>
 	<tr><td>Gender</td><td><%= @user.gender.capitalize unless @user.gender.nil? %></td></tr>
 	<tr><td>Ethnicity</td><td><%= @user.ethnicity.capitalize unless @user.ethnicity.nil? %></td></tr>
 	<tr><td>Age</td><td><% if @user.birthday.nil? %><% else %><%= (Date.today - @user.birthday).to_i/365 %> Years Old <% end %></td></tr>
