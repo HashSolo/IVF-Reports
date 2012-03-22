@@ -3,7 +3,7 @@
 <h2>Patient Information</h2>
 <hr>
 <table class="personal_info">
-	<tr><td>Username</td><td><%= @request_user.name %></td></tr>
+	<tr><td>Username</td><td><%= link_to @request_user.name, @request_user %></td></tr>
 	<% if @request.visible? %><tr><td>Email</td><td><%= link_to @request_user.email, @request_user.email %></td></tr><% end %>
 	<tr><td>Gender</td><td><%= @request_user.gender.capitalize unless @request_user.gender.nil? %></td></tr>
 	<tr><td>Ethnicity</td><td><%= @request_user.ethnicity.capitalize unless @request_user.ethnicity.nil? %></td></tr>

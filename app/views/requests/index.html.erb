@@ -7,13 +7,18 @@
 <% end %>
 
 <ul class="request_list">
-	<li class="header round"><span class="username">User Name</span><span class="age">Age</span><span class="previousivf">Attempts</span><span class="ethnicity">Ethnicity</span><span class="view_button">View</span></li>
+	<li class="header round"><span class="username">User Name</span><span class="age">Age</span><span class="created">Contact Requested</span><span class="view_button">View</span></li>
 	<% @requests.each do |r| %>
 	<% user_info = User.find_by_id(r.user_id) %>
 		<% if r.visible? #Show full information if they have paid for the lead. %>
 		<li>Lead Paid For. Email: <%= user_info.email %></li>		
 		<% else #Show limited..teaser info if the lead is not paid for%>
-		<li><span class="username"><%= user_info.name %></span><span class="age"><% if user_info.birthday.nil? %>-<% else %><%= (Date.today - user_info.birthday).to_i/365 %><% end %></span><span class="previousivf"><% if user_info.previous_cycles.nil? %>-<% else %><%= user_info.previous_cycles %><% end %></span><span class="ethnicity"><% if user_info.ethnicity.nil? %>-<% else %><%= user_info.ethnicity.capitalize %><% end %></span><%= link_to clinic_request_path(@clinic, r) do |l| %><span class="view_button icon">E</span><% end %></li>
+		<li>
+			<span class="username"><%= user_info.name %></span>
+			<span class="age"><% if user_info.birthday.nil? %>-<% else %><%= (Date.today - user_info.birthday).to_i/365 %><% end %></span>
+			<span class="created"><%= r.created_at.strftime("%B %d, %Y") %></span>
+			<%= link_to clinic_request_path(@clinic, r) do |l| %><span class="view_button icon">E</span><% end %>
+		</li>
 		<% end %>
 	<% end %>
 </ul>
