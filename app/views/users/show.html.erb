@@ -20,7 +20,7 @@
 	</div>
 </div>
 
-<% if current_user?(@user) && current_user.clinician? %>
+<% if current_user?(@user) && current_user.clinician? # This is what users will see when they are clinicians viewing their own user profile. %>
 <ul class="clinic_account_options">
 		<li><%= link_to clinic_path(current_user.clinics.first) do |l| %><span class="clinic_rec_rank round" ><span class="icon">⌂</span></span>View My Clinic<% end %></li>
 		<li><%= link_to edit_clinic_path(current_user.clinics.first) do |l| %><span class="clinic_rec_rank round" ><span class="icon">⚙</span></span>Edit My Clinic<% end %></li>
@@ -28,35 +28,38 @@
 		<li><%= link_to edit_user_path(current_user) do |l| %><span class="clinic_rec_rank round"><span class="icon">⚙</span></span>Edit My Account<% end %></li>
 </ul>
 <% else %>
-
-<div class="personal_info user_info_section">
-<h2>Personal Information</h2>
-<hr>
-<table class="personal_info">
-	<tr><td>Name</td><td><%= @user.name %></td></tr>
-	<% if current_user?(@user) %><tr><td>Email</td><td><%= link_to @user.email, @user.email %></td></tr><% end %>
-	<tr><td>Gender</td><td><%= @user.gender.capitalize unless @user.gender.nil? %></td></tr>
-	<tr><td>Ethnicity</td><td><%= @user.ethnicity.capitalize unless @user.ethnicity.nil? %></td></tr>
-	<tr><td>Age</td><td><% if @user.birthday.nil? %><% else %><%= (Date.today - @user.birthday).to_i/365 %> Years Old <% end %></td></tr>
-	<tr><td>IVF Attempts</td><td><%= @user.previous_cycles unless @user.previous_cycles.nil? %></td></tr>
-	<tr><td>Infertility Diagnosis</td><td><%= @user.infertility_diagnosis.gsub("_"," ").capitalize unless @user.infertility_diagnosis.nil? %></td></tr>
-	<tr><td>Member Since</td><td><%= @user.created_at.strftime("%B %d, %Y") %></td></tr>
-</table>
-</div>
-
-<div class="personal_info user_info_section">
-	<h2>Personalized Clinic Recommendations</h2>
+	<% if @user.clinician? %>
+		<% #This is what users will see when visiting a clinician's user page (rare event) who are not that user themselves. %>
+	<% else #What normal users see (about themselves and other users?) need to make sure no contact information exists when viewed by others. %>
+	<div class="personal_info user_info_section">
+	<h2>Personal Information</h2>
 	<hr>
-	<ul class="personal_rec_table">
-		<% 
-		count = 0
-		@clinic_results.each do |c| %>
-			<% count += 1 %>
-			<li><a class="rank_link" href="../clinics/<%= c['permalink'] %>" target="_blank"><span class="clinic_rec_rank round" ><%= count %></span></a><span class="clinic_name"><a href="../clinics/<%= c['permalink'] %>" target="_blank"><%= c['clinic_name'] %></a></span><span class="clinic_location"><%= c['city'] %>, <%= c['state'] %></span></li>
-		<% end %>
-	</ul>
-</div>
+	<table class="personal_info">
+		<tr><td>Name</td><td><%= @user.name %></td></tr>
+		<% if current_user?(@user) %><tr><td>Email</td><td><%= link_to @user.email, @user.email %></td></tr><% end %>
+		<tr><td>Gender</td><td><%= @user.gender.capitalize unless @user.gender.nil? %></td></tr>
+		<tr><td>Ethnicity</td><td><%= @user.ethnicity.capitalize unless @user.ethnicity.nil? %></td></tr>
+		<tr><td>Age</td><td><% if @user.birthday.nil? %><% else %><%= (Date.today - @user.birthday).to_i/365 %> Years Old <% end %></td></tr>
+		<tr><td>IVF Attempts</td><td><%= @user.previous_cycles unless @user.previous_cycles.nil? %></td></tr>
+		<tr><td>Infertility Diagnosis</td><td><%= @user.infertility_diagnosis.gsub("_"," ").capitalize unless @user.infertility_diagnosis.nil? %></td></tr>
+		<tr><td>Member Since</td><td><%= @user.created_at.strftime("%B %d, %Y") %></td></tr>
+	</table>
+	</div>
 
+	<div class="personal_info user_info_section">
+		<h2>Personalized Clinic Recommendations</h2>
+		<hr>
+		<ul class="personal_rec_table">
+			<% 
+			count = 0
+			@clinic_results.each do |c| %>
+				<% count += 1 %>
+				<li><a class="rank_link" href="../clinics/<%= c['permalink'] %>" target="_blank"><span class="clinic_rec_rank round" ><%= count %></span></a><span class="clinic_name"><a href="../clinics/<%= c['permalink'] %>" target="_blank"><%= c['clinic_name'] %></a></span><span class="clinic_location"><%= c['city'] %>, <%= c['state'] %></span></li>
+			<% end %>
+		</ul>
+	</div>
+
+	<% end %>
 <% end %>
 
 <!--<div class="personal_info user_info_section">
