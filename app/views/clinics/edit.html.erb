@@ -1,0 +1,80 @@
+<div class="clinic_edit" >
+	
+	<%= form_for @clinic do |clinic| %>
+	
+	<!--
+	<ul>
+	<li>
+		<span class="label"><%= clinic.label :address %></span> <span class="value"><%= clinic.text_field :address %></span>
+	</li>
+	<li>
+		<span class="label"><%= clinic.label :city %></span> <span class="value"><%= clinic.text_field :city %></span>
+	</li>
+	</ul>
+	-->
+	
+	<h3>Address</h3>
+	<br>
+	<table>
+		
+	<tr>
+		<td class="label"><%= clinic.label :address %></td> <td class="value"><%= clinic.text_field :address %></td>
+	</tr>
+	<tr>
+		<td class="label"><%= clinic.label :city %></td> <td class="value"><%= clinic.text_field :city %></td>
+	</tr>	
+	<tr>
+		<td class="label"><%= clinic.label :state %></td> <td class="value"><%= clinic.text_field :state %></td>
+	</tr>
+	<tr>
+		<td class="label"><%= clinic.label :zip %></td> <td class="value"><%= clinic.text_field :zip %></td>
+	</tr>
+	</table>
+
+	<br>
+	<h3>Directors</h3>
+	<br>
+	
+	<table>
+	<tr>
+		<td class="label"><%= clinic.label :practice_director %></td> <td class="value"><%= clinic.text_field :practice_director %></td>
+	</tr>
+	<tr>
+		<td class="label"><%= clinic.label :medical_director %></td> <td class="value"><%= clinic.text_field :medical_director %></td>
+	</tr>
+	<tr>
+		<td class="label"><%= clinic.label :laboratory_director %></td> <td class="value"><%= clinic.text_field :laboratory_director %></td>
+	</tr>
+	</table>
+	
+	<br>
+	<h3>Contact</h3>
+	<br>
+	
+	<table>
+	<tr>
+		<td class="label"><%= clinic.label :phone %></td> <td class="value"><%= clinic.text_field :phone %></td>
+	</tr>
+	<tr>
+		<td class="label"><%= clinic.label :website %></td> <td class="value"><%= clinic.text_field :website %></td>
+	</tr>
+	<tr>
+		<td class="label"><%= clinic.label :email %></td> <td class="value"><%= clinic.text_field :email %></td>
+	</tr>
+	<tr>
+	
+	</table>
+	
+	<br>
+	<h3>Additional Information</h3>
+	<br>
+	
+	<div class="info">
+	<%= clinic.text_area :info %>
+	</div>
+	
+	<div class="button">
+		<%= clinic.submit :value => "Update Clinic Info"%>
+	</div>
+	<% end %>
+</div>
