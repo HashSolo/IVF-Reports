@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120323175011) do
+ActiveRecord::Schema.define(:version => 20120323181147) do
 
   create_table "clinics", :force => true do |t|
     t.string   "clinic_name"
@@ -26,8 +26,6 @@ ActiveRecord::Schema.define(:version => 20120323175011) do
     t.string   "phone"
     t.string   "website"
     t.string   "email"
-    t.float    "latitude",            :limit => 255
-    t.float    "longitude",           :limit => 255
     t.string   "info"
     t.string   "image"
     t.datetime "created_at"
@@ -35,6 +33,8 @@ ActiveRecord::Schema.define(:version => 20120323175011) do
     t.integer  "old_clinic_id"
     t.string   "permalink"
     t.integer  "user_id"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   create_table "datapoints", :force => true do |t|

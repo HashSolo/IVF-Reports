@@ -1,11 +1,11 @@
 class ChangeDataTypeForLatLong < ActiveRecord::Migration
   def up
-    change_column :clinics, :latitude, :float
-    change_column :clinics, :longitude, :float    
+    rename_column :clinics, :latitude, :old_latitude
+    rename_column :clinics, :longitude, :old_longitude
   end
 
   def down
-    change_column :clinics, :latitude, :string
-    change_column :clinics, :longitude, :string
+    rename_column :clinics, :old_latitude, :latitude
+    rename_column :clinics, :old_longitude, :longitude
   end
 end

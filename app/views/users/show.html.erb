@@ -41,6 +41,7 @@
 		<tr><td>Gender</td><td><%= @user.gender.capitalize unless @user.gender.nil? %></td></tr>
 		<tr><td>Ethnicity</td><td><%= @user.ethnicity.capitalize unless @user.ethnicity.nil? %></td></tr>
 		<tr><td>Age</td><td><% if @user.birthday.nil? %><% else %><%= (Date.today - @user.birthday).to_i/365 %> Years Old <% end %></td></tr>
+		<tr><td>Zip Code</td><td><% if @user.zip_code.nil? %>-<% else %><%= @user.zip_code %><% end %></td></tr>
 		<tr><td>IVF Attempts</td><td><%= @user.previous_cycles unless @user.previous_cycles.nil? %></td></tr>
 		<tr><td>Infertility Diagnosis</td><td><%= @user.infertility_diagnosis.gsub("_"," ").capitalize unless @user.infertility_diagnosis.nil? %></td></tr>
 		<tr><td>Member Since</td><td><%= @user.created_at.strftime("%B %d, %Y") %></td></tr>
