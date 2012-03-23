@@ -171,6 +171,13 @@
 
 	<div id="description_box" class="infobox">
 		<h3>Clinic Description</h3>
+		<h4><%= @clinic.clinic_name %></h4>
+		<% if @clinic.user_id.nil? %>
+			<%= large_gravatar_for User.find_by_email('info@ivfreports.org') %>
+		<% else %>
+			<%= large_gravatar_for User.find_by_id(@clinic.user_id) %>
+		<% end %>
+		
 		<p><%= @clinic.info %><p>
 	</div>
 
