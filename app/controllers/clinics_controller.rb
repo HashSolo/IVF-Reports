@@ -115,6 +115,7 @@ class ClinicsController < ApplicationController
 
   def edit
 	  @title = "Edit Clinic Info"
+	  @clinic = Clinic.find(params[:id])
   end
   
   def update

@@ -1,4 +1,10 @@
 module ApplicationHelper
+  def user_clinic
+    if signed_in? && current_user.clinician?
+      return current_user.clinics.first
+    end
+  end
+  
   def title
 		base_title = "IVF Reports"
 		if @title.nil?
