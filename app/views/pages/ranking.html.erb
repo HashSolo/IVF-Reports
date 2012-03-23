@@ -249,7 +249,7 @@ function PrintOverallRankingResults(){
 								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>Safety Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['safety_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['safety_score']) + "'>★</span></span></li>";
 								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>SART Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['sart_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['sart_score']) + "'>★</span></span></li>";
 								clinic_html = clinic_html + "</ul>";
-								<% if signed_in? %>
+								<% if signed_in? && !current_user.clinician? %>
 									var current_user_id = <%= current_user.id %>;
 									var current_span_id = "span#"+ current_user_id + "o" + data[k]['clinic_id'];									
 									var check_data = {
@@ -295,11 +295,15 @@ function PrintOverallRankingResults(){
 											}
 										}
 									});
-								<% else #Need to add text and link about: Register to Contact %>
-								clinic_html = clinic_html + '<span class="register_to_contact round"><%= link_to register_path do |l| %>Register<br/>to<br/>Contact<% end %></span>';
-								clinic_html = clinic_html + "</div>";
+								<% elsif signed_in? && current_user.clinician? #Display no contact link %>
+									clinic_html = clinic_html + "</div>";
 
-								$('div#overall_ranking_results div.clinic_rank_list').append(clinic_html);
+									$('div#overall_ranking_results div.clinic_rank_list').append(clinic_html);
+								<% else #Need to add text and link about: Register to Contact %>
+									clinic_html = clinic_html + '<span class="register_to_contact round"><%= link_to register_path do |l| %>Register<br/>to<br/>Contact<% end %></span>';
+									clinic_html = clinic_html + "</div>";
+
+									$('div#overall_ranking_results div.clinic_rank_list').append(clinic_html);
 								<% end %>
 						});
 					}

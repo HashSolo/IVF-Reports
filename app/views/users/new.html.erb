@@ -8,12 +8,15 @@
 	<li>Cycle Tracking System</li>
 	<li>A Community of Engaged Patients Like You</li>
 </ul>
+<div class="register_form">
 <%= form_for(@user) do |f| %>
 	<%= render 'shared/error_messages', :object => f.object %>
-	<table class="register_form">
 		<h2 class="register_blurb">Become a Member of the IVF Reports Community</h2>
+		<h3>Required Fields</h3>
+	<table class="register_form">
+
 	<tr>
-		<td class="label"><%= f.label :name %></td>
+		<td class="label"><%= f.label :name, 'Username' %></td>
 		<td><%= f.text_field :name %></td>
 	</tr>
 	<tr>
@@ -28,11 +31,116 @@
 		<td class="label"><%= f.label :password_confirmation, "Confirmation" %></td>
 		<td><%= f.password_field :password_confirmation %></td>
 	</tr>
-	<tr>
-		<td class="label"> </td><td class="submit"><%= f.submit "Register" %></td>
-	</tr>
 	</table>
+	<h3>Optional Fields - Get More Accurate Reccomendations!</h3>
+	<table class="register_form">
+		<tr>
+			<td class="label"><%= f.label :gender %></td>
+			<%
+				if(@user.gender=="male")
+					gender_select = "<option value=''>-</option><option value='male' selected>Male</option><option value='female'>Female</option>"
+				elsif(@user.gender=="female")
+					gender_select = "<option value=''>-</option><option value='male'>Male</option><option value='female' selected>Female</option>"
+				else
+					gender_select = "<option value='' selected>-</option><option value='male'>Male</option><option value='female'>Female</option>"	
+				end
+			%>	
+			<td class="input"><%= f.select(:gender, gender_select) %></td>
+		</tr>
+		<tr>
+			<td class="label"><%= f.label :birthday %></td>
+			<td class="input"><%= f.date_select :birthday, {
+				:start_year => Time.now.year,
+			  	:end_year => 1900,
+			  	:use_short_month => true,
+			  	:order => [:month, :day, :year],
+			  	:prompt => {:month => 'Month', :day => 'Day', :year => 'Year'}} %></td>
+		</tr>
+		<tr>
+			<td class="label"><%= f.label :zip_code %></td>
+			<td class="input"><%= f.text_field :zip_code, :size=>"10"  %></td>
+		</tr>
+		<tr>	
+			<td class="label"><%= f.label :ethnicity %></td>
+			<%
+				if(@user.ethnicity=="caucasian")
+					ethnicity_select = "<option value="">-</option><option value='caucasian' selected>Caucasian</option><option value='east_asian'>East Asian</option><option value='south_asian'>South Asian</option><option value='arabic'>Arabic</option><option value='african'>African</option><option value='hispanic'>Hispanic</option><option value='native_american'>Native American</option><option value='other'>Other</option>"
+				elsif(@user.ethnicity=="east_asian")
+					ethnicity_select = "<option value="">-</option><option value='caucasian'>Caucasian</option><option value='east_asian' selected>East Asian</option><option value='south_asian'>South Asian</option><option value='arabic'>Arabic</option><option value='african'>African</option><option value='hispanic'>Hispanic</option><option value='native_american'>Native American</option><option value='other'>Other</option>"
+				elsif(@user.ethnicity=="south_asian")
+					ethnicity_select = "<option value="">-</option><option value='caucasian'>Caucasian</option><option value='east_asian'>East Asian</option><option value='south_asian' selected>South Asian</option><option value='arabic'>Arabic</option><option value='african'>African</option><option value='hispanic'>Hispanic</option><option value='native_american'>Native American</option><option value='other'>Other</option>"						
+				elsif(@user.ethnicity=="arabic")
+					ethnicity_select = "<option value="">-</option><option value='caucasian'>Caucasian</option><option value='east_asian'>East Asian</option><option value='south_asian'>South Asian</option><option value='arabic' selected>Arabic</option><option value='african'>African</option><option value='hispanic'>Hispanic</option><option value='native_american'>Native American</option><option value='other'>Other</option>"						
+				elsif(@user.ethnicity=="african")
+					ethnicity_select = "<option value="">-</option><option value='caucasian'>Caucasian</option><option value='east_asian'>East Asian</option><option value='south_asian'>South Asian</option><option value='arabic'>Arabic</option><option value='african' selected>African</option><option value='hispanic'>Hispanic</option><option value='native_american'>Native American</option><option value='other'>Other</option>"						
+				elsif(@user.ethnicity=="hispanic")
+					ethnicity_select = "<option value="">-</option><option value='caucasian'>Caucasian</option><option value='east_asian'>East Asian</option><option value='south_asian'>South Asian</option><option value='arabic'>Arabic</option><option value='african'>African</option><option value='hispanic' selected>Hispanic</option><option value='native_american'>Native American</option><option value='other'>Other</option>"						
+				elsif(@user.ethnicity=="native_american")
+					ethnicity_select = "<option value="">-</option><option value='caucasian'>Caucasian</option><option value='east_asian'>East Asian</option><option value='south_asian'>South Asian</option><option value='arabic'>Arabic</option><option value='african'>African</option><option value='hispanic'>Hispanic</option><option value='native_american' selected>Native American</option><option value='other'>Other</option>"						
+				elsif(@user.ethnicity=="other")
+					ethnicity_select = "<option value="">-</option><option value='caucasian'>Caucasian</option><option value='east_asian'>East Asian</option><option value='south_asian'>South Asian</option><option value='arabic'>Arabic</option><option value='african'>African</option><option value='hispanic'>Hispanic</option><option value='native_american'>Native American</option><option value='other' selected>Other</option>"
+				else
+					ethnicity_select = "<option value="" selected>-</option><option value='caucasian'>Caucasian</option><option value='east_asian'>East Asian</option><option value='south_asian'>South Asian</option><option value='arabic'>Arabic</option><option value='african'>African</option><option value='hispanic'>Hispanic</option><option value='native_american'>Native American</option><option value='other'>Other</option>"						
+				end
+			%>
+			<td class="input"><%= f.select(:ethnicity, ethnicity_select) %></td>
+		</tr>
+		<tr>
+			<td class="label"><%= f.label :previous_cycles, "Previous Cycles" %></td>
+			<%
+				if(@user.previous_cycles==0)
+					cycles_select = "<option value="">-</option><option value='0' selected>0</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option>"
+				elsif(@user.previous_cycles==1)
+					cycles_select = "<option value="">-</option><option value='0'>0</option><option value='1' selected>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option>"
+				elsif(@user.previous_cycles==2)
+					cycles_select = "<option value="">-</option><option value='0'>0</option><option value='1'>1</option><option value='2' selected>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option>"
+				elsif(@user.previous_cycles==3)
+					cycles_select = "<option value="">-</option><option value='0'>0</option><option value='1'>1</option><option value='2'>2</option><option value='3' selected>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option>"
+				elsif(@user.previous_cycles==4)
+					cycles_select = "<option value="">-</option><option value='0'>0</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4' selected>4</option><option value='5'>5</option><option value='6'>6</option>"
+				elsif(@user.previous_cycles==5)
+					cycles_select = "<option value="">-</option><option value='0'>0</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5' selected>5</option><option value='6'>6</option>"
+				elsif(@user.previous_cycles==6)
+					cycles_select = "<option value="">-</option><option value='0'>0</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6' selected>6</option>"
+				else
+					cycles_select = "<option value="" selected>-</option><option value='0'>0</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option>"
+				end
+			%>
+			<td class="input"><%= f.select(:previous_cycles, cycles_select) %></td>
+		</tr>
+		<tr>
+			<td class="label"><%= f.label :infertility_diagnosis, "Infertility Diagnosis" %></td>
+			<%
+				if(@user.infertility_diagnosis=="endometriosis")
+					diagnosis_select = "<option value="">-</option><option value='endometriosis' selected>Endometriosis</option><option value='diminished_ovarian_reserve'>Diminished Ovarian Reserve</option><option value='multiple_female_factors'>Multiple Female Factors</option><option value='ovulatory_dysfunction'>Ovulatory Dysfunction</option><option value='tubal_factor'>Tubal Factor</option><option value='female_and_male_factors'>Female and Male Factors</option><option value='male_factor'>Male Factor</option><option value='other_factor'>Other Factor</option><option value='uterine_factor'>Uterine Factor</option><option value='unknown_factor'>Unknown Factor</option>"
+				elsif(@user.infertility_diagnosis=="diminished_ovarian_reserve")
+					diagnosis_select = "<option value="">-</option><option value='endometriosis'>Endometriosis</option><option value='diminished_ovarian_reserve' selected>Diminished Ovarian Reserve</option><option value='multiple_female_factors'>Multiple Female Factors</option><option value='ovulatory_dysfunction'>Ovulatory Dysfunction</option><option value='tubal_factor'>Tubal Factor</option><option value='female_and_male_factors'>Female and Male Factors</option><option value='male_factor'>Male Factor</option><option value='other_factor'>Other Factor</option><option value='uterine_factor'>Uterine Factor</option><option value='unknown_factor'>Unknown Factor</option>"
+				elsif(@user.infertility_diagnosis=="multiple_female_factors")
+					diagnosis_select = "<option value="">-</option><option value='endometriosis'>Endometriosis</option><option value='diminished_ovarian_reserve'>Diminished Ovarian Reserve</option><option value='multiple_female_factors' selected>Multiple Female Factors</option><option value='ovulatory_dysfunction'>Ovulatory Dysfunction</option><option value='tubal_factor'>Tubal Factor</option><option value='female_and_male_factors'>Female and Male Factors</option><option value='male_factor'>Male Factor</option><option value='other_factor'>Other Factor</option><option value='uterine_factor'>Uterine Factor</option><option value='unknown_factor'>Unknown Factor</option>"
+				elsif(@user.infertility_diagnosis=="ovulatory_dysfunction")
+					diagnosis_select = "<option value="">-</option><option value='endometriosis'>Endometriosis</option><option value='diminished_ovarian_reserve'>Diminished Ovarian Reserve</option><option value='multiple_female_factors'>Multiple Female Factors</option><option value='ovulatory_dysfunction' selected>Ovulatory Dysfunction</option><option value='tubal_factor'>Tubal Factor</option><option value='female_and_male_factors'>Female and Male Factors</option><option value='male_factor'>Male Factor</option><option value='other_factor'>Other Factor</option><option value='uterine_factor'>Uterine Factor</option><option value='unknown_factor'>Unknown Factor</option>"
+				elsif(@user.infertility_diagnosis=="tubal_factor")
+					diagnosis_select = "<option value="">-</option><option value='endometriosis'>Endometriosis</option><option value='diminished_ovarian_reserve'>Diminished Ovarian Reserve</option><option value='multiple_female_factors'>Multiple Female Factors</option><option value='ovulatory_dysfunction'>Ovulatory Dysfunction</option><option value='tubal_factor' selected>Tubal Factor</option><option value='female_and_male_factors'>Female and Male Factors</option><option value='male_factor'>Male Factor</option><option value='other_factor'>Other Factor</option><option value='uterine_factor'>Uterine Factor</option><option value='unknown_factor'>Unknown Factor</option>"
+				elsif(@user.infertility_diagnosis=="female_and_male_factors")
+					diagnosis_select = "<option value="">-</option><option value='endometriosis'>Endometriosis</option><option value='diminished_ovarian_reserve'>Diminished Ovarian Reserve</option><option value='multiple_female_factors'>Multiple Female Factors</option><option value='ovulatory_dysfunction'>Ovulatory Dysfunction</option><option value='tubal_factor'>Tubal Factor</option><option value='female_and_male_factors' selected>Female and Male Factors</option><option value='male_factor'>Male Factor</option><option value='other_factor'>Other Factor</option><option value='uterine_factor'>Uterine Factor</option><option value='unknown_factor'>Unknown Factor</option>"
+				elsif(@user.infertility_diagnosis=="male_factor")
+					diagnosis_select = "<option value="">-</option><option value='endometriosis'>Endometriosis</option><option value='diminished_ovarian_reserve'>Diminished Ovarian Reserve</option><option value='multiple_female_factors'>Multiple Female Factors</option><option value='ovulatory_dysfunction'>Ovulatory Dysfunction</option><option value='tubal_factor'>Tubal Factor</option><option value='female_and_male_factors'>Female and Male Factors</option><option value='male_factor' selected>Male Factor</option><option value='other_factor'>Other Factor</option><option value='uterine_factor'>Uterine Factor</option><option value='unknown_factor'>Unknown Factor</option>"
+				elsif(@user.infertility_diagnosis=="other_factor")
+					diagnosis_select = "<option value="">-</option><option value='endometriosis'>Endometriosis</option><option value='diminished_ovarian_reserve'>Diminished Ovarian Reserve</option><option value='multiple_female_factors'>Multiple Female Factors</option><option value='ovulatory_dysfunction'>Ovulatory Dysfunction</option><option value='tubal_factor'>Tubal Factor</option><option value='female_and_male_factors'>Female and Male Factors</option><option value='male_factor'>Male Factor</option><option value='other_factor' selected>Other Factor</option><option value='uterine_factor'>Uterine Factor</option><option value='unknown_factor'>Unknown Factor</option>"
+				elsif(@user.infertility_diagnosis=="uterine_factor")
+					diagnosis_select = "<option value="">-</option><option value='endometriosis'>Endometriosis</option><option value='diminished_ovarian_reserve'>Diminished Ovarian Reserve</option><option value='multiple_female_factors'>Multiple Female Factors</option><option value='ovulatory_dysfunction'>Ovulatory Dysfunction</option><option value='tubal_factor'>Tubal Factor</option><option value='female_and_male_factors'>Female and Male Factors</option><option value='male_factor'>Male Factor</option><option value='other_factor'>Other Factor</option><option value='uterine_factor' selected>Uterine Factor</option><option value='unknown_factor'>Unknown Factor</option>"
+				elsif(@user.infertility_diagnosis=="unknown_factor")
+					diagnosis_select = "<option value="">-</option><option value='endometriosis'>Endometriosis</option><option value='diminished_ovarian_reserve'>Diminished Ovarian Reserve</option><option value='multiple_female_factors'>Multiple Female Factors</option><option value='ovulatory_dysfunction'>Ovulatory Dysfunction</option><option value='tubal_factor'>Tubal Factor</option><option value='female_and_male_factors'>Female and Male Factors</option><option value='male_factor'>Male Factor</option><option value='other_factor'>Other Factor</option><option value='uterine_factor'>Uterine Factor</option><option value='unknown_factor' selected>Unknown Factor</option>"
+				else
+					diagnosis_select = "<option value="" selected>-</option><option value='endometriosis'>Endometriosis</option><option value='diminished_ovarian_reserve'>Diminished Ovarian Reserve</option><option value='multiple_female_factors'>Multiple Female Factors</option><option value='ovulatory_dysfunction'>Ovulatory Dysfunction</option><option value='tubal_factor'>Tubal Factor</option><option value='female_and_male_factors'>Female and Male Factors</option><option value='male_factor'>Male Factor</option><option value='other_factor'>Other Factor</option><option value='uterine_factor'>Uterine Factor</option><option value='unknown_factor'>Unknown Factor</option>"
+				end
+			%>
+			<td class="input"><%= f.select(:infertility_diagnosis, diagnosis_select) %></td>
+		</tr>
+	</table>
+		<div class="update_button"><%= f.submit "Register" %></div>
 
 
 
 <% end %>
+</div>

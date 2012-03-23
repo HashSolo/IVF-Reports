@@ -201,9 +201,20 @@
 	
 	<div id="reviews_box" class="infobox hidden">
 		<h3>Clinic Reviews</h3>
-		<div class="write_button"><span class="write_a_review">Write a Review</span></div>
+		<% if signed_in? && !current_user.clinician? %>
+			<div class="write_button"><span class="write_a_review">Write a Review</span></div>
+		<% elsif signed_in? && current_user.clinician? %>
+			
+		<% else %>
+			<div class="write_button" style="font-size:13px;margin-top:-38px;"><%= link_to 'Register', register_path %> or <%= link_to 'Sign In', signin_path %> to Write a Review</div>
+		<% end %>
 		<% if @reviews.empty? %>
-			<p>This clinic does not currently have any reviews. <span class="write_a_review">Be the first!</span></p>
+			<p>This clinic does not currently have any reviews. 
+				<% if signed_in? && !current_user.clinician? %>
+					<span class="write_a_review">Be the first!</span>
+				<% else %>
+				<% end %>
+			</p>
 		<% else %>
 			<% @reviews.each do |r| %>
 			<% cur_user = User.find_by_id(r.user_id) %>

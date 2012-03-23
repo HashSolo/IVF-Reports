@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   def show
 	  @user = User.find_by_permalink(params[:id])
 	  @title = @user.name.capitalize
-	  
+    
 	  age_group = "All Ages"
 	  diagnosis = "All Diagnoses"
 	  cycle_type = "fresh"
@@ -61,12 +61,33 @@ class UsersController < ApplicationController
 	    age_group = ">42"
 	  end
 	  
-	  @scores = Score.where(:year => year, :cycle_type => cycle_type, :diagnosis => diagnosis, :age_group => age_group).limit(5).offset(0)
-	  
-	  if(@scores.empty?)
-	    diagnosis = "All Diagnoses"
-	    @scores = Score.where(:year => year, :cycle_type => cycle_type, :diagnosis => diagnosis, :age_group => age_group).limit(5).offset(0)
+	  unless @user.zip_code.nil?
+	    @coordinates = Geocoder.search(@user.zip_code)
     end
+    
+    if @coordinates.empty?
+      @scores = Score.where(:year => year, :cycle_type => cycle_type, :diagnosis => diagnosis, :age_group => age_group).limit(5).offset(0)
+
+  	  if(@scores.empty?)
+  	    diagnosis = "All Diagnoses"
+  	    @scores = Score.where(:year => year, :cycle_type => cycle_type, :diagnosis => diagnosis, :age_group => age_group).limit(5).offset(0)
+      end
+    else #If there is a zip code for the user and coordinates are produced
+    	lat = coordinates[0].latitude
+    	low_lat = lat - 1
+    	high_lat = lat + 1
+    	long = coordinates[0].longitude
+    	low_long = long - 1
+    	high_long = long + 1
+      @scores = Score.where(:year => year, :cycle_type => cycle_type, :diagnosis => diagnosis, :age_group => age_group).joins(:clinic).where(:clinics => {:latitude => low_lat..high_lat, :longitude => low_long..high_long}).limit(5).offset(0)
+
+  	  if(@scores.empty?)
+  	    diagnosis = "All Diagnoses"
+  	    @scores = Score.where(:year => year, :cycle_type => cycle_type, :diagnosis => diagnosis, :age_group => age_group).joins(:clinic).where(:clinics => {:latitude => low_lat..high_lat, :longitude => low_long..high_long}).limit(5).offset(0)
+      end
+  	end
+	  
+
     
 	  @clinic_results = Array.new;
     unless @scores.empty?
