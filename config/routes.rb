@@ -1,7 +1,7 @@
 Transit::Application.routes.draw do
   resources :scores
 
-  resources :users do 
+  resources :users, :except => :index do 
     resources :requests
   end
   
@@ -16,7 +16,7 @@ Transit::Application.routes.draw do
   end
   
 	resources :reviews
-	resources :requests do
+	resources :requests, :only => [:test, :create] do
 	  get 'test', :on => :collection
   end
 	
