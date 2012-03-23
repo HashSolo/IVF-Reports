@@ -21,7 +21,8 @@
 		<ul class="sidebar_module">
 			<li class="header">Manage Clinic Info</li>
 			<li><%= link_to 'Edit Clinic Info', edit_clinic_path(@clinic) %></li>
-			<li class="bottom"><%= link_to 'View Patient Leads', [@clinic, :requests] %></li>
+			<li><%= link_to 'View In Depth Statistics', clinic_statistics_path(@clinic) %></li>
+			<li class="bottom"><%= link_to 'View Patient Leads', [@clinic, :requests] %></li>			
 		</ul>
 	<% end %>
 	<% end %>
@@ -32,6 +33,7 @@
 		<li class="header">Manage My Clinic Info</li>
 		<li><%= link_to 'View My Clinic', clinic_path(user_clinic) %></li>
 		<li><%= link_to 'Edit Clinic Info', edit_clinic_path(user_clinic) %></li>
+		<li><%= link_to 'View In Depth Statistics', [user_clinic, :statistics] %></li>		
 		<li class="bottom"><%= link_to 'View Patient Leads', [user_clinic, :requests] %></li>
 	</ul>
 	<% end %>

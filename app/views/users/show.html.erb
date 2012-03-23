@@ -26,6 +26,7 @@
 		<li><%= link_to edit_clinic_path(current_user.clinics.first) do |l| %><span class="clinic_rec_rank round" ><span class="icon">⚙</span></span>Edit My Clinic<% end %></li>
 		<li><%= link_to clinic_requests_path(Clinic.find_by_user_id(current_user.id)) do |l| %><span class="clinic_rec_rank round"><span class="icon">u</span></span>View My Clinic's Leads<% end %></li>
 		<li><%= link_to edit_user_path(current_user) do |l| %><span class="clinic_rec_rank round"><span class="icon">⚙</span></span>Edit My Account<% end %></li>
+		<li><%= link_to [Clinic.find_by_user_id(current_user.id), :statistics] do |l| %><span class="clinic_rec_rank round"><span class="icon">C</span></span>View In Depth Reporting<% end %></li>		
 </ul>
 <% else %>
 	<% if @user.clinician? %>

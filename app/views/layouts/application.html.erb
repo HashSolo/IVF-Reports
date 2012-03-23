@@ -18,7 +18,7 @@
 				<div class="middle_content">
 				<%= yield %>			
 				</div>
-			<% elsif is_clinic_explorer? || is_clinic_comparator? %>
+			<% elsif is_clinic_explorer? || is_clinic_comparator? || (is_controller?('statistics')) %>
 				<div class="explorer_content">
 						<% flash.each do |key, value| %>
 							<div class="grid_9 alpha"><div class="flash <%= key %>"><%= value %></div></div>

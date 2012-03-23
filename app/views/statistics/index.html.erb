@@ -1,0 +1,654 @@
+<h1>IVF Reports - In Depth Clinic Reporting</h1>
+<h2 style="text-align:center;"><%= @clinic.clinic_name %> | <%= @clinic.city %>, <%= @clinic.state %></h2>
+<div class="grid_3 alpha">
+	<div class="left_sidebar" style="overflow:scroll;height:600px;">
+		<h2>Compare Across:</h2>
+			<ul id="statistic-selectable" class="jqueryui-selectable">
+				<li class="ui-selected">Age Group</li>
+				<li>Diagnosis</li>
+				<li>Year</li>
+			</ul>
+		<hr>
+		<div id="age-group-selector" class="variable-selector hidden">
+		<h2>Select Age Group:</h2>
+			<ul id="age-selectable" class="jqueryui-selectable">
+				<li class="ui-selected"><35</li>
+				<li>35-37</li>
+				<li>38-40</li>
+				<li>41-42</li>
+				<li>>42</li>
+			</ul>
+		<hr>
+		</div>
+		<div id="diagnosis-selector" class="variable-selector">		
+		<h2>Select a Diagnosis:</h2>
+			<ul id="diagnosis-selectable" class="jqueryui-selectable">
+				<li class="ui-selected">All Diagnoses</li>
+				<li>Endometriosis</li>
+				<li>Diminished Ovarian Reserve</li>
+				<li>Multiple Female Factors</li>
+				<li>Ovulatory Dysfunction</li>
+				<li>Tubal Factor</li>
+				<li>Female and Male Factors</li>
+				<li>Male Factor</li>
+				<li>Other Factor</li>
+				<li>Uterine Factor</li>
+				<li>Unknown Factor</li>
+			</ul>
+		<hr>
+		</div>
+		<div div id="year-selector" class="variable-selector">
+		<h2>Select a Year:</h2>
+			<ul id="year-selectable" class="jqueryui-selectable">
+				<li class="ui-selected">2010</li>
+				<li>2009</li>
+				<li>2008</li>
+				<li>2007</li>
+				<li>2006</li>
+				<li>2005</li>
+			</ul>
+		<hr>
+		</div>
+	</div>
+</div>
+<div class="grid_6">
+	<div class="middle_content">
+	<div class="comparator_content">
+		<h2 id="results_title">Your Clinic vs. The National Average</h2>
+		
+		
+		<hr>
+		
+		<div id="comparison_results">
+			<div class="graph_instructions" style="text-align:center;color:#7895a3;font-size:13px;">Click on a column to see more in depth statistics.</div>
+			
+			<canvas id="comparison_canvas" width="420" height="450">[No canvas support]</canvas>
+
+		</div>
+	</div>
+	</div>
+</div>
+
+<div class="grid_3 omega">
+	<div class="right_sidebar" style="height:600px;overflow:scroll;">
+		<h2>Statistic to Visualize:</h2>
+			<ul id="statistic-visualize-selectable" class="jqueryui-selectable">
+				<li class="ui-selected">Implantation Rate</li>
+				<li>Embryos Transferred (Avg)</li>
+				<li>Pregnancy Rate (Per Cycle)</li>
+				<li>Birth Rate (Per Cycle)</li>
+				<li>Birth Rate (Per Retrieval)</li>
+				<li>Birth Rate (Per Transfer)</li>
+				<li>Single Embryo Transfer Rate</li>
+				<li>Cancellation Rate</li>
+				<li>Twin Rate</li>
+				<li>Triplet Rate</li>
+			</ul>
+		<hr>
+		<h2>Graph Type:</h2>
+			<ul id="graph-type-selectable" class="jqueryui-selectable">
+				<li class="ui-selected">Vertical Bar Graph</li>
+
+				<!--<li>Horizontal Bar Graph</li>-->
+			</ul>	
+	</div>
+</div>
+
+
+
+<script type="text/javascript">
+	//The event listeners need to change the info when a selection is made from the clinics.
+	var clinic_id = <%= @clinic.id %>; //The national clinic data will be used by default until clinics are selected.
+	var year = 2010;
+	var age_group = "<35";
+	var statistic_across = "age_group";
+	var statistic_visualize = "implantation_rate";
+	var cycle_type = "fresh";
+	var diagnosis = "All Diagnoses";
+	var graph_type = "vertical_bar";
+
+	$(document).ready(function(){
+		RenderGraph();
+		$('#graph-type-selectable').selectable({
+			stop: function(){
+				$(".ui-selected", this).each(function(){
+					var index = $('#graph-type-selectable li').index(this);
+					if(index==0){
+						graph_type="vertical_bar";
+					}
+					else if(index==1){
+						graph_type="horizontal_bar";
+					}
+					else if(index==2){
+						graph_type="line";
+					}
+					else{
+						graph_type="vertical_bar";
+					}
+				});
+				RenderGraph();
+			}
+		});
+		$('#statistic-selectable').selectable({
+			stop: function(){
+				$( ".ui-selected", this ).each(function() {
+					var index = $( "#statistic-selectable li" ).index( this );
+					if(index==0){
+						statistic_across="age_group";
+						$('div#age-group-selector').addClass('hidden');
+						$('div#diagnosis-selector').removeClass('hidden');
+						$('div#year-selector').removeClass('hidden');
+					}
+					else if(index==1){
+						statistic_across="diagnosis";
+						$('div#age-group-selector').removeClass('hidden');
+						$('div#diagnosis-selector').addClass('hidden');
+						$('div#year-selector').removeClass('hidden');
+					}
+					else if(index==2){
+						statistic_across="year";
+						$('div#age-group-selector').removeClass('hidden');
+						$('div#diagnosis-selector').removeClass('hidden');
+						$('div#year-selector').addClass('hidden');
+					}
+					else{
+						statistic_across="age_group";
+						$('div#age-group-selector').addClass('hidden');
+						$('div#diagnosis-selector').removeClass('hidden');
+						$('div#year-selector').removeClass('hidden');
+					}
+				});
+				RenderGraph();
+			}
+		});
+		
+		$('#statistic-visualize-selectable').selectable({
+			stop: function(){
+				$( ".ui-selected", this ).each(function() {
+					var index = $('#statistic-visualize-selectable li').index(this);
+					if(index==0){
+						statistic_visualize="implantation_rate";
+					}
+					else if(index==1){
+						statistic_visualize="avg_num_embs_transferred";
+					}
+					else if(index==2){
+						statistic_visualize="pregs_per_cycle";
+					}
+					else if(index==3){
+						statistic_visualize="births_per_cycle";
+					}
+					else if(index==4){
+						statistic_visualize="births_per_retrieval";
+					}
+					else if(index==5){
+						statistic_visualize="births_per_transfer";
+					}
+					else if(index==6){
+						statistic_visualize="set_transfer_rate";
+					}
+					else if(index==7){
+						statistic_visualize="cancellation_rate";
+					}
+					else if(index==8){
+						statistic_visualize="twin_rate";
+					}
+					else if(index==9){
+						statistic_visualize="trip_rate";
+					}
+					else{
+						statistic_visualize="implantation_rate";
+					}
+				});
+				RenderGraph();
+			}
+		});
+		//Governs the age selectable
+		$('#year-selectable').selectable({
+			stop: function(){
+				$('div#clinic_list').html("");
+				$('div#clinic_list').addClass('ajax_loading');
+				$( ".ui-selected", this ).each(function() {
+					var index = $( "#year-selectable li" ).index( this );
+					if(index==0){
+						year = "2010";
+					}
+					else if(index==1){
+						year = "2009";
+					}
+					else if(index==2){
+						year = "2008";
+					}
+					else if(index==3){
+						year = "2007";
+					}
+					else if(index==4){
+						year = "2006";
+					}
+					else if(index==5){
+						year = "2005";
+					}
+					else{
+						year = "2010";
+					}
+				});
+				RenderGraph();
+			}
+		});
+		$('#age-selectable').selectable({
+			stop: function(){
+				$('div#clinic_list').html("");
+				$('div#clinic_list').addClass('ajax_loading');
+				$( ".ui-selected", this ).each(function() {
+					var index = $( "#age-selectable li" ).index( this );
+					if(index==0){
+						age_group="<35";
+					}
+					else if(index==1){
+						age_group="35-37";
+					}
+					else if(index==2){
+						age_group="38-40";
+					}
+					else if(index==3){
+						age_group="41-42";
+					}
+					else if(index==4){
+						age_group=">42";
+					}
+					else{
+						age_group="<35";
+					}
+				});
+				RenderGraph();
+			}
+		});
+		//Governs the diagnosis selectable
+		$('#diagnosis-selectable').selectable({
+			stop: function(){
+				$('div#clinic_list').html("");
+				$('div#clinic_list').addClass('ajax_loading');
+				$( ".ui-selected", this ).each(function() {
+					var index = $( "#diagnosis-selectable li" ).index( this );
+					if(index==0){
+						diagnosis="All Diagnoses";
+					}
+					else if(index==1){
+						diagnosis="Endometriosis";
+					}
+					else if(index==2){
+						diagnosis="Diminished Ovarian Reserve";
+					}
+					else if(index==3){
+						diagnosis="Multiple Female Factors";
+					}
+					else if(index==4){
+						diagnosis="Ovulatory Dysfunction";
+					}
+					else if(index==5){
+						diagnosis="Tubal Factor";
+					}
+					else if(index==6){
+						diagnosis="Female and Male Factors";
+					}
+					else if(index==7){
+						diagnosis="Male Factor";
+					}
+					else if(index==8){
+						diagnosis="Other Factor";
+					}
+					else if(index==9){
+						diagnosis="Uterine Factor";
+					}
+					else if(index==10){
+						diagnosis="Unknown Factor";
+					}
+					else{
+						diagnosis="All Diagnoses";
+					}
+				});
+				RenderGraph();
+			}
+		});
+	});
+
+	//Charts can either be: multi-year, multi-age, multi-diagnostic
+	//Maybe more dimensions can vary in the future
+	//Global Variables
+
+	
+	function RenderGraph(){
+
+	
+		var data = {
+			year: year,
+			clinic_id: clinic_id,
+			age_group: age_group,
+			statistic_visualize: statistic_visualize,
+			statistic_across: statistic_across,
+			cycle_type: cycle_type,
+			diagnosis: diagnosis
+		}
+		$.ajax({
+			url: "<%= url_for(:action => 'index') %>",
+			dataType: 'json',
+			async: true,
+			data: data,
+			success: 	function(data){
+							var age_groups = ['<35', '35-37', '38-40', '41-42', '>42'];
+							var diagnoses = ["All Diagnoses", "Endometriosis", "Diminished Ovarian Reserve", "Multiple Female Factors", "Ovulatory Dysfunction", "Tubal Factor", "Female and Male Factors", "Male Factor", "Other Factor", "Unknown Factor", "Uterine Factor"]
+							var years = [2005, 2006, 2007, 2008, 2009, 2010]
+							
+							
+							//This is the array data for the graph
+							if(statistic_across=="age_group"){
+								var graph_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array());
+								var cycle_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array());
+								var imp_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array());
+								var tooltips = new Array(new Array(), new Array(), new Array(), new Array(), new Array());
+								
+							}
+							else if(statistic_across=="diagnosis"){
+								var graph_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array());
+								var cycle_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array());
+								var imp_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array());
+								var tooltips = new Array(new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array());
+							}
+							else{
+								
+								var graph_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array(), new Array());
+								var cycle_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array(), new Array());
+								var imp_data = new Array(new Array(), new Array(), new Array(), new Array(), new Array(), new Array());
+								var tooltips = new Array(new Array(), new Array(), new Array(), new Array(), new Array(), new Array());
+							}
+							var cur_age_index = 0;
+							var y_max = 0;
+							var key_data = new Array();
+							
+							var statistic_name = "Implantation Rate"
+							//Determine the name of the current statistic
+							if(statistic_visualize=="implantation_rate"){
+								statistic_name = "Implantation Rate";
+							}
+							else if(statistic_visualize=="avg_num_embs_transferred"){
+								statistic_name = "Average Number of Embryos Transferred";
+							}
+							else if(statistic_visualize=="pregs_per_cycle"){
+								statistic_name = "Pregnancy Rate (Per Cycle)";								
+							}
+							else if(statistic_visualize=="births_per_cycle"){
+								statistic_name = "Birth Rate (Per Cycle)";								
+							}
+							else if(statistic_visualize=="births_per_retrieval"){
+								statistic_name = "Birth Rate (Per Retrieval)";								
+							}
+							else if(statistic_visualize=="births_per_transfer"){
+								statistic_name = "Birth Rate (Per Transfer)";								
+							}
+							else if(statistic_visualize=="set_transfer_rate"){
+								statistic_name = "Single Embryo Transfer Rate";								
+							}
+							else if(statistic_visualize=="cancellation_rate"){
+								statistic_name = "Cancellation Rate";								
+							}
+							else if(statistic_visualize=="twin_rate"){
+								statistic_name = "Twin Rate";								
+							}
+							else if(statistic_visualize=="trip_rate"){
+								statistic_name = "Triplet Rate";								
+							}
+							else{
+								statistic_name = "Implantation Rate";								
+							}
+							
+							
+							
+							//Load the cycle data into the graph
+							//Depends on the statistic that we are comparing across
+							if(statistic_across=="age_group"){
+								$.each(data, function(k){
+									for(var i = 0; i < 5; i++){
+										if(data[k]['clinic_id']==clinic_id){
+											if(data[k]['age_group']==age_groups[i]){
+												key_data[1] = "Your Clinic";
+												if(graph_type=="horizontal_bar" || graph_type=="vertical_bar"){
+													graph_data[i][1] = data[k]['statistic_visualize'];
+													cycle_data[i][1] = data[k]['cycles'];
+													imp_data[i][1] = data[k]['statistic_visualize'];
+													tooltips[i*(2)+1] = "<b>Age Group: "+ age_groups[i] +"</b><br/>";
+													tooltips[i*(2)+1] = tooltips[i*(2)+1] + "Your Clinic's Cycles: " + cycle_data[i][1] + "<br/>";
+													tooltips[i*(2)+1] = tooltips[i*(2)+1] + "Your Clinic's " + statistic_name+": " + Math.round(10*graph_data[i][1])/10;
+												}
+												else if(graph_type=="line"){
+													graph_data[1][i] = data[k]['statistic_visualize'];
+													cycle_data[1][i] = data[k]['cycles'];
+													imp_data[1][i] = data[k]['statistic_visualize'];
+													tooltips[1][i] = "<b>Age Group: "+ age_groups[i] +"</b><br/>";
+													tooltips[1][i] = tooltips[1][i] + "Your Clinic's Cycles: " + cycle_data[1][i] + "<br/>";
+													tooltips[1][i] = tooltips[1][i] + "Your Clinic's " + statistic_name+": " + Math.round(10*graph_data[1][i])/10;
+												}
+												if(data[k]['statistic_visualize'] > y_max){
+													y_max = data[k]['statistic_visualize'];
+												}
+											}
+										}
+										if(data[k]['clinic_id']==384){
+											if(data[k]['age_group']==age_groups[i]){									
+												key_data[0] = "National Average";
+												if(graph_type=="horizontal_bar" || graph_type=="vertical_bar"){
+													graph_data[i][0] = data[k]['statistic_visualize'];
+													cycle_data[i][0] = data[k]['cycles'];
+													imp_data[i][0] = data[k]['statistic_visualize'];
+													tooltips[i*(2)+0] = "<b>Age Group: "+ age_groups[i] +"</b><br/>";								
+													tooltips[i*(2)+0] = tooltips[i*(2)+0] + "National Number of Cycles: " + cycle_data[i][0] + "<br/>";
+													tooltips[i*(2)+0] = tooltips[i*(2)+0] + "National "+statistic_name+": " + Math.round(10*graph_data[i][0])/10;
+												}
+												else if(graph_type=="line"){
+													graph_data[0][i] = data[k]['statistic_visualize'];
+													cycle_data[0][i] = data[k]['cycles'];
+													imp_data[0][i] = data[k]['statistic_visualize'];
+													tooltips[0][i] = "<b>Age Group: "+ age_groups[i] +"</b><br/>";								
+													tooltips[0][i] = tooltips[0][i] + "National Number of Cycles: " + cycle_data[0][i] + "<br/>";
+													tooltips[0][i] = tooltips[0][i] + "National "+statistic_name+": " + Math.round(10*graph_data[0][i])/10;
+												}
+												if(data[k]['statistic_visualize'] > y_max){
+													y_max = data[k]['statistic_visualize'];
+												}
+											}
+										}
+									}
+								});
+							} //If statistic across is age group
+							
+							else if(statistic_across=="diagnosis"){
+								$.each(data, function(k){
+									for(var i = 0; i < 11; i++){
+										if(data[k]['clinic_id']==clinic_id){
+											if(data[k]['diagnosis']==diagnoses[i]){
+												key_data[1] = "Your Clinic";
+												if(graph_type=="horizontal_bar" || graph_type=="vertical_bar"){
+													graph_data[i][1] = data[k]['statistic_visualize'];
+													cycle_data[i][1] = data[k]['cycles'];
+													imp_data[i][1] = data[k]['statistic_visualize'];
+													tooltips[i*(2)+1] = "<b>Diagnosis: "+ diagnoses[i] +"</b><br/>";
+													tooltips[i*(2)+1] = tooltips[i*(2)+1] + "Your Clinic's Cycles: " + cycle_data[i][1] + "<br/>";
+													tooltips[i*(2)+1] = tooltips[i*(2)+1] + "Your Clinic's " + statistic_name+": " + Math.round(10*graph_data[i][1])/10;
+												}
+												else{
+													graph_data[1][i] = data[k]['statistic_visualize'];
+													cycle_data[1][i] = data[k]['cycles'];
+													imp_data[1][i] = data[k]['statistic_visualize'];
+													tooltips[1][i] = "<b>Diagnosis: "+ diagnoses[i] +"</b><br/>";
+													tooltips[1][i] = tooltips[1][i] + "Your Clinic's Cycles: " + cycle_data[1][i] + "<br/>";
+													tooltips[1][i] = tooltips[1][i] + "Your Clinic's " + statistic_name+": " + Math.round(10*graph_data[1][i])/10;
+												}
+												if(data[k]['statistic_visualize'] > y_max){
+													y_max = data[k]['statistic_visualize'];
+												}
+											}
+										}
+										if(data[k]['clinic_id']==384){
+											if(data[k]['diagnosis']==diagnoses[i]){									
+												key_data[0] = "National Average";
+												if(graph_type=="horizontal_bar" || graph_type=="vertical_bar"){
+													graph_data[i][0] = data[k]['statistic_visualize'];
+													cycle_data[i][0] = data[k]['cycles'];
+													imp_data[i][0] = data[k]['statistic_visualize'];
+													tooltips[i*(2)+0] = "<b>Diagnosis: "+ diagnoses[i] +"</b><br/>";								
+													tooltips[i*(2)+0] = tooltips[i*(2)+0] + "National Number of Cycles: " + cycle_data[i][0] + "<br/>";
+													tooltips[i*(2)+0] = tooltips[i*(2)+0] + "National "+statistic_name+": " + Math.round(10*graph_data[i][0])/10;
+												}
+												else{
+													graph_data[0][i] = data[k]['statistic_visualize'];
+													cycle_data[0][i] = data[k]['cycles'];
+													imp_data[0][i] = data[k]['statistic_visualize'];
+													tooltips[0][i] = "<b>Diagnosis: "+ diagnoses[i] +"</b><br/>";
+													tooltips[0][i] = tooltips[0][i] + "Your Clinic's Cycles: " + cycle_data[0][i] + "<br/>";
+													tooltips[0][i] = tooltips[0][i] + "Your Clinic's " + statistic_name+": " + Math.round(10*graph_data[0][i])/10;
+												}
+												if(data[k]['statistic_visualize'] > y_max){
+													y_max = data[k]['statistic_visualize'];
+												}
+											}
+										}
+									}
+								});
+							}
+							
+							else if(statistic_across=="year"){
+								$.each(data, function(k){
+									for(var i = 0; i < 6; i++){
+										if(data[k]['clinic_id']==clinic_id){
+											if(data[k]['year']==years[i]){
+												key_data[1] = "Your Clinic";
+												if(graph_type=="horizontal_bar" || graph_type=="vertical_bar"){
+													graph_data[i][1] = data[k]['statistic_visualize'];
+													cycle_data[i][1] = data[k]['cycles'];
+													imp_data[i][1] = data[k]['statistic_visualize'];
+													tooltips[i*(2)+1] = "<b>Year: "+ years[i] +"</b><br/>";
+													tooltips[i*(2)+1] = tooltips[i*(2)+1] + "Your Clinic's Cycles: " + cycle_data[i][1] + "<br/>";
+													tooltips[i*(2)+1] = tooltips[i*(2)+1] + "Your Clinic's " + statistic_name+": " + Math.round(10*graph_data[i][1])/10;
+												}
+												else{
+													graph_data[1][i] = data[k]['statistic_visualize'];
+													cycle_data[1][i] = data[k]['cycles'];
+													imp_data[1][i] = data[k]['statistic_visualize'];
+													tooltips[1][i] = "<b>Year: "+ years[i] +"</b><br/>";
+													tooltips[1][i] = tooltips[1][i] + "Your Clinic's Cycles: " + cycle_data[1][i] + "<br/>";
+													tooltips[1][i] = tooltips[1][i] + "Your Clinic's " + statistic_name+": " + Math.round(10*graph_data[1][i])/10;
+												}
+												if(data[k]['statistic_visualize'] > y_max){
+													y_max = data[k]['statistic_visualize'];
+												}
+											}
+										}
+										if(data[k]['clinic_id']==384){
+											if(data[k]['year']==years[i]){									
+												key_data[0] = "National Average";
+												if(graph_type=="horizontal_bar" || graph_type=="vertical_bar"){
+													graph_data[i][0] = data[k]['statistic_visualize'];
+													cycle_data[i][0] = data[k]['cycles'];
+													imp_data[i][0] = data[k]['statistic_visualize'];
+													tooltips[i*(2)+0] = "<b>Year: "+ years[i] +"</b><br/>";								
+													tooltips[i*(2)+0] = tooltips[i*(2)+0] + "National Number of Cycles: " + cycle_data[i][0] + "<br/>";
+													tooltips[i*(2)+0] = tooltips[i*(2)+0] + "National "+statistic_name+": " + Math.round(10*graph_data[i][0])/10;
+												}
+												else{
+													graph_data[0][i] = data[k]['statistic_visualize'];
+													cycle_data[0][i] = data[k]['cycles'];
+													imp_data[0][i] = data[k]['statistic_visualize'];
+													tooltips[0][i] = "<b>Year: "+ years[i] +"</b><br/>";
+													tooltips[0][i] = tooltips[0][i] + "Your Clinic's Cycles: " + cycle_data[0][i] + "<br/>";
+													tooltips[0][i] = tooltips[0][i] + "Your Clinic's " + statistic_name+": " + Math.round(10*graph_data[0][i])/10;
+												}
+												if(data[k]['statistic_visualize'] > y_max){
+													y_max = data[k]['statistic_visualize'];
+												}
+											}
+										}
+									}
+								});
+							}
+							
+							
+							//Set the maximum y value		
+							y_max = y_max + 5;
+							if(y_max > 100.0){
+								y_max = 100;
+							}
+							
+							//Instantiate the new graph
+							if(graph_type=="vertical_bar"){
+								statistic_graph = new RGraph.Bar('comparison_canvas', graph_data);
+							}
+							else if(graph_type=="line"){
+								statistic_graph = new RGraph.Line('comparison_canvas', graph_data);
+							}
+							else if(graph_type=="horizontal_bar"){
+								statistic_graph = new RGraph.HBar('comparison_canvas', graph_data);
+							}
+							
+							
+							if(statistic_across=="age_group"){
+								statistic_graph.Set('chart.labels', age_groups);
+							}
+							else if(statistic_across=="diagnosis"){
+								statistic_graph.Set('chart.labels', diagnoses);
+							}
+							else{
+								statistic_graph.Set('chart.labels', years);
+							}
+							
+							statistic_graph.Set('chart.key', key_data);
+							if(graph_type=="horizontal_bar" && statistic_across=="diagnosis"){
+								statistic_graph.Set('chart.gutter.left', 175);
+							}
+							else{
+								statistic_graph.Set('chart.gutter.left', 45);
+							}
+							statistic_graph.Set('chart.gutter.bottom', 150);
+							statistic_graph.Set('chart.text.angle', 45);
+					        statistic_graph.Set('chart.key.position', 'gutter');
+					        statistic_graph.Set('chart.background.barcolor1', 'white');
+					        statistic_graph.Set('chart.background.barcolor2', 'ddffff');
+					        statistic_graph.Set('chart.colors', ['#65BDBD', '#7895A3', '#0F5151']);
+							statistic_graph.Set('chart.variant', '3d');
+							statistic_graph.Set('chart.text.font', 'Trebuchet MS');
+							statistic_graph.Set('chart.text.size', 10);
+							
+							if(statistic_visualize=="avg_num_embs_transferred"){	
+							}
+							else{
+								statistic_graph.Set('chart.units.post', '%');
+							}
+							if(graph_type=="horizontal_bar" || graph_type=="vertical_bar"){
+								statistic_graph.Set('chart.tooltips', tooltips);
+							}
+							else if(graph_type=="line"){
+
+								statistic_graph.Set('chart.tooltips', tooltips);
+
+							}
+								
+							statistic_graph.Set('chart.shadow', true);
+							statistic_graph.Set('chart.shadow.blur', 5);
+							statistic_graph.Set('chart.shadow.offsetx', 2);
+							statistic_graph.Set('chart.shadow.offsety', 0);
+							statistic_graph.Set('chart.shadow.color', '#0F5151');
+							statistic_graph.Set('chart.background.image', "<%= asset_path 'ivfr_washout.jpg' %>");
+							
+							//Bar graph grow
+							if(graph_type=="vertical_bar" || graph_type=="horizontal_bar"){
+								RGraph.Effects.Bar.Wave(statistic_graph);
+							}
+							else{
+								RGraph.Effects.Line.jQuery.Trace(statistic_graph);
+							}
+			}
+		});
+	}
+	
+
+	
+	
+</script>

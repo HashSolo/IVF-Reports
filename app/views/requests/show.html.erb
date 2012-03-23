@@ -17,7 +17,7 @@
 <div class="personal_info user_info_section">
 <h2>Contact This Patient</h2>
 <hr>
-<% if @request.visible? %>
+<% if @request.visible? || current_user.admin? %>
 <table class="personal_info">
 	<tr><td>Email</td><td><%= @request_user.email %></td></tr>
 	<tr><td>Phone</td><td><% if @request_user.phone.nil? %><i>Phone Number Not Provided</i><% else %><%= @request_user.phone %><% end %></td></tr>
