@@ -73,10 +73,10 @@ class UsersController < ApplicationController
   	    @scores = Score.where(:year => year, :cycle_type => cycle_type, :diagnosis => diagnosis, :age_group => age_group).limit(5).offset(0)
       end
     else #If there is a zip code for the user and coordinates are produced
-    	lat = coordinates[0].latitude
+    	lat = @coordinates[0].latitude
     	low_lat = lat - 1
     	high_lat = lat + 1
-    	long = coordinates[0].longitude
+    	long = @coordinates[0].longitude
     	low_long = long - 1
     	high_long = long + 1
       @scores = Score.where(:year => year, :cycle_type => cycle_type, :diagnosis => diagnosis, :age_group => age_group).joins(:clinic).where(:clinics => {:latitude => low_lat..high_lat, :longitude => low_long..high_long}).limit(5).offset(0)
