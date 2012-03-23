@@ -142,16 +142,22 @@ class ClinicsController < ApplicationController
 	  end
 		  
     def correct_user
-      if current_user.admin?
-      elsif current_user.clinician?
-        @clinic = Clinic.find(params[:id])
-        if @clinic.user_id.nil? #The clinic has not been claimed
-          redirect_to(@clinic)
+      @clinic = Clinic.find(params[:id])      
+      if signed_in?
+        if current_user.admin?
+        elsif current_user.clinician?
+          if @clinic.user_id.nil? #The clinic has not been claimed
+            redirect_to(@clinic)
+          else
+            @clinic_user = User.find_by_id(@clinic.user_id)
+            redirect_to(@clinic) unless current_user?(@clinic_user)
+          end
         else
-          @clinic_user = User.find_by_id(@clinic.user_id)
-          redirect_to(root_path) unless current_user?(@clinic_user)
-        end
-  	  end
+          redirect_to(@clinic)
+    	  end
+  	  else
+  	    redirect_to(@clinic)
+	    end
     end
   
 end

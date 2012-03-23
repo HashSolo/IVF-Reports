@@ -10,7 +10,7 @@
 				<li class="request_button bottom"><%= form_for @request, :remote => :true do |f| %><%= f.hidden_field :user_id, :value => current_user.id %><%= f.hidden_field :clinic_id, :value => @clinic.id %><%= f.submit :value => 'Click Here to Contact' %><% end %></li>
 			<% end %>
 		<% else %>
-			<li class="request_button bottom"><%= link_to 'Register to Contact', new_user_path %></li>
+			<li class="request_button bottom"><%= link_to 'Register to Contact', register_path %></li>
 		<% end %>
 	</ul>
 	<% end %>

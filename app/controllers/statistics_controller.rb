@@ -1,5 +1,5 @@
 class StatisticsController < ApplicationController
-  before_filter :correct_user
+  before_filter :correct_user, :index
 
   def index
     @clinic = Clinic.find_by_id(params[:clinic_id])
@@ -12,16 +12,22 @@ class StatisticsController < ApplicationController
 	  end
 		  
     def correct_user
-      if current_user.admin?
-      elsif current_user.clinician? #Only clinician users can see the statistics page
-        @clinic = Clinic.find(params[:id])
-        if @clinic.user_id.nil? #The clinic has not been claimed
-          redirect_to(@clinic)
+      @clinic = Clinic.find(params[:clinic_id])      
+      if signed_in?
+        if current_user.admin?
+        elsif current_user.clinician? #Only clinician users can see the statistics page
+          if @clinic.user_id.nil? #The clinic has not been claimed
+            redirect_to(@clinic)
+          else
+            @clinic_user = User.find_by_id(@clinic.user_id) #The clinic users can only see their own clinic's statistics.
+            redirect_to(@clinic) unless current_user?(@clinic_user)
+          end
         else
-          @clinic_user = User.find_by_id(@clinic.user_id) #The clinic users can only see their own clinic's statistics.
-          redirect_to(root_path) unless current_user?(@clinic_user)
-        end
-  	  end
+          redirect_to(@clinic)
+    	  end
+  	  else
+  	    redirect_to(@clinic)
+	    end
     end
     
 end
