@@ -20,6 +20,7 @@ class Request < ActiveRecord::Base
       :amount => 10.00,
       :currency_code => 'USD',
       :notify_url => notify_url,
+      :rm => 1,
       :return => return_url
     }
     values.merge!({
