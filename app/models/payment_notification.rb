@@ -4,7 +4,7 @@ class PaymentNotification < ActiveRecord::Base
   after_create :mark_request_as_purchased
   
   private
-  def mark_cart_as_purchased
+  def mark_request_as_purchased
     if status == "Completed"
       request.update_attributes(
         :purchased_at => Time.now,
