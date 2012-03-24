@@ -3,6 +3,5 @@ class PaymentNotificationsController < ApplicationController
   def create
     PaymentNotification.create!(:params => params, :request_id => params[:invoice], :status => params[:payment_status], :transaction_id => params[:transaction_id])
     render :nothing => true
-    end
   end
 end
