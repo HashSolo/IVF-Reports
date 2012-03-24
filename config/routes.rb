@@ -1,4 +1,4 @@
-Transit::Application.routes.draw do
+IVFReports::Application.routes.draw do
   resources :scores
 
   resources :users, :except => :index do 
