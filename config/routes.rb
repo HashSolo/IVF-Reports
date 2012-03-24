@@ -19,6 +19,7 @@ Transit::Application.routes.draw do
 	resources :requests, :only => [:test, :create] do
 	  get 'test', :on => :collection
   end
+  resources :payment_notifications, :only => :create
 	
 	resources :datapoints
 	match '/register', :to => 'users#new'

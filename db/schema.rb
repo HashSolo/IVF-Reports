@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120323181147) do
+ActiveRecord::Schema.define(:version => 20120324200623) do
 
   create_table "clinics", :force => true do |t|
     t.string   "clinic_name"
@@ -69,12 +69,22 @@ ActiveRecord::Schema.define(:version => 20120323181147) do
   add_index "datapoints", ["diagnosis"], :name => "index_datapoints_on_diagnosis"
   add_index "datapoints", ["year"], :name => "index_datapoints_on_year"
 
+  create_table "payment_notifications", :force => true do |t|
+    t.text     "params"
+    t.integer  "request_id"
+    t.string   "status"
+    t.string   "transaction_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "requests", :force => true do |t|
     t.integer  "user_id"
     t.integer  "clinic_id"
-    t.boolean  "visible",    :default => false
+    t.boolean  "visible",      :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "purchased_at"
   end
 
   create_table "reviews", :force => true do |t|

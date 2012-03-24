@@ -26,7 +26,7 @@
 
 <div class="purchase_request">
 	<span class="purchase_button round">
-		Purchase Contact Information
+		<%= link_to 'Purchase Contact Information', @request.paypal_url(clinic_request_url(@clinic, @request), payment_notifications_url) %>
 	</span>
 </div>
 

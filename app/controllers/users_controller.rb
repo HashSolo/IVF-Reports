@@ -65,7 +65,7 @@ class UsersController < ApplicationController
 	    @coordinates = Geocoder.search(@user.zip_code)
     end
     
-    if @coordinates.empty?
+    if @coordinates.nil? || @coordinates.empty?
       @scores = Score.where(:year => year, :cycle_type => cycle_type, :diagnosis => diagnosis, :age_group => age_group).limit(5).offset(0)
 
   	  if(@scores.empty?)
