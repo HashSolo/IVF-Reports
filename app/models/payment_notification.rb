@@ -4,12 +4,12 @@ class PaymentNotification < ActiveRecord::Base
   after_create :mark_request_as_purchased
   
   private
-  def mark_request_as_purchased
-    if status == "Completed"
-      request.update_attributes(
-        :purchased_at => Time.now,
-        :visible => true
-      )
+    def mark_request_as_purchased
+      if status == "Completed"
+        request.update_attributes(
+          :purchased_at => Time.now,
+          :visible => true
+        )
+      end
     end
-  end
 end
