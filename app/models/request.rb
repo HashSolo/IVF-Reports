@@ -17,7 +17,7 @@ class Request < ActiveRecord::Base
       :item_name => "Patient Lead: #{user.name}",
       :item_number => id,
       :invoice => id,
-      :amount => 100.00,
+      :amount => 10.00,
       :currency_code => 'USD',
       :notify_url => notify_url,
       :return => return_url
