@@ -1,1 +1,34 @@
-<h1>Lead # <%= @request.id %></h1>
+<h1>Contact Request: <%= @request.created_at.strftime("%B %d, %Y") %></h1>
+<div class="personal_info user_info_section">
+<h2>Patient Information</h2>
+<hr>
+<table class="personal_info">
+	<tr><td>Username</td><td><%= link_to @request_user.name, @request_user %></td></tr>
+	<% if @request.visible? %><tr><td>Email</td><td><%= link_to @request_user.email, @request_user.email %></td></tr><% end %>
+	<tr><td>Gender</td><td><%= @request_user.gender.capitalize unless @request_user.gender.nil? %></td></tr>
+	<tr><td>Ethnicity</td><td><%= @request_user.ethnicity.capitalize unless @request_user.ethnicity.nil? %></td></tr>
+	<tr><td>Age</td><td><% if @request_user.birthday.nil? %><% else %><%= (Date.today - @request_user.birthday).to_i/365 %> Years Old <% end %></td></tr>
+	<tr><td>Previous IVF Attempts</td><td><%= @request_user.previous_cycles unless @request_user.previous_cycles.nil? %></td></tr>
+	<tr><td>Infertility Diagnosis</td><td><%= @request_user.infertility_diagnosis.gsub("_"," ").capitalize unless @request_user.infertility_diagnosis.nil? %></td></tr>
+	<tr><td>IVF Reports Member Since</td><td><%= @request_user.created_at.strftime("%B %d, %Y") %></td></tr>
+</table>
+</div>
+
+<div class="personal_info user_info_section">
+<h2>Contact This Patient</h2>
+<hr>
+<% if @request.visible? || current_user.admin? %>
+<table class="personal_info">
+	<tr><td>Email</td><td><%= @request_user.email %></td></tr>
+	<tr><td>Phone</td><td><% if @request_user.phone.nil? %><i>Phone Number Not Provided</i><% else %><%= @request_user.phone %><% end %></td></tr>
+</table>
+<% else #This needs to be a button whereby a clinic can purchase access to the patient's contact information (we also need the purchase to trigger an email with the contact info) %>
+
+<div class="purchase_request">
+	<span class="purchase_button round">
+		<%= link_to 'Purchase Contact Information', @request.paypal_url(clinic_request_url(@clinic, @request), payment_notifications_url) %>
+	</span>
+</div>
+
+<% end %>
+</div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120227204827) do
+ActiveRecord::Schema.define(:version => 20120324200623) do
 
   create_table "clinics", :force => true do |t|
     t.string   "clinic_name"
@@ -26,8 +26,6 @@ ActiveRecord::Schema.define(:version => 20120227204827) do
     t.string   "phone"
     t.string   "website"
     t.string   "email"
-    t.string   "latitude"
-    t.string   "longitude"
     t.string   "info"
     t.string   "image"
     t.datetime "created_at"
@@ -35,6 +33,8 @@ ActiveRecord::Schema.define(:version => 20120227204827) do
     t.integer  "old_clinic_id"
     t.string   "permalink"
     t.integer  "user_id"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   create_table "datapoints", :force => true do |t|
@@ -69,12 +69,22 @@ ActiveRecord::Schema.define(:version => 20120227204827) do
   add_index "datapoints", ["diagnosis"], :name => "index_datapoints_on_diagnosis"
   add_index "datapoints", ["year"], :name => "index_datapoints_on_year"
 
+  create_table "payment_notifications", :force => true do |t|
+    t.text     "params"
+    t.integer  "request_id"
+    t.string   "status"
+    t.string   "transaction_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "requests", :force => true do |t|
     t.integer  "user_id"
     t.integer  "clinic_id"
-    t.boolean  "visible",    :default => false
+    t.boolean  "visible",      :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "purchased_at"
   end
 
   create_table "reviews", :force => true do |t|
@@ -115,38 +125,7 @@ ActiveRecord::Schema.define(:version => 20120227204827) do
     t.datetime "updated_at"
   end
 
-  create_table "users", :force => true do |t|
-    t.string   "name"
-    t.string   "email"
-    t.string   "encrypted_password"
-    t.string   "salt"
-    t.boolean  "admin",                 :default => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "insurer",               :default => false
-    t.string   "permalink"
-    t.string   "gender"
-    t.string   "zip_code"
-    t.string   "ethnicity"
-    t.date     "birthday"
-    t.integer  "previous_cycles"
-    t.string   "infertility_diagnosis"
-    t.string   "abo_blood_type"
-    t.string   "rh_factor"
-    t.integer  "height_ft"
-    t.integer  "height_inches"
-    t.integer  "weight"
-    t.float    "day_3_fsh"
-    t.float    "day_3_e2"
-    t.float    "day_3_lh"
-    t.float    "day_10_fsh"
-    t.float    "day_10_e2"
-    t.float    "day_10_lh"
-    t.float    "prolactin"
-    t.string   "uterine_fibroids"
-    t.string   "uterine_tumors"
-    t.string   "phone"
-    t.boolean  "clinician",             :default => false
-  end
+# Could not dump table "users" because of following StandardError
+#   Unknown type 'weight' for column 'weight'
 
 end

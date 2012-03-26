@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   include SessionsHelper
   helper_method :download_csv
-
+  
   def download_csv(clinic_data)
     require 'csv'
       csv_string = CSV.generate do |csv|

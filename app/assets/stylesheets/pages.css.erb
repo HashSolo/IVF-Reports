@@ -162,5 +162,33 @@ dark-green-gradient{
 /*AJAX*/
 .ajax_loading {height:400px;background:url("<%= asset_path 'ajax-loader.gif' %>") no-repeat center center;}
 
+/*Review Writing*/
+div.review_dark_bg {position:fixed;left:0;right:0;top:0;bottom:0;background:#325d46;z-index:50;opacity:0.6;}
+span.close_button {display:inline-block;width:60px;height:60px;font-size:50px;line-height:60px;text-align:center;right:0;top:0;float:right;color:#ffffff;cursor:pointer;}
+span.close_button:hover {color:#bbbbbb;}
+div.review_form {position:fixed;width:436px;margin-left:auto;margin-right:auto;z-index:100;background:#7895a3;top:10%;border:1px solid #cccccc;color:#ffffff;padding:8px;bottom:10%;}
+div.review_form h2 {border-bottom:1px solid #cccccc;font-size:18px;}
+div.review_form ul.star_rating {list-style:none;width:100%;display:inline-block;float:left;}
+div.review_form ul.star_rating li {list-style-type:none;margin:0px;padding:0px;width:100%;float:left;height:40px;line-height:40px;margin-top:6px;margin-bottom:6px;}
+div.review_form ul.star_rating li.review_space {height:300px;}
+div.review_form ul.star_rating li span.star_label {float:left;display:inline-block;}
+div.review_form ul.star_rating li span.stars {float:right;display:inline-block;font-size:24px;}
+div.review_form ul.star_rating li span.stars input {width:300px;height:30px;}
+div.review_form ul.star_rating li span.stars textarea {width:300px;height:200px;}
+div.review_form ul.star_rating li span.stars span.icon {display:inline-block;cursor:pointer;}
+div.review_form ul.star_rating li span.stars span.icon.yellow {color:#EEC900;}
+div.review_form ul.star_rating li span.stars span.icon.permyellow {color:#ffd900;}
+div.write_button {display:inline-block;position:relative;margin-top:-44px;float:right;}
+span.write_a_review {text-decoration:underline;color:#325d42;cursor:pointer;}
+
+/*New Sessions (signin)*/
+div.sign_in_form {}
+div.sign_in_form form {margin:24px;border:1px solid #7895a3;padding:24px;}
+div.sign_in_form form h3 {color:#325d5d;margin-top:0px;border-top:0px;font-size:16px;margin-bottom:36px;}
+div.sign_in_form div.field {display:inline-block;width:100%;height:40px;line-height:40px;}
+div.sign_in_form div.field label {float:left;display:inline-block;line-height:30px;}
+div.sign_in_form div.field input {float:right;display:inline-block;line-height:20px;font-size:14px;width:50%;}
+div.sign_in_form input.sign-in-button {font-size:18px;}
+
 /*Hidden*/
 .hidden {display:none;}

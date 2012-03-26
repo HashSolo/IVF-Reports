@@ -18,10 +18,13 @@
 
 <div id="tabs" class="edit_user_tabs">
 	<ul id="edit-user-tabs" class="jqueryui-user-edit-tabs">
+		<% unless current_user.clinician? %>
 		<li class="edit_user_tab"><a href="#edit_user_1"/>Personal Information</a></li>
 		<li class="edit_user_tab"><a href="#edit_user_2"/>Medical Information</a></li>
+		<% end %>
 		<li class="edit_user_tab"><a href="#edit_user_3"/>Account Information</a></li>
 	</ul>
+	<% unless current_user.clinician? %>
 	<div id='edit_user_1' class="edit_user_content">
 	<h2 id="edit_user_personal_title" class="edit_user_title">Edit Personal Information</h2>
 	<%= form_for @user, :as => :personal_info, :url => user_path(@user), :method => :put, :remote => true do |f| %>
@@ -250,6 +253,7 @@
 		</div>
 	<% end %>	
 	</div>
+	<% end %>
 	<div id='edit_user_3' class="edit_user_content">
 		<h2 id="edit_user_account_title" class="edit_user_title">Edit Account Information</h2>
 		<%= form_for @user, :as => :account_info,  :url => user_path(@user), :method => :put, :remote => true do |f| %>

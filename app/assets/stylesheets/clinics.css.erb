@@ -24,10 +24,21 @@ ul.infobox_choices li {display:inline-block;float:left;margin:0px;padding:0px;wi
 ul.infobox_choices li:hover{cursor:pointer;}
 ul.infobox_choices li.selected {color:#325d64;background:#B6d1de;}
 div.infobox_content {border:1px solid #7895A3;float:left;margin-left:1px;margin-right:1px;width:100%;min-height:200px;}
-div.infobox_content div.infobox {padding:10px;}
+div.infobox_content div.infobox {padding:10px;height:360px;overflow:scroll;}
 div.infobox_content div.infobox p {padding:5px;}
 div.infobox_content div.infobox h3 {font-size:17px;color:#325d64;margin-bottom:20px;margin-top:10px;font-weight:bold;border-bottom:1px dashed #c5c5c5;}
 div.infobox_content div.infobox h4 {font-size:16px;color:#325d64;margin-bottom:10px;margin-top:10px;}
+div.single_review {}
+div.single_review span {display:inline-block;float:left;}
+div.single_review span.review_title {height:20px;line-height:20px;font-size:18px;color:#325d5d;width:70%;overflow:hidden;font-weight:bold;margin-top:24px;}
+div.single_review span.review_stars {text-align:right;float:right;height:20px;width:30%;height:20px;line-height:20px;margin-top:24px;}
+div.single_review span.review_stars span.icon {display:inline-block;float:right;color:#cccccc;}
+div.single_review span.review_stars span.icon.permyellow {color:#ffd900;}
+div.single_review span.review_author {width:100%;font-size:13px;color:#ababab;}
+div.single_review span.review_author a{font-size:13px;color:#7895a3;text-decoration:none;}
+div.single_review span.review_date {text-align:left;width:100%;color:#ababab;font-size:14px;float:left;margin-top:12px;}
+div.single_review div.review_content {text-align:justify;font-size:13px;color:#555555;margin-top:24px;margin-left:6px;display:inline-block;width:100%;padding-bottom:24px;border-bottom:1px solid #cccccc;padding-right:6px;}
+	
 
 #select-age {padding:0px;margin:0px;display:inline-block;width:100%;font-size:13px;margin-bottom:20px;}
 #select-age li {padding:0px;margin:0px;list-style-type:none;display:inline-block;width:18%;text-align:center;height:25px;line-height:25px;cursor:pointer;margin-top:5px;}
@@ -54,7 +65,9 @@ div.clinic_edit h3 {color:#7895a3;}
 div.clinic_edit table tr td.label {width:45%;text-align:left;}
 div.clinic_edit table tr td.value {text-align:right;}
 div.clinic_edit div.info {margin-left:5%;}
+div.clinic_edit div.info textarea {width:388px;}
 div.clinic_edit div.button {display:inline-block;margin-left:35%;width:30%;margin-right:35%;margin-top:20px;text-align:center;}
+
 /*
 div.clinic_edit ul li {padding:0px;margin:0px;list-style-type:none;}
 div.clinic_edit ul li span{display:inline-block;border: 2px solid}

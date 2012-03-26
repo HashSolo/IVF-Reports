@@ -16,7 +16,13 @@ namespace :db do
                            :email => "cfclevel@gmail.com",
                            :password => "foobar",
                            :password_confirmation => "foobar")
-      admin2.toggle!(:admin)
+    admin2.toggle!(:admin)
+      
+    admin3 = User.create!(  :name => "ivfreports",
+                            :email => 'info@ivfreports.org',
+                            :password => "foobar",
+                            :password_confirmation => "foobar"
+    )
 	
 	
   end

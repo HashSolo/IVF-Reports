@@ -1,13 +1,14 @@
-Transit::Application.routes.draw do
+IVFReports::Application.routes.draw do
   resources :scores
 
-  resources :users do 
+  resources :users, :except => :index do 
     resources :requests
   end
   
 	resources :sessions, :only => [:new, :create, :destroy]
 	
 	resources :clinics do
+    resources :statistics, :only => [:index]
 	  get 'find_clinics_in_state', :on => :collection
 	  get 'pull_clinic_data', :on => :collection
 	  resources :datapoints
@@ -15,9 +16,10 @@ Transit::Application.routes.draw do
   end
   
 	resources :reviews
-	resources :requests do
+	resources :requests, :only => [:test, :create] do
 	  get 'test', :on => :collection
   end
+  resources :payment_notifications, :only => [:create]
 	
 	resources :datapoints
 	match '/register', :to => 'users#new'
