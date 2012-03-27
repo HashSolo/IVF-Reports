@@ -22,6 +22,7 @@ class ReportsController < ApplicationController
   end
   
   def other_technologies
+    @title = "Other Technologies"
   end
   
   def clinic_comparator

@@ -5,7 +5,7 @@ class PaymentNotification < ActiveRecord::Base
   
   private
     def mark_request_as_purchased
-      if status == "Completed"
+      if status == "Completed" && params[:secret]==APP_CONFIG[:paypal_secret]
         request.update_attributes(
           :purchased_at => Time.now,
           :visible => true
