@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= title %></title>
-  <%= stylesheet_link_tag    "application" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
+  	<title><%= title %></title>
+  	<%= stylesheet_link_tag    "application" %>
+  	<%= javascript_include_tag "application" %>
+	<%= render 'layouts/meta' if Rails.env.production? %>
+	<link rel="shortcut icon" href="<%= asset_path 'favicon.png' %>">
+	<link rel="icon" href="<%= asset_path 'favicon.png' %>">	
+  	<%= csrf_meta_tags %>
 </head>
 <body>
 	<div class="container">
