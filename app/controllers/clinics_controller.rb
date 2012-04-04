@@ -89,12 +89,10 @@ class ClinicsController < ApplicationController
   end
   
   def edit
-    
     @clinic = Clinic.find(params[:id])
     unless @clinic.user_id.nil?
       @clinic_user = User.find(@clinic.user_id)
     end
-    
   end
   
   def new

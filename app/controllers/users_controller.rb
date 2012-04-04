@@ -10,7 +10,12 @@ class UsersController < ApplicationController
   
   def show
 	  @user = User.find_by_permalink(params[:id])
-	  @title = @user.name.capitalize
+	  
+	  if @user.clinician?
+	    redirect_to @user.clinics.first unless current_user?(@user)
+    end
+    
+	  @title = @user.name
     
 	  age_group = "All Ages"
 	  diagnosis = "All Diagnoses"

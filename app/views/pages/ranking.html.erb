@@ -87,6 +87,7 @@ var states = [
 <% end %>
 ];
 
+
 $(document).ready(function(){
 	$( "#tabs" ).tabs();
 	PrintOverallRankingResults();
@@ -242,7 +243,7 @@ function PrintOverallRankingResults(){
 								if(k==9){
 									clinic_html = clinic_html + " bottom";
 								}
-								clinic_html = clinic_html + "'><li class='clinic_name'><a href='/clinics/"+data[k]['permalink']+"' target='_blank'>"+ (overall_page*10 + k + 1) + ". " + data[k]['clinic_name'] + "</a></li>";
+								clinic_html = clinic_html + "'><li class='clinic_name'><a href='/clinics/"+data[k]['permalink']+"'>"+ (overall_page*10 + k + 1) + ". " + data[k]['clinic_name'] + "</a></li>";
 								clinic_html = clinic_html + "<li class='clinic_location'>" + data[k]['city'] + ", " + data[k]['state'] + "</li>";
 								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>IVF Reports Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['ivf_reports_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['ivf_reports_score']) + "'>★</span></span></li>";
 								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>Quality Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['quality_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['quality_score']) + "'>★</span></span></li>";
@@ -334,14 +335,14 @@ function PrintAgeRankingResults(){
 								if(k==9){
 									clinic_html = clinic_html + " bottom";
 								}								
-								clinic_html = clinic_html + "'><li class='clinic_name'><a href='/clinics/"+data[k]['permalink']+"' target='_blank'>"+ (age_page*10 + k + 1) + ". " + data[k]['clinic_name'] + "</a></li>";
+								clinic_html = clinic_html + "'><li class='clinic_name'><a href='/clinics/"+data[k]['permalink']+"'>"+ (age_page*10 + k + 1) + ". " + data[k]['clinic_name'] + "</a></li>";
 								clinic_html = clinic_html + "<li class='clinic_location'>" + data[k]['city'] + ", " + data[k]['state'] + "</li>";
 								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>IVF Reports Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['ivf_reports_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['ivf_reports_score']) + "'>★</span></span></li>";
 								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>Quality Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['quality_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['quality_score']) + "'>★</span></span></li>";
 								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>Safety Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['safety_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['safety_score']) + "'>★</span></span></li>";
 								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>SART Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['sart_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['sart_score']) + "'>★</span></span></li>";
 								clinic_html = clinic_html + "</ul>"
-								<% if signed_in? %>
+								<% if signed_in? && !current_user.clinician?%>
 									var current_user_id = <%= current_user.id %>;
 									var current_span_id = "span#"+ current_user_id + "o" + data[k]['clinic_id'];									
 									var check_data = {
@@ -387,12 +388,16 @@ function PrintAgeRankingResults(){
 											}
 										}
 									});
-								<% else #Need to add text and link about: Register to Contact %>
-								clinic_html = clinic_html + '<span class="register_to_contact round"><%= link_to register_path do |l| %>Register<br/>to<br/>Contact<% end %></span>';
-								clinic_html = clinic_html + "</div>";
+									<% elsif signed_in? && current_user.clinician? #Display no contact link %>
+										clinic_html = clinic_html + "</div>";
 
-								$('div#age_ranking_results div.clinic_rank_list').append(clinic_html);
-								<% end %>
+										$('div#age_ranking_results div.clinic_rank_list').append(clinic_html);
+									<% else #Need to add text and link about: Register to Contact %>
+										clinic_html = clinic_html + '<span class="register_to_contact round"><%= link_to register_path do |l| %>Register<br/>to<br/>Contact<% end %></span>';
+										clinic_html = clinic_html + "</div>";
+
+										$('div#age_ranking_results div.clinic_rank_list').append(clinic_html);
+									<% end %>
 						});
 					}
 	});
@@ -423,14 +428,14 @@ function PrintDiagnosisRankingResults(){
 									clinic_html = clinic_html + " bottom";
 								}
 
-								clinic_html = clinic_html + "'><li class='clinic_name'><a href='/clinics/"+data[k]['permalink']+"' target='_blank'>"+ (diagnosis_page*10 + k + 1) + ". " + data[k]['clinic_name'] + "</a></li>";
+								clinic_html = clinic_html + "'><li class='clinic_name'><a href='/clinics/"+data[k]['permalink']+"'>"+ (diagnosis_page*10 + k + 1) + ". " + data[k]['clinic_name'] + "</a></li>";
 								clinic_html = clinic_html + "<li class='clinic_location'>" + data[k]['city'] + ", " + data[k]['state'] + "</li>";
 								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>IVF Reports Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['ivf_reports_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['ivf_reports_score']) + "'>★</span></span></li>";
 								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>Quality Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['quality_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['quality_score']) + "'>★</span></span></li>";
 								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>Safety Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['safety_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['safety_score']) + "'>★</span></span></li>";
 								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>SART Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['sart_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['sart_score']) + "'>★</span></span></li>";
 								clinic_html = clinic_html + "</ul>"
-								<% if signed_in? %>
+								<% if signed_in? && !current_user.clinician?%>
 									var current_user_id = <%= current_user.id %>;
 									var current_span_id = "span#"+ current_user_id + "o" + data[k]['clinic_id'];									
 									var check_data = {
@@ -476,12 +481,16 @@ function PrintDiagnosisRankingResults(){
 											}
 										}
 									});
-								<% else #Need to add text and link about: Register to Contact %>
-								clinic_html = clinic_html + '<span class="register_to_contact round"><%= link_to register_path do |l| %>Register<br/>to<br/>Contact<% end %></span>';
-								clinic_html = clinic_html + "</div>";
+									<% elsif signed_in? && current_user.clinician? #Display no contact link %>
+										clinic_html = clinic_html + "</div>";
 
-								$('div#diagnosis_ranking_results div.clinic_rank_list').append(clinic_html);
-								<% end %>
+										$('div#diagnosis_ranking_results div.clinic_rank_list').append(clinic_html);
+									<% else #Need to add text and link about: Register to Contact %>
+										clinic_html = clinic_html + '<span class="register_to_contact round"><%= link_to register_path do |l| %>Register<br/>to<br/>Contact<% end %></span>';
+										clinic_html = clinic_html + "</div>";
+
+										$('div#diagnosis_ranking_results div.clinic_rank_list').append(clinic_html);
+									<% end %>
 						});
 					}
 	});

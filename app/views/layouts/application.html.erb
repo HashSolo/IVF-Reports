@@ -11,8 +11,7 @@
 </head>
 <body>
 	<div class="container">
-		<%= render 'layouts/header' %>
-		
+	<%= render 'layouts/header' %>
 		
 	<section class="page-body-content">
 		<div class="container_12">
@@ -33,6 +32,11 @@
 			<div class="grid_3 alpha">
 				<%= render 'layouts/left_sidebar' %>
 			</div>
+				<% if is_controller?('pages') && is_action?('home') %>
+					<div class="grid_9 omega">
+						<%= render 'layouts/call_to_action' %>
+					</div>
+				<% end %>
 			<div class="grid_6">
 				<div class="middle_content">
 					<% flash.each do |key, value| %>

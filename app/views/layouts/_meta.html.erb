@@ -1,5 +1,7 @@
 <meta name='description' content='IVF Reports empowers infertile couples by helping them find the best fertility clinic to treat their specific type of infertility. Fertility Clinics are evaluated according to historical performance, and the data help couples bring a happy, healthy child into this world.'>
-<meta name='keywords' content='IVF Reports, Fertility, Infertility, IVF Clinic, IVF, Best IVF Clinics, Top IVF Clinics, Pregnancy, Embryos, Reproduction, Reproductive Medicine, Assisted Reproductive Technology'>
+<meta name='keywords' content='IVF Reports, Fertility, Infertility, IVF Clinic, IVF, Best IVF Clinics, Top IVF Clinics, Pregnancy, Embryos, Reproduction, Reproductive Medicine, Assisted Reproductive Technology, <% if is_controller?('clinics') && is_action?('show') %>
+<%= "#{@clinic.clinic_name}, #{@clinic.practice_director}, #{@clinic.medical_director}, #{@clinic.laboratory_director}" %>
+<% end %>'>
 <meta name="google-site-verification" content="b4VS-QYAuuj2LQ_7n52YyXhZa4pbIqZiE60o7T2Qc0c" />
 <script type="text/javascript">
 
@@ -14,3 +16,12 @@
   })();
 
 </script>
+<% if is_controller?('clinics') && is_action?('show') %>
+	<meta name="geo.position" content="<%= "#{@clinic.latitude};#{@clinic.longitude}" %>">
+	<meta name="ICBM" content="<%= "#{@clinic.latitude};#{@clinic.longitude}" %>">
+	<meta name="geo.region" content="<%= "US-#{@clinic.state}" %>">
+	<meta name="geo.country" content="US">
+	<meta name="city" content="<%= @clinic.city %>">
+	<meta name="state" content="<%= @clinic.state %>">
+	<meta name="zipcode" content="<%= @clinic.zip %>">			
+<% end %>
