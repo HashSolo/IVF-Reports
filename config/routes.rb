@@ -28,24 +28,24 @@ IVFReports::Application.routes.draw do
 
   root :to => "pages#home"
   
-  match "/find-a-clinic", :to => "pages#clinicfind"
+  match "/find-a-clinic", :to => "pages#clinicfind", :as => :find_a_clinic
   match "/ranking", :to => "pages#ranking"
-  match "/our-system", :to => "pages#system"
+  match "/our-system", :to => "pages#system", :as => :our_system
   match "/faqs", :to => "pages#faqs"
   match "/about", :to => "pages#about"
   match "/contact", :to => "pages#contact"
-  match "/terms-and-conditions", :to => "pages#terms"
-  match "/privacy-policy", :to => "pages#privacy"
+  match "/terms-and-conditions", :to => "pages#terms", :as => :terms_and_conditions
+  match "/privacy-policy", :to => "pages#privacy", :as => :privacy_policy
   match "/clinicians", :to => "pages#clinicians"
   
-  match "/reports/the-ivf-process", :to => "reports#the_ivf_process"
-  match "/reports/infertility-diagnoses", :to => "reports#infertility_diagnoses"
-  match "/reports/cdc-vs-sart", :to => "reports#cdc_vs_sart"
-  match "/reports/fertility-news", :to => "reports#fertility_news"
-  match "/reports/other-technologies", :to => "reports#other_technologies"
-  match "/reports/clinics-by-region", :to => "reports#clinics_by_region"
-  match "/reports/clinic-explorer", :to => "reports#clinic_explorer"
-  match "/reports/clinic-comparator", :to => "reports#clinic_comparator"
+  match "/reports/the-ivf-process", :to => "reports#the_ivf_process", :as => :the_ivf_process
+  match "/reports/infertility-diagnoses", :to => "reports#infertility_diagnoses", :as => :infertility_diagnoses
+  match "/reports/cdc-vs-sart", :to => "reports#cdc_vs_sart", :as => :cdc_vs_sart
+  match "/reports/fertility-news", :to => "reports#fertility_news", :as => :fertility_news
+  match "/reports/other-technologies", :to => "reports#other_technologies", :as => :other_technologies
+  match "/reports/clinics-by-region", :to => "reports#clinics_by_region", :as => :clinics_by_region
+  match "/reports/clinic-explorer", :to => "reports#clinic_explorer", :as => :clinic_explorer
+  match "/reports/clinic-comparator", :to => "reports#clinic_comparator", :as => :clinic_comparator
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

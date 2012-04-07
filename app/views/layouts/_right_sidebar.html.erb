@@ -40,17 +40,7 @@
 	<% else # Nothing else displayed... %>
 	<% end %>
 
-<ul class="sidebar_module">
-	<li class="header">Links</li>
-	<li><%= link_to "The CDC", 'http://www.cdc.gov/art/', :target => "_blank" %></li>
-	<li><%= link_to "SART", 'http://www.sart.org/', :target => "_blank" %></li>
-	<li><%= link_to "IVF.NET", 'http://www.ivf.net/', :target => "_blank" %></li>
-	<li><%= link_to "ASRM", 'http://www.asrm.org/', :target => "_blank" %></li>
-	<li><%= link_to "RBM Online", 'http://www.rbmojournal.com/', :target => "_blank" %></li>
-	<li class="bottom"><%= link_to "American College of Embryology", 'http://embcol.org/', :target => "_blank" %></li>
-</ul>
-		
-	<% if is_controller?('pages') && is_action?('ranking') %>
+	<% if is_controller?('pages') and is_action?('ranking') %>
 		<ul class="sidebar_module">
 			<li class="header">Select States</li>
 			<li><span class="all_state_label">Select All States</span><input checked type="checkbox" class="select_all_state_checkbox" name="select_all_states" value="all_states" style="float:right;margin-top:9px;margin-right:10px;"></li>
@@ -71,6 +61,18 @@
 			<% end %>
 		</ul>
 	<% end %>
+	
+<ul class="sidebar_module">
+	<li class="header">Links</li>
+	<li><%= link_to "The CDC", 'http://www.cdc.gov/art/', :target => "_blank" %></li>
+	<li><%= link_to "SART", 'http://www.sart.org/', :target => "_blank" %></li>
+	<li><%= link_to "IVF.NET", 'http://www.ivf.net/', :target => "_blank" %></li>
+	<li><%= link_to "ASRM", 'http://www.asrm.org/', :target => "_blank" %></li>
+	<li><%= link_to "RBM Online", 'http://www.rbmojournal.com/', :target => "_blank" %></li>
+	<li class="bottom"><%= link_to "American College of Embryology", 'http://embcol.org/', :target => "_blank" %></li>
+</ul>
+		
+
 
 </div>
 

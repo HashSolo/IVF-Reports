@@ -49,14 +49,28 @@ class RequestsController < ApplicationController
     if(params[:request].nil?)
       params[:request] = {:user_id => params[:user_id], :clinic_id => params[:clinic_id]}
     end
-    @clinic = Clinic.find(params[:request][:clinic_id])
-    if Request.where(:clinic_id => params[:request][:clinic_id], :user_id => params[:request][:user_id]).empty?
-      @request = Request.new(params[:request])
-      @request.save
-	    @response = @request.errors
+    
+    if params[:user_id].nil?
+      @user = User.find_by_id(params[:request][:user_id])      
+    else
+      @user = User.find_by_id(params[:user_id])
+    end
+    
+    request_count = @user.requests.count
+    
+    if request_count>=5
+      @response = "5"
+    else
+      @clinic = Clinic.find(params[:request][:clinic_id])
+      if Request.where(:clinic_id => params[:request][:clinic_id], :user_id => params[:request][:user_id]).empty?
+        @request = Request.new(params[:request])
+        @request.save
+	      @response = "#{request_count}"
+      end
     end
     respond_to do |format|
-      format.js {render :layout => false}
+      format.js {render :response => @response}
+      format.json {render :json => @response.to_json() }
     end
   end
   

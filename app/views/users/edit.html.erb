@@ -61,6 +61,10 @@
 				<td class="label"><%= f.label :phone, 'Phone # (Clinic Contact Only)' %></td>
 				<td class="input"><%= f.text_field :phone, :size => '14'  %></td>
 			</tr>
+			<tr>
+				<td class="label"><%= f.label :about_me, 'About Me (Clinic Contact Only)' %></td>
+				<td class="input"><%= f.text_area :about_me, :size => '30', :class => 'about_me'  %></td>
+			</tr>
 		</table>
 		<div class="update_button">
 			<%= f.submit "Update" %>

@@ -57,6 +57,18 @@ div.ranking_tabs ul.jqueryui-ranking-tabs {width:431px;background:#E6E6E6 url(im
 div.ranking_tabs ul.jqueryui-ranking-tabs li.ranking_tab {height:30px;line-height:30px;text-align:center;width:140px;display:inline-block;}
 div.ranking_tabs ul.jqueryui-ranking-tabs li.ranking_tab a {text-align:center;display:inline-block;width:100%;}
 
+/*Ranking Score-select tooltips*/
+div.score_explanation {position:absolute;width:240px;height:180px;background:#7895a3;color:#ffffff;border:1px solid #325d64;padding:12px;}
+div.score_explanation h3 {font-size:16px;color:#ffffff;font-weight:bold;border-bottom:1px solid #ffffff;margin-bottom:6px;}
+div.score_explanation p {text-align:justify;color:#ffffff;font-size:13px;}
+
+div.star_explanation {position:absolute;width:200px;height:150px;background:#7895a3;color:#ffffff;border:1px solid #325d64;padding:12px;}
+div.star_explanation h3 {font-size:16px;color:#ffffff;font-weight:bold;border-bottom:1px solid #ffffff;margin-bottom:6px;}
+div.star_explanation ul {color:#ffffff;font-size:13px;list-style:none;padding:0px;margin:0px;float:left;display:inline-block;width:100%;margin-top:12px;}
+div.star_explanation ul li {list-style-type:none;padding:0px;margin:0px;float:left;display:inline-block;width:100%;margin-bottom:12px;}
+div.star_explanation ul li span.icon {display:inline-block;float:left;font-size:16px;text-align:left;width:20%;margin-right:5%;}
+div.star_explanation ul li span.explanation {display:inline-block;float:right;text-align:left;width:65%;margin-left:0%;line-height:16px;}
+
 /*Ranking - Age Subselect*/
 .jqueryui-ranking-subselect {padding:0px;margin:0px;display:inline-block;width:431px;font-size:12px;border-left:1px solid #bcbcbc;border-right:1px solid #bcbcbc;}
 .jqueryui-ranking-subselect li {padding:0px;margin:0px;list-style-type:none;display:inline-block;width:83px;text-align:center;height:30px;line-height:30px;cursor:pointer;padding-right:0px;}
@@ -80,9 +92,9 @@ ul.clinic_rank li.clinic_name a {display:block;text-decoration:none;color:#325d5
 ul.clinic_rank li.clinic_name a:hover {color:#103b3b;}
 ul.clinic_rank li.clinic_location {color:#666666;margin-bottom:10px;margin-left:20px;font-size:11px;}
 ul.clinic_rank li.clinic_stats {padding-left:20px;width:60%;font-size:12px;padding-bottom:3px;padding-top:3px;}
-ul.clinic_rank li.clinic_stats span.score_type {display:inline-block;float:left;}
+ul.clinic_rank li.clinic_stats span.score_type {display:inline-block;float:left;height:16px;line-height:16px;}
 ul.clinic_rank li.clinic_stats span.score_result {display:inline-block;float:right;}
-ul.clinic_rank li.clinic_stats span.score_result span.icon {display:inline-block;padding-left:5px;font-size:16px;}
+ul.clinic_rank li.clinic_stats span.score_result span.icon {display:inline-block;padding-left:5px;font-size:16px;height:16px;}
 div.clinic_rank_item {display:inline-block;width:100%;float:left;}
 div.clinic_rank_item span.clinic_contact_button {float:right;position:absolute;display:inline-block;width:90px;height:80px;text-align:center;line-height:26px;border:1px solid #cccccc;background:#7895a3;color:#ffffff;font-weight:bold;margin-left:-120px;margin-top:74px;cursor:pointer;}
 div.clinic_rank_item span.clinic_contact_button:hover {color:#cccccc;}
@@ -182,11 +194,11 @@ dark-green-gradient{
 div.review_dark_bg {position:fixed;left:0;right:0;top:0;bottom:0;background:#325d46;z-index:50;opacity:0.6;}
 span.close_button {display:inline-block;width:60px;height:60px;font-size:50px;line-height:60px;text-align:center;right:0;top:0;float:right;color:#ffffff;cursor:pointer;}
 span.close_button:hover {color:#bbbbbb;}
-div.review_form {position:fixed;width:436px;margin-left:auto;margin-right:auto;z-index:100;background:#7895a3;top:10%;border:1px solid #cccccc;color:#ffffff;padding:8px;bottom:10%;}
+div.review_form {position:fixed;width:436px;margin-left:auto;margin-right:auto;z-index:100;background:#7895a3;top:60px;border:1px solid #cccccc;color:#ffffff;padding:8px;}
 div.review_form h2 {border-bottom:1px solid #cccccc;font-size:18px;}
 div.review_form ul.star_rating {list-style:none;width:100%;display:inline-block;float:left;}
 div.review_form ul.star_rating li {list-style-type:none;margin:0px;padding:0px;width:100%;float:left;height:40px;line-height:40px;margin-top:6px;margin-bottom:6px;}
-div.review_form ul.star_rating li.review_space {height:300px;}
+div.review_form ul.star_rating li.review_space {height:200px;}
 div.review_form ul.star_rating li span.star_label {float:left;display:inline-block;}
 div.review_form ul.star_rating li span.stars {float:right;display:inline-block;font-size:24px;}
 div.review_form ul.star_rating li span.stars input {width:300px;height:30px;}
@@ -208,3 +220,4 @@ div.sign_in_form input.sign-in-button {font-size:18px;}
 
 /*Hidden*/
 .hidden {display:none;}
+.inlineblock {display:inline-block;}
