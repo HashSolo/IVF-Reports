@@ -26,7 +26,13 @@
 
 <div class="purchase_request">
 	<span class="purchase_button round">
-		<%= link_to 'Purchase Contact Information', @request.paypal_encrypted(clinic_request_url(@clinic, @request), payment_notifications_url)%>
+		<%= link_to 'Purchase Info', @request.paypal_encrypted(clinic_request_url(@clinic, @request), payment_notifications_url)%>
+	</span>
+</div>
+
+<div class="deny_request">
+	<span class="deny_button round">
+		<%= link_to 'Decline Info', decline_clinic_requests_path(@clinic,:user_id => @request.user_id, :clinic_id => @request.clinic_id), :confirm => "Are You Sure You Want to Decline this Request?" %>
 	</span>
 </div>
 

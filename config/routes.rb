@@ -12,7 +12,9 @@ IVFReports::Application.routes.draw do
 	  get 'find_clinics_in_state', :on => :collection
 	  get 'pull_clinic_data', :on => :collection
 	  resources :datapoints
-	  resources :requests
+	  resources :requests do 
+	    get 'decline', :on => :collection
+    end
   end
   
 	resources :reviews

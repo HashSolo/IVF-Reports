@@ -9,7 +9,7 @@ class RequestsController < ApplicationController
       @requests = Request.all
     elsif !params[:clinic_id].nil?
       @clinic = Clinic.find(params[:clinic_id])
-      @requests = @clinic.requests
+      @requests = @clinic.requests.where(:declined => false)
       @title = "Leads for #{@clinic.clinic_name}"
     elsif !params[:user_id].nil?
       @user = User.find_by_permalink(params[:user_id])
@@ -41,8 +41,19 @@ class RequestsController < ApplicationController
     end    
   end
   
-  def purchase #This will be the method for purchasing the lead after reviewing the information
-    
+  def decline #This will be the method for declining a request
+    @request = Request.where(:user_id => params[:user_id], :clinic_id => params[:clinic_id]).first
+    @clinic = Clinic.find_by_id(params[:clinic_id])
+    if @request.toggle!(:declined)
+      if @request.declined==true
+        flash[:success] = "Request #{@request.id} Declined."
+      else
+        flash[:success] = "Error Declining Request."
+      end
+    else
+      flash[:error] = "Request Unchanged."
+    end
+    redirect_to clinic_requests_path(@clinic)
   end
   
   def create
@@ -56,7 +67,7 @@ class RequestsController < ApplicationController
       @user = User.find_by_id(params[:user_id])
     end
     
-    request_count = @user.requests.count
+    request_count = @user.requests.where(:declined => false).count
     
     if request_count>=5
       @response = "5"
