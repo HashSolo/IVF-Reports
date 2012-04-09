@@ -70,7 +70,7 @@
 		</div>
 		
 		<div class="personal_info user_info_section">
-			<h2>Clinics Contacted</h2>
+			<h2>Clinics Contacted (<%= contacts_remaining(@user) %> Requests Remaining)</h2>
 			<div id="contacted_accordion">
 				<% if @user.requests.empty? %>
 					<h3><a href="#">None Contacted Yet.</a></h3>
@@ -78,9 +78,21 @@
 					<% @user.requests.each do |r| %>
 					<h3><a href="#"><%= r.clinic.clinic_name %> - <%= r.clinic.city %>, <%= r.clinic.state %></a></h3>
 					<div>
-						<table>
+						<table class="contacted_table">
 						<tr><td class="label">Clinic</td><td class="value"><%= link_to r.clinic do |l| %><span class="icon">⌂</span><%= r.clinic.clinic_name %><% end %></td></tr>
 						<tr><td class="label">Contacted</td><td class="value"><%= r.created_at.strftime("%B %d, %Y") %></td></tr>
+						<tr>
+							<td class="label">Response</td>
+							<td class="value">
+								<% if r.visible==true %>
+									<%= "Contact Accepted - #{r.updated_at.strftime("%B %d, %Y")}" %>
+								<% elsif r.declined==true %>
+									<%= "Contact Declined - #{r.updated_at.strftime("%B %d, %Y")}" %>
+								<% else %>
+									<%= "No Response Yet" %>
+								<% end %>
+							</td>
+						</tr>
 						</table>
 					</div>
 					<% end %>
