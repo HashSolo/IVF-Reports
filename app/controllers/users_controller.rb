@@ -78,12 +78,32 @@ class UsersController < ApplicationController
   	    @scores = Score.where(:year => year, :cycle_type => cycle_type, :diagnosis => diagnosis, :age_group => age_group).limit(5).offset(0)
       end
     else #If there is a zip code for the user and coordinates are produced
+      lat_offset = 1.5
+      long_offset = 1.5
+      
+      if @user.zip_distance=='25'
+        lat_offset = 0.75
+        long_offset = 0.75
+      elsif @user.zip_distance=='50'
+        lat_offset = 1.5
+        long_offset = 1.5
+      elsif @user.zip_distance=='100'
+        lat_offset = 3.0
+        long_offset = 3.0
+      elsif @user.zip_distance=='200'
+        lat_offset = 3.0
+        long_offset = 3.0
+      elsif @user.zip_distance=='ALL'
+        lat_offset = 180.0
+        long_offset = 180.0
+      end
+      
     	lat = @coordinates[0].latitude
-    	low_lat = lat - 1.5
-    	high_lat = lat + 1.5
+    	low_lat = lat - lat_offset
+    	high_lat = lat + lat_offset
     	long = @coordinates[0].longitude
-    	low_long = long - 1.5
-    	high_long = long + 1.5
+    	low_long = long - long_offset
+    	high_long = long + long_offset
       @scores = Score.where(:year => year, :cycle_type => cycle_type, :diagnosis => diagnosis, :age_group => age_group).joins(:clinic).where(:clinics => {:latitude => low_lat..high_lat, :longitude => low_long..high_long}).limit(5).offset(0)
 
   	  if(@scores.empty?)
@@ -155,7 +175,15 @@ class UsersController < ApplicationController
 	  @response = @user.errors
 	  
 	  respond_to do |format|
-	    format.html {}
+	    format.html do |f| 
+	        if @user.update_attributes(params[:user])
+            flash[:success] = "Zip Code Radius Successfully Updated"
+    	      redirect_to @user
+  	      else
+  	        flash[:error] = "There was an error processing your request."
+  	        render 'show'
+    	    end
+      end
 	    format.js {render :layout => false }
     end
   end
