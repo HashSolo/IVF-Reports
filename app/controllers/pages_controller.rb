@@ -80,7 +80,13 @@ class PagesController < ApplicationController
     results = 10 #The number of results per page    
     results_start = page*results    
     
-    @scores = Score.where(:year => year, :age_group => age_group, :diagnosis => diagnosis, :cycle_type => cycle_type).joins(:clinic).where(:clinics => {:state => states}).limit(results).offset(results_start)
+    if params[:region]=="ALL"
+      @scores = Score.where(:year => year, :age_group => age_group, :diagnosis => diagnosis, :cycle_type => cycle_type).joins(:clinic).where(:clinics => {:state => states}).limit(results).offset(results_start)
+    else
+      region = params[:region]
+      @scores = Score.where(:year => year, :age_group => age_group, :diagnosis => diagnosis, :cycle_type => cycle_type).joins(:clinic).where(:clinics => {:state => states, :region => region}).limit(results).offset(results_start)
+    end
+    
     @clinic_results = Array.new;
     unless @scores.empty?
       @scores.each do |s|
@@ -97,15 +103,19 @@ class PagesController < ApplicationController
   end
   
   def faqs
+    @title = "Frequently Asked Questions"
   end
   
   def terms
+    @title = "Terms and Conditions"
   end
   
   def privacy
+    @title = "Privacy Policy"
   end
   
   def clinicians
+    @title = "Clinicians"
   end
 
 end

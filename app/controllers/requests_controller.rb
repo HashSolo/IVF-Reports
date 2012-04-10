@@ -46,7 +46,7 @@ class RequestsController < ApplicationController
     @clinic = Clinic.find_by_id(params[:clinic_id])
     if @request.toggle!(:declined)
       if @request.declined==true
-        flash[:success] = "Request #{@request.id} Declined."
+        flash[:success] = "Request from #{@request.user.name} Declined."
       else
         flash[:success] = "Error Declining Request."
       end

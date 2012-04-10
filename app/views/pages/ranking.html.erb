@@ -1,5 +1,5 @@
-<h1>IVF Clinic Rankings</h1>
-
+<h1 id="ranking_title">IVF Clinic Rankings</h1>
+<span class="back_to_region_select round"><-- Back to Region Select</span>
 <div id="tabs" class="ranking_tabs">
 	<ul id="ranking-category-tabs" class="jqueryui-ranking-tabs">
 		<li class="ranking_tab"><a href="#ranking_category_1"/>Overall Ranking</a></li>
@@ -85,6 +85,7 @@ var cycle_type = "fresh";
 var overall_page = 0;
 var age_page = 0;
 var diagnosis_page = 0;
+var region = "ALL";
 var states = [
 <% @states.each_with_index do |s, index| %>
 <% if index==50 %>
@@ -97,6 +98,56 @@ var states = [
 
 
 $(document).ready(function(){
+	$('span.back_to_region_select').click(function(){
+		$('div#ranking_content').slideToggle('slow');
+		$('div#us_region_map').slideToggle('slow');
+		$('div#overall_ranking_results div.clinic_rank_list').html("");		
+	});
+	
+	$('div#us_region_map div.map_region').click(function(){
+		region = $(this).attr('id');		
+		PrintOverallRankingResults();
+		PrintAgeRankingResults();
+		PrintDiagnosisRankingResults();
+		$('div#us_region_map').slideToggle('slow');
+		
+		if(region=="ENC"){
+			$('h1#ranking_title').html('IVF Clinic Rankings - East North Central Region');
+		}
+		else if(region=="ESC"){
+			$('h1#ranking_title').html('IVF Clinic Rankings - East South Central Region');
+		}
+		else if(region=="WNC"){
+			$('h1#ranking_title').html('IVF Clinic Rankings - West North Central Region');
+		}
+		else if(region=="WSC"){
+			$('h1#ranking_title').html('IVF Clinic Rankings - West South Central Region');
+		}
+		else if(region=="MA"){
+			$('h1#ranking_title').html('IVF Clinic Rankings - Mid-Atlantic Region');
+		}
+		else if(region=="SA"){
+			$('h1#ranking_title').html('IVF Clinic Rankings - South Atlantic Region');
+		}
+		else if(region=="NE"){
+			$('h1#ranking_title').html('IVF Clinic Rankings - New England Region');
+		}
+		else if(region=="OTH"){
+			$('h1#ranking_title').html('IVF Clinic Rankings - Alaska, Hawaii, Puerto Rico');
+		}
+		else if(region=="NP"){
+			$('h1#ranking_title').html('IVF Clinic Rankings - North Pacific Region');
+		}
+		else if(region=="SP"){
+			$('h1#ranking_title').html('IVF Clinic Rankings - South Pacific Region');
+		}
+		else if(region=="MT"){
+			$('h1#ranking_title').html('IVF Clinic Rankings - Mountain Region');
+		}
+		
+		$('div#ranking_content').slideToggle('slow');
+	});
+	
 	$(document).on("mouseenter", "li.clinic_stats span.score_type", function(e){
 		var x_pos = e.pageX;
 		var y_pos = e.pageY;
@@ -179,9 +230,6 @@ $(document).ready(function(){
 	});
 	
 	$( "#tabs" ).tabs();
-	PrintOverallRankingResults();
-	PrintAgeRankingResults();
-	PrintDiagnosisRankingResults();
 
 	$('li.left_button').click(function(){
 		var button_id = $(this).attr('id');
@@ -315,6 +363,7 @@ function PrintOverallRankingResults(){
 		year: year,
 		age_group: "All Ages",
 		diagnosis: "All Diagnoses",
+		region: region,
 		cycle_type: cycle_type,
 		page: overall_page,
 		states: states
@@ -390,6 +439,7 @@ function PrintAgeRankingResults(){
 		diagnosis: "All Diagnoses",
 		cycle_type: cycle_type,
 		page: age_page,
+		region: region,
 		states: states
 	}
 	$.ajax({
@@ -461,6 +511,7 @@ function PrintDiagnosisRankingResults(){
 		diagnosis: diagnosis,
 		cycle_type: cycle_type,
 		page: diagnosis_page,
+		region: region,
 		states: states
 	}
 	$.ajax({

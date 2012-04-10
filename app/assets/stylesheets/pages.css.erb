@@ -5,6 +5,26 @@ body {background: url("<%= asset_path 'bg.png' %>") repeat-x #eeeeee;font-weight
 /*clinicians page*/
 img.clinicians_page {display:inline-block;float:right;}
 
+
+/*US Region Map*/
+div.region_map {display:inline-block;width:100%;height:480px;position:relative;}
+div.region_map h1 {font-family:'Trebuchet MS', Arial, sans-serif;color:#00345c;text-align:center;font-size:24px;}
+div.region_map div.map_region {position:absolute;display:inline-block;cursor:pointer;opacity:0.5;}
+div.region_map div.map_region:hover {opacity:1.0;}
+div.region_map div#WSC {left:370px;top:290px;background:url('<%= asset_path "regions/wscentral.png" %>') no-repeat;width:190px;height:137px;}
+div.region_map div#ESC {left:560px;top:260px;background:url('<%= asset_path "regions/escentral.png" %>') no-repeat;width:88px;height:116px;}
+div.region_map div#MT {left:205px;top:125px;background:url('<%= asset_path "regions/mountain.png" %>') no-repeat;width:167px;height:222px;}
+div.region_map div#SP {left:130px;top:200px;background:url('<%= asset_path "regions/spacific.png" %>') no-repeat;width:79px;height:129px;}
+div.region_map div#NE {left:735px;top:70px;background:url("<%= asset_path 'regions/nengland.png' %>") no-repeat;width:70px;height:109px;}
+div.region_map div#SA {left:630px;top:230px;background:url("<%= asset_path 'regions/satlantic.png' %>") no-repeat;width:136px;height:196px;}
+div.region_map div#OTH {left:110px;top:360px;background:url('<%= asset_path "regions/other.png" %>') no-repeat;width:155px;height:108px;}
+div.region_map div#WNC {left:390px;top:130px;background:url('<%= asset_path "regions/wncentral.png" %>') no-repeat;width:143px;height:155px;}
+div.region_map div#ENC {left:540px;top:130px;background:url('<%= asset_path "regions/encentral.png" %>') no-repeat;width:118px;height:129px;}
+div.region_map div#MA {left:670px;top:140px;background:url('<%= asset_path "regions/midatlantic.png" %>') no-repeat;width:93px;height:79px;}
+div.region_map div#NP {left:130px;top:100px;background:url("<%= asset_path 'regions/npacific.png' %>") no-repeat;width:80px;height:94px;}
+span.back_to_region_select {display:inline-block;width:60%;margin-left:20%;margin-right:20%;height:20px;background:#7895a3;cursor:pointer;color:#ffffff;line-height:20px;font-weight:bold;text-align:center;font-size:14px;margin-bottom:12px;}
+span.back_to_region_select:hover {color:#bbbbbb;}
+
 /*Home Page Call to Action*/
 div.call_to_action_page {border-bottom:1px solid #cccccc;display:inline-block;width:98%;margin-right:2%;}
 div.call_to_action_page h1 {text-align:left;font-weight:normal;font-family:'Trebuchet MS', Arial, sans-serif;color:#00345c;font-size:20px;margin-bottom:10px;}
