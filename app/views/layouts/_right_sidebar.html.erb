@@ -71,7 +71,15 @@
 	<li><%= link_to "RBM Online", 'http://www.rbmojournal.com/', :target => "_blank" %></li>
 	<li class="bottom"><%= link_to "American College of Embryology", 'http://embcol.org/', :target => "_blank" %></li>
 </ul>
-		
 
+<% if is_controller?('users') && is_action?('show') %>	
+<ul class="sidebar_module tips_for_success">
+	<li class="header">Tips for Success</li>
+	<li class="tip">*Fill out as much information as possible to help the physicians who you contact gauge whether you are a good fit for their clinic. This also makes sure that our recommendation engine matches you with the best clinics for you.</li>
+	<li class="tip">*You may contact up to 5 clinics at a time. If contact is declined by a clinic, feel free to contact a new clinic. Again, the more information in your profile (Phone Number, Age, About Me, Zip Code), the higher the chances that a clinic will follow up with an appointment.</li>
+	<li class="tip">*Describe more details about your fertility issues in the 'About Me' section. Don't worry fields marked 'Clinic Contact Only' are not shared with anyone except for clinics you explicitly contact.</li>
+	<li class="tip bottom">*<%= link_to "Contact", contact_path %> an IVF Reports representative with any issues or questions. We want to help you navigate through this difficult time, and we have representatives ready to point you in the right direction.</li>
+</ul>
+<% end %>
 
 </div>

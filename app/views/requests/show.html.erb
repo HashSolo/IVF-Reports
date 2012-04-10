@@ -11,6 +11,7 @@
 	<tr><td>Previous IVF Attempts</td><td><%= @request_user.previous_cycles unless @request_user.previous_cycles.nil? %></td></tr>
 	<tr><td>Infertility Diagnosis</td><td><%= @request_user.infertility_diagnosis.gsub("_"," ").capitalize unless @request_user.infertility_diagnosis.nil? %></td></tr>
 	<tr><td>IVF Reports Member Since</td><td><%= @request_user.created_at.strftime("%B %d, %Y") %></td></tr>
+	<tr><td>About This Couple</td><td class="about_me"><%= @request_user.about_me %></td></tr>
 </table>
 </div>
 

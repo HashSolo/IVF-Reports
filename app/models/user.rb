@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   has_many :clinics
 
 	attr_accessor :password
-	attr_accessible :name, :email, :password, :password_confirmation, :gender, :zip_code, :ethnicity, :birthday, :previous_cycles, :infertility_diagnosis, :abo_blood_type, :rh_factor, :height_ft, :height_inches, :weight, :day_3_fsh, :day_3_e2, :day_3_lh, :day_10_fsh, :day_10_e2, :day_10_lh, :prolactin, :uterine_fibroids, :uterine_tumors, :phone, :about, :zip_distance
+	attr_accessible :name, :email, :password, :password_confirmation, :gender, :zip_code, :ethnicity, :birthday, :previous_cycles, :infertility_diagnosis, :abo_blood_type, :rh_factor, :height_ft, :height_inches, :weight, :day_3_fsh, :day_3_e2, :day_3_lh, :day_10_fsh, :day_10_e2, :day_10_lh, :prolactin, :uterine_fibroids, :uterine_tumors, :phone, :about_me, :zip_distance
 	
 	
 	email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
