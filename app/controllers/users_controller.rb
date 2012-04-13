@@ -91,8 +91,8 @@ class UsersController < ApplicationController
         lat_offset = 3.0
         long_offset = 3.0
       elsif @user.zip_distance=='200'
-        lat_offset = 3.0
-        long_offset = 3.0
+        lat_offset = 6.0
+        long_offset = 6.0
       elsif @user.zip_distance=='ALL'
         lat_offset = 180.0
         long_offset = 180.0
