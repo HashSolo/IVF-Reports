@@ -51,7 +51,7 @@
 		<div class="personal_info user_info_section">
 			<h2>Personalized Clinic Recommendations</h2>
 			<hr>
-			<% unless @user.zip_code.nil? %>
+			<% unless @user.zip_code.empty? %>
 				<span class="recommendation_distance">Currently showing clinics within <%= @user.zip_distance %> miles of <%= @user.zip_code %>.</span>
 				<%= form_for @user do |f| %>
 				<table class="personal_info zip_search">
