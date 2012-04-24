@@ -50,11 +50,11 @@
 				<% if index%2 == 0 %>
 				<li class="state">
 				<span class="state_span">
-					<%= s.name %><input checked class="state_checkbox" type="checkbox" name="state" value="<%= s.name %>">
+					<%= s.name %><input checked id="state_<%= s.name %>" class="state_checkbox" type="checkbox" name="state" value="<%= s.name %>">
 				</span>
 				<% else %>
 				<span class="state_span">
-					<%= s.name %><input checked class="state_checkbox" type="checkbox" name="state" value="<%= s.name %>">
+					<%= s.name %><input checked id="state_<%= s.name %>" class="state_checkbox" type="checkbox" name="state" value="<%= s.name %>">
 				</span>
 				</li>
 				<% end %>
