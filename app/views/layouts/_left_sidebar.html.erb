@@ -1,6 +1,7 @@
 <div class="left_sidebar">
 <ul class="sidebar_module">
 	<li class="header">Reports</li>
+	<% if signed_in? %><li><%= link_to user_path(current_user), :class=> is_active?("users#show") do %><span class='icon'>u</span> My Profile<% end %></li><% end %>
 	<li><%= link_to "The IVF Process", {:controller => 'reports', :action => 'the_ivf_process'} %></li>
 	<!-- <li><%= link_to "Infertility Diagnoses", {:controller => 'reports', :action => 'infertility_diagnoses'} %></li> -->
 	<li><%= link_to "The CDC vs SART", {:controller => 'reports', :action => 'cdc_vs_sart'} %></li>

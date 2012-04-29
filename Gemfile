@@ -11,6 +11,7 @@ gem 'paperclip'
 gem 'geocoder'
 gem 'feedzirra'
 gem 'yaml_db'
+gem 'pony'
 
 gem 'json'
 
