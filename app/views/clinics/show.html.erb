@@ -345,9 +345,9 @@
 											if(data[l]['age_group']==age_groups[i]){
 												graph_data2[i] = data[l]['implantation_rate'];
 												tooltips[i] = "<b>Age Group: "+ age_groups[i] +"</b><br/>";
-												tooltips[i] = tooltips[i] + "Cycles: " + cycle_data[i] + "<br/>";
-												tooltips[i] = tooltips[i] + "Imp Rate: " + Math.round(10*graph_data[i])/10 + "<br/>";
-												tooltips[i] = tooltips[i] + "National Avg: " + Math.round(10*graph_data2[i])/10;
+												tooltips[i] = tooltips[i] + "Cycles Performed: " + cycle_data[i] + "<br/>";
+												tooltips[i] = tooltips[i] + "Clinic's Implantation Rate: " + Math.round(10*graph_data[i])/10 + "%<br/>";
+												tooltips[i] = tooltips[i] + "National Implantation Rate: " + Math.round(10*graph_data2[i])/10 + "%";
 												if(data[l]['implantation_rate'] > y_max){
 													y_max = data[l]['implantation_rate'];
 												}
@@ -423,8 +423,8 @@
 										if(data[k]['diagnosis']==diagnoses[i]){
 											graph_data[i] = parseInt(data[k]['cycles']);
 											tooltips[i] = "<b>" + diagnoses[i] + "</b><br/>"
-											tooltips[i] = tooltips[i] + "Cycles: " + parseInt(data[k]['cycles']) + "<br/>";
-											tooltips[i] = tooltips[i] + "Implantation Rate: " + Math.round(10*data[k]['implantation_rate'])/10 + "<br/>";
+											tooltips[i] = tooltips[i] + "Cycles Performed: " + parseInt(data[k]['cycles']) + "<br/>";
+											tooltips[i] = tooltips[i] + "Implantation Rate: " + Math.round(10*data[k]['implantation_rate'])/10 + "%<br/>";
 											tooltips[i] = tooltips[i] + "Average Number of Embryos Transferred: " + parseInt(data[k]['avg_num_embs_transferred']);
 										}
 									}
@@ -436,8 +436,8 @@
 										if(data[k]['diagnosis']==diagnoses[i]){
 											graph_data[i] = parseInt(data[k]['cycles']);
 											tooltips[i] = "<b>" + diagnoses[i] + "</b><br/>"
-											tooltips[i] = tooltips[i] + "Cycles: " + parseInt(data[k]['cycles']) + "<br/>";
-											tooltips[i] = tooltips[i] + "Implantation Rate: " + Math.round(10*data[k]['implantation_rate'])/10 + "<br/>";
+											tooltips[i] = tooltips[i] + "Cycles Performed: " + parseInt(data[k]['cycles']) + "<br/>";
+											tooltips[i] = tooltips[i] + "Implantation Rate: " + Math.round(10*data[k]['implantation_rate'])/10 + "%<br/>";
 											tooltips[i] = tooltips[i] + "Average Number of Embryos Transferred: " + parseInt(data[k]['avg_num_embs_transferred']);
 										}
 									}

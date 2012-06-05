@@ -9,7 +9,7 @@ class RequestsController < ApplicationController
       @requests = Request.all
     elsif !params[:clinic_id].nil?
       @clinic = Clinic.find(params[:clinic_id])
-      @requests = @clinic.requests
+      @requests = @clinic.requests.where(:declined => false)
       @title = "Leads for #{@clinic.clinic_name}"
     elsif !params[:user_id].nil?
       @user = User.find_by_permalink(params[:user_id])
@@ -41,22 +41,47 @@ class RequestsController < ApplicationController
     end    
   end
   
-  def purchase #This will be the method for purchasing the lead after reviewing the information
-    
+  def decline #This will be the method for declining a request
+    @request = Request.where(:user_id => params[:user_id], :clinic_id => params[:clinic_id]).first
+    @clinic = Clinic.find_by_id(params[:clinic_id])
+    if @request.toggle!(:declined)
+      if @request.declined==true
+        flash[:success] = "Request from #{@request.user.name} Declined."
+      else
+        flash[:success] = "Error Declining Request."
+      end
+    else
+      flash[:error] = "Request Unchanged."
+    end
+    redirect_to clinic_requests_path(@clinic)
   end
   
   def create
     if(params[:request].nil?)
       params[:request] = {:user_id => params[:user_id], :clinic_id => params[:clinic_id]}
     end
-    @clinic = Clinic.find(params[:request][:clinic_id])
-    if Request.where(:clinic_id => params[:request][:clinic_id], :user_id => params[:request][:user_id]).empty?
-      @request = Request.new(params[:request])
-      @request.save
-	    @response = @request.errors
+    
+    if params[:user_id].nil?
+      @user = User.find_by_id(params[:request][:user_id])      
+    else
+      @user = User.find_by_id(params[:user_id])
+    end
+    
+    request_count = @user.requests.where(:declined => false).count
+    
+    if request_count>=5
+      @response = "5"
+    else
+      @clinic = Clinic.find(params[:request][:clinic_id])
+      if Request.where(:clinic_id => params[:request][:clinic_id], :user_id => params[:request][:user_id]).empty?
+        @request = Request.new(params[:request])
+        @request.save
+	      @response = "#{request_count}"
+      end
     end
     respond_to do |format|
-      format.js {render :layout => false}
+      format.js {render :response => @response}
+      format.json {render :json => @response.to_json() }
     end
   end
   

@@ -4,17 +4,17 @@
 	<h1> </h1>
 	
 	<%= form_for @clinic do |clinic| %>
+	<h3>Clinic Name</h3>
+	<br>
+	<table>
+		
+	<tr>
+		<td class="label"><%= clinic.label :clinic_name, "Clinic Name" %></td> <td class="value"><%= clinic.text_field :clinic_name %></td>
+	</tr>
 	
-	<!--
-	<ul>
-	<li>
-		<span class="label"><%= clinic.label :address %></span> <span class="value"><%= clinic.text_field :address %></span>
-	</li>
-	<li>
-		<span class="label"><%= clinic.label :city %></span> <span class="value"><%= clinic.text_field :city %></span>
-	</li>
-	</ul>
-	-->
+	</table>
+
+	<br>
 	
 	<h3>Address</h3>
 	<br>
@@ -64,9 +64,20 @@
 	<tr>
 		<td class="label"><%= clinic.label :email %></td> <td class="value"><%= clinic.text_field :email %></td>
 	</tr>
-	<tr>
 	
 	</table>
+
+	<br>
+	<h3>Clinic Photo</h3>
+	<br>
+	
+	<table>
+	<tr>
+		<td class="label">To Edit Your Clinic's Photo, Visit <%= link_to 'Gravatar.com', 'http://gravatar.com', :target => "_blank" %></td>
+	</tr>
+	
+	</table>	
+	<br>
 	
 	<br>
 	<h3>Additional Information</h3>

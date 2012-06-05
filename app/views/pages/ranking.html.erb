@@ -1,5 +1,5 @@
-<h1>IVF Clinic Rankings</h1>
-
+<h1 id="ranking_title">IVF Clinic Rankings</h1>
+<span class="back_to_region_select round"><-- Back to Region Select</span>
 <div id="tabs" class="ranking_tabs">
 	<ul id="ranking-category-tabs" class="jqueryui-ranking-tabs">
 		<li class="ranking_tab"><a href="#ranking_category_1"/>Overall Ranking</a></li>
@@ -69,6 +69,14 @@
 		</div>
 </div>
 
+<div class="score_explanation hidden">
+
+</div>
+
+<div class="star_explanation hidden">
+
+</div>
+
 <script type="text/javascript">
 var year = "2010";
 var age_group = "<35";
@@ -77,6 +85,7 @@ var cycle_type = "fresh";
 var overall_page = 0;
 var age_page = 0;
 var diagnosis_page = 0;
+var region = "ALL";
 var states = [
 <% @states.each_with_index do |s, index| %>
 <% if index==50 %>
@@ -87,11 +96,161 @@ var states = [
 <% end %>
 ];
 
+
 $(document).ready(function(){
+	$('span.back_to_region_select').click(function(){
+		$('div#ranking_content').slideToggle('slow');
+		$('div#us_region_map').slideToggle('slow');
+		$('div#overall_ranking_results div.clinic_rank_list').html("");		
+	});
+	
+	$('div#us_region_map div.map_region').click(function(){
+		region = $(this).attr('id');
+		
+		if(region=="ENC"){
+			$('h1#ranking_title').html('IVF Clinic Rankings - East North Central Region');
+			states = ["WI","MI","IL","IN","OH"];
+		}
+		else if(region=="ESC"){
+			$('h1#ranking_title').html('IVF Clinic Rankings - East South Central Region');
+			states = ["KY","TN","MS","AL"];
+		}
+		else if(region=="WNC"){
+			$('h1#ranking_title').html('IVF Clinic Rankings - West North Central Region');
+			states = ["ND","SD","MN","IA","NE","KS","MO"];
+		}
+		else if(region=="WSC"){
+			$('h1#ranking_title').html('IVF Clinic Rankings - West South Central Region');
+			states = ["TX","OK","AR","LA"];
+		}
+		else if(region=="MA"){
+			$('h1#ranking_title').html('IVF Clinic Rankings - Mid-Atlantic Region');
+			states = ["NY","PA","NJ"];
+		}
+		else if(region=="SA"){
+			$('h1#ranking_title').html('IVF Clinic Rankings - South Atlantic Region');
+			states = ["DE","MD","DC","WV","VA","NC","SC","GA","FL"];
+		}
+		else if(region=="NE"){
+			$('h1#ranking_title').html('IVF Clinic Rankings - New England Region');
+			states = ["ME","NH","VT","CT","MA","RI"];
+		}
+		else if(region=="OTH"){
+			$('h1#ranking_title').html('IVF Clinic Rankings - Alaska, Hawaii, Puerto Rico');
+			states = ["AK","HI","PR"];
+		}
+		else if(region=="NP"){
+			$('h1#ranking_title').html('IVF Clinic Rankings - North Pacific Region');
+			states = ["WA","OR"];
+		}
+		else if(region=="SP"){
+			$('h1#ranking_title').html('IVF Clinic Rankings - South Pacific Region');
+			states = ["CA"];
+		}
+		else if(region=="MT"){
+			$('h1#ranking_title').html('IVF Clinic Rankings - Mountain Region');
+			states = ["MT","ID","WY","NV","UT","CO","AZ","NM"];
+		}
+		
+		$('input.state_checkbox').attr('checked',false);
+		$('input.select_all_state_checkbox').attr('checked',false);
+		$('input.unselect_all_state_checkbox').attr('checked',false);
+		
+		$.each(states, function(){
+			var checkbox_name = "input#state_"+ this;
+			$(checkbox_name).attr('checked',true);
+		});
+				
+		PrintOverallRankingResults();
+		PrintAgeRankingResults();
+		PrintDiagnosisRankingResults();
+		$('div#us_region_map').slideToggle('slow');
+		
+		$('div#ranking_content').slideToggle('slow');
+	});
+	
+	$(document).on("mouseenter", "li.clinic_stats span.score_type", function(e){
+		var x_pos = e.pageX;
+		var y_pos = e.pageY;
+		$('div.score_explanation').addClass('inlineblock');
+		$('div.score_explanation').show('fast');
+		$('div.score_explanation').css({
+			'left':x_pos,
+			'top':y_pos
+		});
+		var score_type = $(this).attr('id');
+		if(score_type=='ivfr_score'){
+			$('div.score_explanation').html('<h3>IVF Reports Score</h3><p>The IVF Reports Score is our age-adjusted evaluation of performance for a particular year. We provide scores for clinics for all ages combined (Overall), each of the 5 major age groups of patients, and for each of 9 major diagnoses for infertility. We judge clinics primarily on two measures: safety and quality.</p>');
+		}
+		else if(score_type=='quality_score'){
+			$('div.score_explanation').html('<h3>Quality Score</h3><p>To assess quality, our ranking system derives a score based on the implantation rate. The implantation rate is the frequency of implantation (when an embryo attaches to the uterus and forms a sac or fetus) related to the number of embryos transferred per patient. By judging success per embryo, the clinician cannot inflate his performance rating by transferring more embryos.</p>');
+		}
+		else if(score_type=='safety_score'){
+			$('div.score_explanation').html('<h3>Safety Score</h3><p>The average number of embryos transferred is the statistic we employ to measure safety. Multiple-birth pregnancies put both the mother and the children at higher risk than a single-birth pregnancy. Thus, our guiding principal is that, all else being equal, clinics that transfer fewer embryos on average maintain higher standards of safety in their practice.</p>');
+		}
+		else {//(score_type=='sart_Score'){
+			$('div.score_explanation').html('<h3>SART Score</h3><p>Although our core principals dictate that implantation rate is a better measure of success, we still provide a score that assesses clinics based on the live birth rate. Live birth rate data are available at the SART webpage, and SART emphasizes these data as an important factor in assessing success. This score is for comparison purposes only and does not factor into the IVF Reports score.</p>');
+		}
+	});
+	
+	$(document).on("mouseout", "li.clinic_stats span.score_type", function(e){
+		$('div.score_explanation').hide('fast');
+	});
+	
+	$(document).on("mouseenter", "span.score_result", function(e){
+		var x_pos = e.pageX;
+		var y_pos = e.pageY;
+		$('div.star_explanation').addClass('inlineblock');
+		$('div.star_explanation').show('fast');
+		$('div.star_explanation').css({
+			'left':x_pos,
+			'top':y_pos
+		});
+		$('div.star_explanation').html('<h3>Our Rating System</h3><ul><li><span class="icon green">★</span><span class="explanation">Excellent</span></li><li><span class="icon blue">★</span><span class="explanation">Good</span></li><li><span class="icon yellow">★</span><span class="explanation">Satisfactory</span></li><li><span class="icon ">★</span><span class="explanation">Not Enough Data</span></li></ul>');
+	});
+	
+	$(document).on("mouseout", "span.score_result", function(e){
+		$('div.star_explanation').hide('fast');
+	});
+	
+	//This next method creates the contact record. Need to have it check if 5 exist and alert user if all 5 are already used.
+	$(document).on("click", 'span.clinic_contact_button', function(){
+		var id_values = $(this).attr('id');
+		var id_arrays = id_values.split('o');
+		var user_id = id_arrays[0];
+		var clinic_id = id_arrays[1];
+		var current_object = this;
+		var data = {
+			user_id: user_id,
+			clinic_id: clinic_id
+		}
+		
+		$.ajax({
+			url: "<%= url_for(:controller => 'requests', :action => 'create') %>",
+			type: 'POST',
+			dataType: 'json',
+			async: true,
+			data: data,
+			success: function(data){
+				if(data[0]==='5'){
+					alert("You have already contacted 5 clinics.");
+				}
+				else{
+					$(current_object).addClass('already_contacted',1000);
+					$(current_object).removeClass('clinic_contact_button',1000);
+					$(current_object).html('Contact<br/>Request<br/>Sent',1000);
+					if(data[0]==='3'){
+						alert("You have " + (4-parseInt(data[0])) + " clinic left to contact.");
+					}
+					else{
+						alert("You have " + (4-parseInt(data[0])) + " clinics left to contact.");
+					}
+				}
+			}
+		});
+	});
+	
 	$( "#tabs" ).tabs();
-	PrintOverallRankingResults();
-	PrintAgeRankingResults();
-	PrintDiagnosisRankingResults();
 
 	$('li.left_button').click(function(){
 		var button_id = $(this).attr('id');
@@ -225,6 +384,7 @@ function PrintOverallRankingResults(){
 		year: year,
 		age_group: "All Ages",
 		diagnosis: "All Diagnoses",
+		region: region,
 		cycle_type: cycle_type,
 		page: overall_page,
 		states: states
@@ -242,12 +402,12 @@ function PrintOverallRankingResults(){
 								if(k==9){
 									clinic_html = clinic_html + " bottom";
 								}
-								clinic_html = clinic_html + "'><li class='clinic_name'><a href='/clinics/"+data[k]['permalink']+"' target='_blank'>"+ (overall_page*10 + k + 1) + ". " + data[k]['clinic_name'] + "</a></li>";
+								clinic_html = clinic_html + "'><li class='clinic_name'><a href='/clinics/"+data[k]['permalink']+"'>"+ (overall_page*10 + k + 1) + ". " + data[k]['clinic_name'] + "</a></li>";
 								clinic_html = clinic_html + "<li class='clinic_location'>" + data[k]['city'] + ", " + data[k]['state'] + "</li>";
-								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>IVF Reports Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['ivf_reports_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['ivf_reports_score']) + "'>★</span></span></li>";
-								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>Quality Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['quality_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['quality_score']) + "'>★</span></span></li>";
-								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>Safety Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['safety_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['safety_score']) + "'>★</span></span></li>";
-								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>SART Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['sart_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['sart_score']) + "'>★</span></span></li>";
+								clinic_html = clinic_html + "<li class='clinic_stats'><span id='ivfr_score' class='score_type'>IVF Reports Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['ivf_reports_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['ivf_reports_score']) + "'>★</span></span></li>";
+								clinic_html = clinic_html + "<li class='clinic_stats'><span id='quality_score' class='score_type'>Quality Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['quality_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['quality_score']) + "'>★</span></span></li>";
+								clinic_html = clinic_html + "<li class='clinic_stats'><span id='safety_score' class='score_type'>Safety Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['safety_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['safety_score']) + "'>★</span></span></li>";
+								clinic_html = clinic_html + "<li class='clinic_stats'><span id='sart_score' class='score_type'>SART Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['sart_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['sart_score']) + "'>★</span></span></li>";
 								clinic_html = clinic_html + "</ul>";
 								<% if signed_in? && !current_user.clinician? %>
 									var current_user_id = <%= current_user.id %>;
@@ -266,26 +426,7 @@ function PrintOverallRankingResults(){
 												clinic_html = clinic_html + '<span id="'+ current_user_id + 'o' + data[k]['clinic_id']+'" class="clinic_contact_button round">Contact<br/>this<br/>Clinic</span>';
 												clinic_html = clinic_html + "</div>";
 
-												$('div#overall_ranking_results div.clinic_rank_list').append(clinic_html).find(current_span_id).bind("click", function(){
-													var id_values = $(this).attr('id');
-													var id_arrays = id_values.split('o');
-													var user_id = id_arrays[0];
-													var clinic_id = id_arrays[1];
-													var data = {
-														user_id: user_id,
-														clinic_id: clinic_id
-													}
-													$.ajax({
-														url: "<%= url_for(:controller => 'requests', :action => 'create') %>",
-														type: 'POST',
-														dataType: 'json',
-														async: true,
-														data: data
-													});
-													$(this).addClass('already_contacted',1000);
-													$(this).removeClass('clinic_contact_button',1000);
-													$(this).html('Contact<br/>Request<br/>Sent',1000);
-												});
+												$('div#overall_ranking_results div.clinic_rank_list').append(clinic_html);
 											}
 											else{
 												clinic_html = clinic_html + '<span id="'+ current_user_id + 'o' + data[k]['clinic_id']+'" class="already_contacted round">Contact<br/>Request<br/>Sent</span>';
@@ -319,6 +460,7 @@ function PrintAgeRankingResults(){
 		diagnosis: "All Diagnoses",
 		cycle_type: cycle_type,
 		page: age_page,
+		region: region,
 		states: states
 	}
 	$.ajax({
@@ -334,14 +476,14 @@ function PrintAgeRankingResults(){
 								if(k==9){
 									clinic_html = clinic_html + " bottom";
 								}								
-								clinic_html = clinic_html + "'><li class='clinic_name'><a href='/clinics/"+data[k]['permalink']+"' target='_blank'>"+ (age_page*10 + k + 1) + ". " + data[k]['clinic_name'] + "</a></li>";
+								clinic_html = clinic_html + "'><li class='clinic_name'><a href='/clinics/"+data[k]['permalink']+"'>"+ (age_page*10 + k + 1) + ". " + data[k]['clinic_name'] + "</a></li>";
 								clinic_html = clinic_html + "<li class='clinic_location'>" + data[k]['city'] + ", " + data[k]['state'] + "</li>";
-								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>IVF Reports Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['ivf_reports_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['ivf_reports_score']) + "'>★</span></span></li>";
-								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>Quality Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['quality_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['quality_score']) + "'>★</span></span></li>";
-								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>Safety Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['safety_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['safety_score']) + "'>★</span></span></li>";
-								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>SART Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['sart_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['sart_score']) + "'>★</span></span></li>";
+								clinic_html = clinic_html + "<li class='clinic_stats'><span id='ivfr_score' class='score_type'>IVF Reports Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['ivf_reports_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['ivf_reports_score']) + "'>★</span></span></li>";
+								clinic_html = clinic_html + "<li class='clinic_stats'><span id='quality_score' class='score_type'>Quality Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['quality_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['quality_score']) + "'>★</span></span></li>";
+								clinic_html = clinic_html + "<li class='clinic_stats'><span id='safety_score' class='score_type'>Safety Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['safety_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['safety_score']) + "'>★</span></span></li>";
+								clinic_html = clinic_html + "<li class='clinic_stats'><span id='sart_score' class='score_type'>SART Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['sart_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['sart_score']) + "'>★</span></span></li>";
 								clinic_html = clinic_html + "</ul>"
-								<% if signed_in? %>
+								<% if signed_in? && !current_user.clinician?%>
 									var current_user_id = <%= current_user.id %>;
 									var current_span_id = "span#"+ current_user_id + "o" + data[k]['clinic_id'];									
 									var check_data = {
@@ -357,42 +499,25 @@ function PrintAgeRankingResults(){
 											if(check_data[0]==undefined){
 												clinic_html = clinic_html + '<span id="'+ current_user_id + 'o' + data[k]['clinic_id']+'" class="clinic_contact_button round">Contact<br/>this<br/>Clinic</span>';
 												clinic_html = clinic_html + "</div>";
-
-												$('div#age_ranking_results div.clinic_rank_list').append(clinic_html).find(current_span_id).bind("click", function(){
-													var id_values = $(this).attr('id');
-													var id_arrays = id_values.split('o');
-													var user_id = id_arrays[0];
-													var clinic_id = id_arrays[1];
-													var data = {
-														user_id: user_id,
-														clinic_id: clinic_id
-													}
-													$.ajax({
-														url: "<%= url_for(:controller => 'requests', :action => 'create') %>",
-														type: 'POST',
-														dataType: 'json',
-														async: true,
-														data: data
-													});
-													$(this).addClass('already_contacted',1000);
-													$(this).removeClass('clinic_contact_button',1000);
-													$(this).html('Contact<br/>Request<br/>Sent',1000);
-												});
+												$('div#age_ranking_results div.clinic_rank_list').append(clinic_html);
 											}
 											else{
 												clinic_html = clinic_html + '<span id="'+ current_user_id + 'o' + data[k]['clinic_id']+'" class="already_contacted round">Contact<br/>Request<br/>Sent</span>';
 												clinic_html = clinic_html + "</div>";
-
 												$('div#age_ranking_results div.clinic_rank_list').append(clinic_html);
 											}
 										}
 									});
-								<% else #Need to add text and link about: Register to Contact %>
-								clinic_html = clinic_html + '<span class="register_to_contact round"><%= link_to register_path do |l| %>Register<br/>to<br/>Contact<% end %></span>';
-								clinic_html = clinic_html + "</div>";
+									<% elsif signed_in? && current_user.clinician? #Display no contact link %>
+										clinic_html = clinic_html + "</div>";
 
-								$('div#age_ranking_results div.clinic_rank_list').append(clinic_html);
-								<% end %>
+										$('div#age_ranking_results div.clinic_rank_list').append(clinic_html);
+									<% else #Need to add text and link about: Register to Contact %>
+										clinic_html = clinic_html + '<span class="register_to_contact round"><%= link_to register_path do |l| %>Register<br/>to<br/>Contact<% end %></span>';
+										clinic_html = clinic_html + "</div>";
+
+										$('div#age_ranking_results div.clinic_rank_list').append(clinic_html);
+									<% end %>
 						});
 					}
 	});
@@ -407,6 +532,7 @@ function PrintDiagnosisRankingResults(){
 		diagnosis: diagnosis,
 		cycle_type: cycle_type,
 		page: diagnosis_page,
+		region: region,
 		states: states
 	}
 	$.ajax({
@@ -423,14 +549,14 @@ function PrintDiagnosisRankingResults(){
 									clinic_html = clinic_html + " bottom";
 								}
 
-								clinic_html = clinic_html + "'><li class='clinic_name'><a href='/clinics/"+data[k]['permalink']+"' target='_blank'>"+ (diagnosis_page*10 + k + 1) + ". " + data[k]['clinic_name'] + "</a></li>";
+								clinic_html = clinic_html + "'><li class='clinic_name'><a href='/clinics/"+data[k]['permalink']+"'>"+ (diagnosis_page*10 + k + 1) + ". " + data[k]['clinic_name'] + "</a></li>";
 								clinic_html = clinic_html + "<li class='clinic_location'>" + data[k]['city'] + ", " + data[k]['state'] + "</li>";
-								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>IVF Reports Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['ivf_reports_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['ivf_reports_score']) + "'>★</span></span></li>";
-								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>Quality Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['quality_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['quality_score']) + "'>★</span></span></li>";
-								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>Safety Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['safety_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['safety_score']) + "'>★</span></span></li>";
-								clinic_html = clinic_html + "<li class='clinic_stats'><span class='score_type'>SART Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['sart_score'])/10 + "<span class='icon " + PrintStarIcon(data[k]['sart_score']) + "'>★</span></span></li>";
+								clinic_html = clinic_html + "<li class='clinic_stats'><span id='ivfr_score' class='score_type'>IVF Reports Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['ivf_reports_score'])/10 + "<span id='star_icon' class='icon " + PrintStarIcon(data[k]['ivf_reports_score']) + "'>★</span></span></li>";
+								clinic_html = clinic_html + "<li class='clinic_stats'><span id='quality_score' class='score_type'>Quality Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['quality_score'])/10 + "<span id='star_icon' class='icon " + PrintStarIcon(data[k]['quality_score']) + "'>★</span></span></li>";
+								clinic_html = clinic_html + "<li class='clinic_stats'><span id='safety_score' class='score_type'>Safety Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['safety_score'])/10 + "<span id='star_icon' class='icon " + PrintStarIcon(data[k]['safety_score']) + "'>★</span></span></li>";
+								clinic_html = clinic_html + "<li class='clinic_stats'><span id='sart_score' class='score_type'>SART Score:</span> " + "<span class='score_result'>" +  Math.round(10*data[k]['sart_score'])/10 + "<span id='star_icon' class='icon " + PrintStarIcon(data[k]['sart_score']) + "'>★</span></span></li>";
 								clinic_html = clinic_html + "</ul>"
-								<% if signed_in? %>
+								<% if signed_in? && !current_user.clinician?%>
 									var current_user_id = <%= current_user.id %>;
 									var current_span_id = "span#"+ current_user_id + "o" + data[k]['clinic_id'];									
 									var check_data = {
@@ -446,42 +572,23 @@ function PrintDiagnosisRankingResults(){
 											if(check_data[0]==undefined){
 												clinic_html = clinic_html + '<span id="'+ current_user_id + 'o' + data[k]['clinic_id']+'" class="clinic_contact_button round">Contact<br/>this<br/>Clinic</span>';
 												clinic_html = clinic_html + "</div>";
-
-												$('div#diagnosis_ranking_results div.clinic_rank_list').append(clinic_html).find(current_span_id).bind("click", function(){
-													var id_values = $(this).attr('id');
-													var id_arrays = id_values.split('o');
-													var user_id = id_arrays[0];
-													var clinic_id = id_arrays[1];
-													var data = {
-														user_id: user_id,
-														clinic_id: clinic_id
-													}
-													$.ajax({
-														url: "<%= url_for(:controller => 'requests', :action => 'create') %>",
-														type: 'POST',
-														dataType: 'json',
-														async: true,
-														data: data
-													});
-													$(this).addClass('already_contacted',1000);
-													$(this).removeClass('clinic_contact_button',1000);
-													$(this).html('Contact<br/>Request<br/>Sent',1000);
-												});
+												$('div#diagnosis_ranking_results div.clinic_rank_list').append(clinic_html);
 											}
 											else{
 												clinic_html = clinic_html + '<span id="'+ current_user_id + 'o' + data[k]['clinic_id']+'" class="already_contacted round">Contact<br/>Request<br/>Sent</span>';
 												clinic_html = clinic_html + "</div>";
-
 												$('div#diagnosis_ranking_results div.clinic_rank_list').append(clinic_html);
 											}
 										}
 									});
-								<% else #Need to add text and link about: Register to Contact %>
-								clinic_html = clinic_html + '<span class="register_to_contact round"><%= link_to register_path do |l| %>Register<br/>to<br/>Contact<% end %></span>';
-								clinic_html = clinic_html + "</div>";
-
-								$('div#diagnosis_ranking_results div.clinic_rank_list').append(clinic_html);
-								<% end %>
+									<% elsif signed_in? && current_user.clinician? #Display no contact link %>
+										clinic_html = clinic_html + "</div>";
+										$('div#diagnosis_ranking_results div.clinic_rank_list').append(clinic_html);
+									<% else #Need to add text and link about: Register to Contact %>
+										clinic_html = clinic_html + '<span class="register_to_contact round"><%= link_to register_path do |l| %>Register<br/>to<br/>Contact<% end %></span>';
+										clinic_html = clinic_html + "</div>";
+										$('div#diagnosis_ranking_results div.clinic_rank_list').append(clinic_html);
+									<% end %>
 						});
 					}
 	});

@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= title %></title>
-  <%= stylesheet_link_tag    "application" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
+  	<title><%= title %></title>
+  	<%= stylesheet_link_tag    "application" %>
+  	<%= javascript_include_tag "application" %>
+	<%= render 'layouts/meta' if Rails.env.production? %>
+	<link rel="shortcut icon" href="<%= asset_path 'favicon.png' %>">
+	<link rel="icon" href="<%= asset_path 'favicon.png' %>">	
+  	<%= csrf_meta_tags %>
 </head>
 <body>
 	<div class="container">
-		<%= render 'layouts/header' %>
-		
+	<%= render 'layouts/header' %>
 		
 	<section class="page-body-content">
 		<div class="container_12">
@@ -27,21 +29,36 @@
 						<%= yield %>
 				</div>
 			<% else %>
-			<div class="grid_3 alpha">
-				<%= render 'layouts/left_sidebar' %>
-			</div>
-			<div class="grid_6">
-				<div class="middle_content">
-					<% flash.each do |key, value| %>
-						<div class="grid_6 alpha"><div class="flash <%= key %>"><%= value %></div></div>
-					<% end %>
-		
-					<%= yield %>
+				<% if is_controller?("pages") && is_action?('ranking') %>
+					<%= render 'layouts/region_map' %>
+					<div id="ranking_content" class="hidden">
+				<% end %>
+				<div class="grid_3 alpha">
+					<%= render 'layouts/left_sidebar' %>
 				</div>
-			</div>
-			<div class="grid_3 omega">
-				<%= render 'layouts/right_sidebar' %>
-			</div>
+					<% if is_controller?('pages') && is_action?('home') %>
+					<% unless signed_in? %>
+						<div class="grid_9 omega">
+							<%= render 'layouts/call_to_action' %>
+						</div>
+					<% end %>
+					<% end %>
+				<div class="grid_6">
+					<div class="middle_content">
+						<% flash.each do |key, value| %>
+							<div class="grid_6 alpha"><div class="flash <%= key %>"><%= value %></div></div>
+						<% end %>
+		
+						<%= yield %>
+					</div>
+				</div>
+				<div class="grid_3 omega">
+					<%= render 'layouts/right_sidebar' %>
+				</div>
+			
+				<% if is_controller?("pages") && is_action?('ranking') %>
+					</div>
+				<% end %>
 			<% end %>
 			
 

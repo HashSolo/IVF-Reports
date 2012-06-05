@@ -12,4 +12,9 @@ module UsersHelper
 												:class => 'large_gravatar',
 												:gravatar => options)
 	end
+	
+	def contacts_remaining(user)
+	  outstanding_contacts = user.requests.where(:declined => false)
+	  remaining = (5 - outstanding_contacts.count)
+  end
 end

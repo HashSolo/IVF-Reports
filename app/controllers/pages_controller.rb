@@ -16,24 +16,16 @@ class PagesController < ApplicationController
   	age = "All Ages"
   	diagnosis = "All Diagnoses"
   	cycle_type = "fresh"
+    @states = State.all.collect { |state| state.name }
   	
   	respond_to do |format|
   	  format.html {}
   	  format.json do 
-  	    @clinics = Clinic.all
+  	    @scores = Score.where(:year => year, :age_group => age, :diagnosis => diagnosis, :cycle_type => cycle_type).joins(:clinic).where(:clinics => {:state => @states})
         @clinic_results = Array.new;
-        @clinics.each do |c|
-          if(c.id==384)
-
-          else
-            cur_score = Score.where(:clinic_id => c.id, :year => year, :age_group => age, :diagnosis => diagnosis, :cycle_type => cycle_type)
-            if cur_score.empty?
-              cur_new_object = {'year' => year, 'age_group' => age, 'diagnosis' => diagnosis, 'ivf_reports_score' => 0.00, 'quality_score' => 0.00, 'safety_score' => 0.00, 'sart_score' => 0.00, 'clinic_id' => c.id, 'clinic_name' => c.clinic_name, 'permalink' => c.permalink, 'city' => c.city, 'state' => c.state, 'address' => c.address, 'practice_director' => c.practice_director, 'lab_director' => c.laboratory_director, 'medical_director' => c.medical_director, 'zip' => c.zip, 'info' => c.info, 'latitude' => c.latitude, 'longitude' => c.longitude}
-            else
-              cur_new_object = {'updated_at' => cur_score[0].updated_at, 'year' => cur_score[0].year, 'age_group' => cur_score[0].age_group, 'diagnosis' => cur_score[0].diagnosis, 'ivf_reports_score' => cur_score[0].ivf_reports_score, 'quality_score' => cur_score[0].quality_score, 'safety_score' => cur_score[0].safety_score, 'sart_score' => cur_score[0].sart_score, 'clinic_id' => c.id, 'clinic_name' => c.clinic_name, 'permalink' => c.permalink, 'city' => c.city, 'state' => c.state, 'address' => c.address, 'practice_director' => c.practice_director, 'lab_director' => c.laboratory_director, 'medical_director' => c.medical_director, 'zip' => c.zip, 'info' => c.info, 'latitude' => c.latitude, 'longitude' => c.longitude}
-            end
-            @clinic_results << cur_new_object
-          end
+        @scores.each do |s|
+          cur_new_object = {'updated_at' => s.updated_at, 'year' => s.year, 'age_group' => s.age_group, 'diagnosis' => s.diagnosis, 'ivf_reports_score' => s.ivf_reports_score, 'quality_score' => s.quality_score, 'safety_score' => s.safety_score, 'sart_score' => s.sart_score, 'clinic_id' => s.clinic.id, 'clinic_name' => s.clinic.clinic_name, 'permalink' => s.clinic.permalink, 'city' => s.clinic.city, 'state' => s.clinic.state, 'address' => s.clinic.address, 'practice_director' => s.clinic.practice_director, 'lab_director' => s.clinic.laboratory_director, 'medical_director' => s.clinic.medical_director, 'zip' => s.clinic.zip, 'info' => s.clinic.info, 'latitude' => s.clinic.latitude, 'longitude' => s.clinic.longitude}
+          @clinic_results << cur_new_object
         end
   	    render :json => @clinic_results.to_json()
 	    end
@@ -80,12 +72,17 @@ class PagesController < ApplicationController
     results = 10 #The number of results per page    
     results_start = page*results    
     
-    @scores = Score.where(:year => year, :age_group => age_group, :diagnosis => diagnosis, :cycle_type => cycle_type).joins(:clinic).where(:clinics => {:state => states}).limit(results).offset(results_start)
+    if params[:region]=="ALL"
+      @scores = Score.where(:year => year, :age_group => age_group, :diagnosis => diagnosis, :cycle_type => cycle_type).joins(:clinic).where(:clinics => {:state => states}).limit(results).offset(results_start)
+    else
+      region = "ALL" #this can be changed if we want to go back to the region based ranking.
+      @scores = Score.where(:year => year, :age_group => age_group, :diagnosis => diagnosis, :cycle_type => cycle_type).joins(:clinic).where(:clinics => {:state => states}).limit(results).offset(results_start)
+    end
+    
     @clinic_results = Array.new;
     unless @scores.empty?
       @scores.each do |s|
-        cur_clinic = Clinic.find_by_id(s.clinic_id)
-        cur_new_object = cur_new_object = {'ivf_reports_score' => s.ivf_reports_score, 'quality_score' => s.quality_score, 'safety_score' => s.safety_score, 'sart_score' => s.sart_score, 'clinic_id' => cur_clinic.id, 'clinic_name' => cur_clinic.clinic_name, 'permalink' => cur_clinic.permalink, 'city' => cur_clinic.city, 'state' => cur_clinic.state, 'address' => cur_clinic.address, 'practice_director' => cur_clinic.practice_director, 'lab_director' => cur_clinic.laboratory_director, 'medical_director' => cur_clinic.medical_director, 'zip' => cur_clinic.zip}
+        cur_new_object = {'ivf_reports_score' => s.ivf_reports_score, 'quality_score' => s.quality_score, 'safety_score' => s.safety_score, 'sart_score' => s.sart_score, 'clinic_id' => s.clinic.id, 'clinic_name' => s.clinic.clinic_name, 'permalink' => s.clinic.permalink, 'city' => s.clinic.city, 'state' => s.clinic.state, 'address' => s.clinic.address, 'practice_director' => s.clinic.practice_director, 'lab_director' => s.clinic.laboratory_director, 'medical_director' => s.clinic.medical_director, 'zip' => s.clinic.zip}
         @clinic_results << cur_new_object
       end
     end
@@ -97,15 +94,19 @@ class PagesController < ApplicationController
   end
   
   def faqs
+    @title = "Frequently Asked Questions"
   end
   
   def terms
+    @title = "Terms and Conditions"
   end
   
   def privacy
+    @title = "Privacy Policy"
   end
   
   def clinicians
+    @title = "Clinicians"
   end
 
 end

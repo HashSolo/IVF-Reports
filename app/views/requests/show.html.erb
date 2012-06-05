@@ -11,6 +11,7 @@
 	<tr><td>Previous IVF Attempts</td><td><%= @request_user.previous_cycles unless @request_user.previous_cycles.nil? %></td></tr>
 	<tr><td>Infertility Diagnosis</td><td><%= @request_user.infertility_diagnosis.gsub("_"," ").capitalize unless @request_user.infertility_diagnosis.nil? %></td></tr>
 	<tr><td>IVF Reports Member Since</td><td><%= @request_user.created_at.strftime("%B %d, %Y") %></td></tr>
+	<tr><td>About This Couple</td><td class="about_me"><%= @request_user.about_me %></td></tr>
 </table>
 </div>
 
@@ -26,7 +27,13 @@
 
 <div class="purchase_request">
 	<span class="purchase_button round">
-		<%= link_to 'Purchase Contact Information', @request.paypal_encrypted(clinic_request_url(@clinic, @request), payment_notifications_url)%>
+		<%= link_to 'Purchase Info', @request.paypal_encrypted(clinic_request_url(@clinic, @request), payment_notifications_url)%>
+	</span>
+</div>
+
+<div class="deny_request">
+	<span class="deny_button round">
+		<%= link_to 'Decline Info', decline_clinic_requests_path(@clinic,:user_id => @request.user_id, :clinic_id => @request.clinic_id), :confirm => "Are You Sure You Want to Decline this Request?" %>
 	</span>
 </div>
 

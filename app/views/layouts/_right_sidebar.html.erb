@@ -40,6 +40,28 @@
 	<% else # Nothing else displayed... %>
 	<% end %>
 
+	<% if is_controller?('pages') and is_action?('ranking') %>
+		<ul class="sidebar_module">
+			<li class="header">Select States</li>
+			<li><span class="all_state_label">Select All States</span><input checked type="checkbox" class="select_all_state_checkbox" name="select_all_states" value="all_states" style="float:right;margin-top:9px;margin-right:10px;"></li>
+
+			<li><span class="all_state_label">Unselect All States</span><input type="checkbox" class="unselect_all_state_checkbox" name="unselect_all_states" value="no_states" style="float:right;margin-top:9px;margin-right:10px;"></li>
+			<% @states.each_with_index do |s, index| %>
+				<% if index%2 == 0 %>
+				<li class="state">
+				<span class="state_span">
+					<%= s.name %><input checked id="state_<%= s.name %>" class="state_checkbox" type="checkbox" name="state" value="<%= s.name %>">
+				</span>
+				<% else %>
+				<span class="state_span">
+					<%= s.name %><input checked id="state_<%= s.name %>" class="state_checkbox" type="checkbox" name="state" value="<%= s.name %>">
+				</span>
+				</li>
+				<% end %>
+			<% end %>
+		</ul>
+	<% end %>
+	
 <ul class="sidebar_module">
 	<li class="header">Links</li>
 	<li><%= link_to "The CDC", 'http://www.cdc.gov/art/', :target => "_blank" %></li>
@@ -50,27 +72,14 @@
 	<li class="bottom"><%= link_to "American College of Embryology", 'http://embcol.org/', :target => "_blank" %></li>
 </ul>
 
-	<% if is_controller?('pages') && is_action?('ranking') %>
-		<ul class="sidebar_module">
-			<li class="header">Select States</li>
-			<li><span class="all_state_label">Select All States</span><input checked type="checkbox" class="select_all_state_checkbox" name="select_all_states" value="all_states" style="float:right;margin-top:9px;margin-right:10px;"></li>
-
-			<li><span class="all_state_label">Unselect All States</span><input type="checkbox" class="unselect_all_state_checkbox" name="unselect_all_states" value="no_states" style="float:right;margin-top:9px;margin-right:10px;"></li>
-			<% @states.each_with_index do |s, index| %>
-				<% if index%2 == 0 %>
-				<li class="state">
-				<span class="state_span">
-					<%= s.name %><input checked class="state_checkbox" type="checkbox" name="state" value="<%= s.name %>">
-				</span>
-				<% else %>
-				<span class="state_span">
-					<%= s.name %><input checked class="state_checkbox" type="checkbox" name="state" value="<%= s.name %>">
-				</span>
-				</li>
-				<% end %>
-			<% end %>
-		</ul>
-	<% end %>
+<% if is_controller?('users') && is_action?('show') %>	
+<ul class="sidebar_module tips_for_success">
+	<li class="header">Tips for Success</li>
+	<li class="tip">*Fill out as much information as possible to help the physicians who you contact gauge whether you are a good fit for their clinic. This also makes sure that our recommendation engine matches you with the best clinics for you.</li>
+	<li class="tip">*You may contact up to 5 clinics at a time. If contact is declined by a clinic, feel free to contact a new clinic. Again, the more information in your profile (Phone Number, Age, About Me, Zip Code), the higher the chances that a clinic will follow up with an appointment.</li>
+	<li class="tip">*Describe more details about your fertility issues in the 'About Me' section. Don't worry fields marked 'Clinic Contact Only' are not shared with anyone except for clinics you explicitly contact.</li>
+	<li class="tip bottom">*<%= link_to "Contact", contact_path %> an IVF Reports representative with any issues or questions. We want to help you navigate through this difficult time, and we have representatives ready to point you in the right direction.</li>
+</ul>
+<% end %>
 
 </div>
-
