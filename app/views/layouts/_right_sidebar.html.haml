@@ -1,0 +1,108 @@
+.right_sidebar
+ - if is_controller?('clinics') && is_action?('show')
+  - unless signed_in? && (current_user.clinician? || current_user.admin?)	 
+   %ul.sidebar_module
+    %li.header Contact this Clinic
+    - if signed_in?
+     - if @clinic.requests.where(:user_id => current_user.id).count == 1
+      %li.request_button.bottom
+       %a{ :href => "#" }
+        %span.request_bottom_old Contact Request Sent
+     - else
+      %li.request_button.bottom
+       = form_for @request, :remote => :true do |f|
+        = f.hidden_field :user_id, :value => current_user.id   
+        = f.hidden_field :clinic_id, :value => @clinic.id
+        = f.submit :value => 'Click Here to Contact'  	    
+    -else
+     %li.request_button.bottom
+      = link_to 'Register to Contact', register_path    
+
+ - if signed_in? && current_user.admin?
+  - unless @clinic.nil?
+   %ul.sidebar_module
+    %li.header Manage Clinic Info
+    %li
+     = link_to 'Edit Clinic Info', edit_clinic_path(@clinic)
+    %li
+     = link_to 'View In Depth Statistics', clinic_statistics_path(@clinic)
+    %li.bottom
+     = link_to 'View Patient Leads', [@clinic, :requests]        
+ 
+ - if signed_in? && current_user.clinician?
+  - unless user_clinic.nil?
+   %ul.sidebar_module
+    %li.header Manage My Clinic Info
+    %li 
+     = link_to 'View My Clinic', clinic_path(user_clinic)
+    %li 
+     = link_to 'Edit Clinic Info', edit_clinic_path(user_clinic)
+    %li 
+     = link_to 'View In Depth Statistics', [user_clinic, :statistics]            
+    %li.bottom
+     = link_to 'View Patient Leads', [user_clinic, :requests]
+ - else
+  -# Nothing displayed
+  
+ - if is_controller?('pages') && is_action?('ranking')
+  %ul.sidebar_module
+   %li.header Select States
+   %li
+
+    -#need to set default checkbox values
+    %span.all_state_label Select All States
+    %input{ :type => "checkbox", :class => "select_all_state_checkbox", :name => "select_all_states", :value => "all_states", :style => "float:right;margin-top:9px;margin-right:10px;" }
+   %li
+    %span.all_state_label Unselect All States
+    %input{ :type => "checkbox", :class => "unselect_all_state_checkbox", :name => "unselect_all_states", :value => "no_states", :style => "float:right;margin-top:9px;margin-right:10px;" }
+   
+   -# there is an issue with the code below because the original html had a nesting issue. it currently produces a single column of checkboxes, when there should be two columns
+
+   - @states.each_with_index do |s, index|
+    - if index%2 == 0
+     %li.state
+      %span.state_span
+       %span
+        = s.name  
+       %input{ :class => "state_checkbox", :type => "checkbox", :name => "state", :value => "#{s.name}" }
+    - else
+     %li.state
+      %span.state_span
+       %span
+        = s.name  
+       %input{ :class => "state_checkbox", :type => "checkbox", :name => "state", :value => "#{s.name}" }
+ 
+ %ul.sidebar_module
+  %li.header Links
+  %li
+   = link_to "The CDC", 'http://www.cdc.gov/art/', :target => "_blank"
+  %li
+   = link_to "SART", 'http://www.sart.org/', :target => "_blank"
+  %li
+   = link_to "IVF.NET", 'http://www.ivf.net/', :target => "_blank"
+  %li
+   = link_to "ASRM", 'http://www.asrm.org/', :target => "_blank"
+  %li
+   = link_to "RBM Online", 'http://www.rbmojournal.com/', :target => "_blank"
+  %li.bottom
+   = link_to "American College of Embryology", 'http://embcol.org/', :target => "_blank"
+
+ - if is_controller?('users') && is_action?('show')
+  %ul.sidebar_module.tips_for_success
+   %li.header Tips for Success
+   %li.tip *Fill out as much information as possible to help the physicians who you contact gauge whether you are a good fit for their clinic. This also makes sure that our recommendation engine matches you with the best clinics for you.
+   %li.tip *You may contact up to 5 clinics at a time. If contact is declined by a clinic, feel free to contact a new clinic. Again, the more information in your profile (Phone Number, Age, About Me, Zip Code), the higher the chances that a clinic will follow up with an appointment.
+   %li.tip *Describe more details about your fertility issues in the 'About Me' section. Don't worry fields marked 'Clinic Contact Only' are not shared with anyone except for clinics you explicitly contact.
+   %li.tip.bottom 
+    %span
+     = link_to 'Contact', contact_path
+    %span an IVF Reports representative with any issues or questions. We want to help you navigate through this difficult time, and we have representatives ready to point you in the right direction.
+     
+        
+
+
+
+
+
+
+

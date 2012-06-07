@@ -1,0 +1,61 @@
+%header
+ .container_12
+  .grid_12
+   .grid_12.alpha.omega
+    %h1.hidden IVF Reports
+    .header_top
+     %span.logo
+      = link_to root_path do
+       %span
+     %span.authentication
+      %ul
+       - if signed_in?
+        %li
+         = link_to signout_path do
+          %span.icon ⊝
+          %span Sign Out
+        %li
+         = link_to edit_user_path(current_user), :class => is_active?('users#edit') do
+          %span.icon ⚙
+          %span Settings
+        %li
+         = link_to user_path(current_user), :class => is_active?('users#show') do
+          %span.icon u
+          %span 
+           = current_user.name
+        - if current_user.clinician?
+         %li
+          = link_to clinic_path(current_user.clinics.first) do
+           %span.icon ⌂
+           %span My Clinic
+       - else
+        %li
+         = link_to "Register", register_path, :class => is_active?('users#new') 
+        %li.divider 
+         = "|"
+        %li
+         = link_to "Sign In", signin_path, :class => is_active?("sessions#new")   
+
+
+   .grid_12.alpha.omega
+    .header_nav
+     %nav.header    
+      %ul
+       %li{ :class => "#{is_active?("pages#home")}"}  
+        = link_to "Home", root_path
+       %li{ :class => "#{is_active?("pages#clinic_find")}"}            	                 
+        = link_to "Find a Clinic", { :controller => 'pages', :action => 'clinicfind'  } 
+       %li{ :class => "#{is_active?("pages#ranking")}"} 
+        = link_to "Ranking", ranking_path
+       %li{ :class => "#{is_active?("pages#system")}"}
+        = link_to "Our System", { :controller => 'pages', :action => 'system' }
+       %li{ :class => "#{is_active?("pages#faqs")}"}
+        = link_to "Faqs", faqs_path
+       %li.search
+        %span.icon z
+        %input{ :type => 'text' }
+
+
+   - if is_controller?('pages') and is_action?('home')
+    .grid_12.alpha.omega
+     .header_pic

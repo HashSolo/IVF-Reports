@@ -1,0 +1,46 @@
+%h1 Frequently Asked Questions
+
+.qcontainer
+ .faqquestion Is the information that is available publicly about IVF clinics reliable?
+ .faqanswer.hidden 
+  %p The pregnancy data of IVF clinics is collected by SART and CDC each year. The information is not validated by these institutions on a routine basis. Although it is possible that entries into the database are sometimes wrong, most experts believe that the data is reliable since validation inspections may occur and clinics are at risk to lose their license or be negatively affected by bad publicity.
+
+.qcontainer
+ .faqquestion How could the information that is now publicly available about IVF clinics improve?
+ .faqanswer.hidden 
+  %p An important aspect, which is not presented by SART is that of attempt number. It is likely that patients, who return after a failed IVF attempt have a lower chance of pregnancy. This decrease may be modest or severe, depending on the nature of the diagnosis and technical aspects related to the quality and experience of the clinic.
+
+.qcontainer
+ .faqquestion What Makes a Clinic Score Well?
+ .faqanswer.hidden
+  %p At IVF Reports, we evaluate clinics according to three main properties in clinics: maternal age, performance and safety. Maternal age is the single most important factor affecting the success of IVF. Though the data is generally available by age groups, outcome chances are determined by many other factors as well, such as attempt number. Performance is judged by the implantation rate. The third factor, safety, is judged by how few embryos are transferred. Clinics that are ranked high have relatively high implantation rates and proportionally lower numbers of embryos transferred. This may be different from patient to patient and is also affected by the distribution of results across maternal age groups.
+
+.qcontainer
+ .faqquestion Why Implantation Rate
+ .faqanswer.hidden
+  %p The implantation rate is an important statistic because it is defined as the percentage of embryos transferred that implanted into the uterus.ù Since this statistic is defined per embryo,ù it is impossible for a clinician to artificially inflate this number by simply transferring an excess number of embryos.
+
+.qcontainer
+ .faqquestion What about Live Birth Rate (per transfer)?
+ .faqanswer.hidden
+  %p The Live Birth Rate per transfer statistic measures the rate of births per each transfer procedure. A transfer procedure may involve multiple embryos, and for this reason, this statistic can be inflated by transferring an excess of embryos (at a sacrifice of the safety of the patient). Moreover, it occludes poor implantation rates and fails to accurately judge the skill and technique used by the clinician and embryologist. For this reason, we have elected not to use the Live Birth Rate in ranking the clinics (although we still give these statistics in the clinic information page and provide a SART score which assesses this statistic).
+
+.qcontainer
+ .faqquestion Can a clinic achieve a better score by simply only accepting younger patients?
+ .faqanswer.hidden
+  %p Our score system does not provide clinics an incentive to reject older patients. In fact, if a clinic does particularly well with an older age group, it will help the overall score. For each clinic, a score is derived for one of the five major age groups. These scores are then averaged together in a weighted average according to the number of procedures done for each age group. By computing our score this way, we do not just reward clinics with the highest absolute implantation rates. Clinics are rewarded based on how well they do in each age group relative to the mean performance for that age group.
+
+.qcontainer
+ .faqquestion Why is Maternal Age so Important?
+ .faqanswer.hidden
+  %p Eggs are produced only once and they stay immature in the ovary for many years until the hormonal circumstances recruits a few to ripen each menstrual cycle. All other cells are refreshed during life by a process called cell division, yet eggs remain dormant and undivided. This dormant state leads to small but sometimes damaging conditions becoming more serious over time.
+
+
+
+
+:javascript
+ $(document).ready(function(){ 
+ 	$('div.faqquestion').click(function(){
+ 		$(this).siblings().toggle('slow');
+ 	});
+ });

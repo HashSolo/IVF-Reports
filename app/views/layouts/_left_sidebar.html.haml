@@ -1,0 +1,40 @@
+.left_sidebar
+ %ul.sidebar_module
+  %li.header Reports
+  - if signed_in?
+   %li 
+    = link_to user_path(current_user), :class => is_active?('users#show') do
+     %span.icon u
+     %span My Profile   
+  %li
+   = link_to "The IVF Process", {:controller => 'reports', :action => 'the_ivf_process'}
+  -#%li 
+   =# link_to "Infertility Diagnoses", {:controller => 'reports', :action => 'infertility_diagnoses'}
+  %li
+   = link_to "The CDC vs SART", {:controller => 'reports', :action => 'cdc_vs_sart'}
+  %li
+   = link_to "Fertility News", {:controller => 'reports', :action => 'fertility_news'}
+  %li.bottom
+   = link_to "Other Technologies", {:controller => 'reports', :action => 'other_technologies'}
+  -#%li.bottom
+   = #link_to "Clinics By State", {:controller => 'clinics', :action => 'index'}
+ 
+ - if signed_in?
+  - if current_user.admin? || current_user.insurer?
+   %ul.sidebar_module
+    %li.header Optum Health
+    %li
+     = link_to "Clinic Explorer", {:controller => 'reports', :action => 'clinic_explorer'}
+    %li.bottom
+     = link_to "Clinic Comparator", {:controller => 'reports', :action => 'clinic_comparator'} 	   	   
+
+ %ul.sidebar_module
+  %li.header Social Media
+  %li.social_media
+   .facebookbadge.small-round
+    %iframe{ :src => "http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fpages%2FIVF-Reports%2F166670843383510&amp;width=190&amp;colorscheme=light&amp;show_faces=false&amp;stream=false&amp;header=false&amp;height=62", :scrolling => "no", :frameborder => "0", :style => "border:none; width:190px; height:80px;", :allowTransparency => "true" }
+  %li.social_media.bottom
+   .twitterbadge.small-round
+    %a{ :href => "http://www.twitter.com/ivfreports"}
+     %img{ :src => "http://twitter-badges.s3.amazonaws.com/follow_us-b.png", :alt => "Follow ivfreports on Twitter"}     
+

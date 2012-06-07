@@ -74,8 +74,8 @@ ActiveRecord::Schema.define(:version => 20120409204802) do
     t.integer  "request_id"
     t.string   "status"
     t.string   "transaction_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "requests", :force => true do |t|
@@ -126,7 +126,41 @@ ActiveRecord::Schema.define(:version => 20120409204802) do
     t.datetime "updated_at"
   end
 
-# Could not dump table "users" because of following StandardError
-#   Unknown type 'weight' for column 'weight'
+  create_table "users", :force => true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "encrypted_password"
+    t.string   "salt"
+    t.boolean  "admin",                 :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "insurer",               :default => false
+    t.string   "permalink"
+    t.string   "gender"
+    t.string   "zip_code"
+    t.string   "ethnicity"
+    t.date     "birthday"
+    t.integer  "previous_cycles"
+    t.string   "infertility_diagnosis"
+    t.string   "abo_blood_type"
+    t.string   "rh_factor"
+    t.integer  "height_ft"
+    t.integer  "height_inches"
+    t.integer  "weight"
+    t.float    "day_3_fsh"
+    t.float    "day_3_e2"
+    t.float    "day_3_lh"
+    t.float    "day_10_fsh"
+    t.float    "day_10_e2"
+    t.float    "day_10_lh"
+    t.float    "prolactin"
+    t.string   "uterine_fibroids"
+    t.string   "uterine_tumors"
+    t.string   "phone"
+    t.boolean  "clinician",             :default => false
+    t.text     "about_me"
+    t.string   "user_type"
+    t.string   "zip_distance",          :default => "50"
+  end
 
 end

@@ -1,0 +1,78 @@
+!!!XML
+!!!
+
+%html
+ %head
+  %title
+   = title
+  %span
+   = stylesheet_link_tag    "application"
+   = javascript_include_tag "application"
+   = render 'layouts/meta' if Rails.env.production?
+  %link{ :rel => "shortcut icon", :href => "#{asset_path 'favicon.png'}"}  
+  %link{ :rel => "icon", :href => "#{asset_path 'favicon.png'}"}  
+  %span
+   = csrf_meta_tags
+
+ %body
+  .container
+   %span
+    = render 'layouts/header'
+   %section.page-body-content
+    .container_12
+     .grid_12.body_content
+      - if is_clinic_index?
+       .middle_content
+        = yield
+      - elsif is_clinic_explorer? || is_clinic_comparator? || is_controller?('statistics')
+       .explorer_content
+        - flash.each do |key, value|  
+         .grid_9.alpha
+          %div{ :class => "flash #{key}"}
+           = value
+        %span
+         = yield   
+      - else 
+       - if is_controller?('pages') && is_action?('ranking') 
+        %span
+         = render 'layouts/region_map'
+        .hidden#ranking_content
+         .grid_3.alpha
+          = render 'layouts/left_sidebar'
+         - if is_controller?('pages') && is_action?('home')
+          - unless signed_in?
+           .grid_9.omega
+            = render 'layouts/call_to_action'
+         .grid_6
+          .middle_content
+           - flash.each do |key, value|  
+            .grid_6.alpha
+             %div{ :class => "flash #{key}"}
+              = value       
+           %span
+            = yield
+         .grid_3.omega
+          = render 'layouts/right_sidebar'
+       - else
+        .grid_3.alpha
+         = render 'layouts/left_sidebar'
+        - if is_controller?('pages') && is_action?('home')
+         - unless signed_in?
+          .grid_9.omega
+           = render 'layouts/call_to_action'
+        .grid_6
+         .middle_content
+          - flash.each do |key, value|  
+           .grid_6.alpha
+            %div{ :class => "flash #{key}"}
+             = value       
+          %span
+           = yield
+        .grid_3.omega
+         = render 'layouts/right_sidebar'
+
+   %span
+    = render 'layouts/footer'
+  %span
+   = debug(params) if Rails.env.development?
+
