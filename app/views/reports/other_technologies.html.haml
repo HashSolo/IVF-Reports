@@ -1,0 +1,20 @@
+%h1 Other Technologies
+
+.qcontainer
+ .faqquestion PGD and PGS
+ .faqanswer.hidden
+  %p Some couples are at risk of transmitting a genetic disease to their child. Preimplantation genetic diagnosis is a method for determining the presence of genetic disease in a cell taken from embryos before they are transferred. This technology was developed years ago and it was found that many embryos also have spontaneous genetic anomalies called chromosomal aberrations. These anomalies can occur in any embryo from any couple. The method to diagnose this in embryos before transfer is called PGS or preimplantation genetic screening.
+
+.qcontainer
+ .faqquestion Assisted Hatching
+ .faqanswer.hidden
+  %p There are a number of ways to improve the odds of pregnancy. One of these involves opening the zona pellucida layer surrounding the embryo artificially. Assisted hatching does not improve the chance of success by a very large margin and not in each embryo. Data from many studies has shown that its contribution is modest, but real.
+
+:javascript
+ $(document).ready(function(){
+ 	$('div.faqquestion').click(function(){
+ 		$(this).siblings().toggle('slow');
+ 	});
+ });
+
+ 

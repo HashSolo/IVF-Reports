@@ -1,0 +1,45 @@
+- if !params[:clinic_id].nil? #If the user is a clinician..or Admin in a clinic's nested request resource
+ %h1 Viewing Leads for #{@clinic.clinic_name}
+- elsif !params[:user_id].nil? #IF the user is a user..  
+ %h1 Viewing Clinics You Have Contacted
+- elsif current_user.admin? #If the user is an admin a.k.a. all leads view
+ %h1 Viewing All Leads
+
+%ul.request_list
+ %li.header.round
+  %span.username Username
+  %span.age Age
+  %span.created Contact Requested
+  %span.view_button View
+ - @requests.each do |r|
+  - user_info = User.find_by_id(r.user_id)
+  - if r.visible? #Show full information if they have paid for the lead.
+   %li
+    %span.username
+     = "#{user_info.name} (Paid)"
+    %span
+     - if user_info.birthday.nil?
+      = '-'
+     - else
+      = (Date.today - user_info.birthday).to_i/365
+    %span.created
+     = r.created_at.strftime("%B %d, %Y")
+    = link_to clinic_request_path(@clinic, r) do |l| 
+     %span.view_button.icon
+      E 
+  - else #Show limited..teaser info if the lead is not paid for
+   %li
+    %span.username
+     = user_info.name
+    %span.age
+     - if user_info.birthday.nil?
+      = '-'
+     - else 
+      = (Date.today - user_info.birthday).to_i/365
+    %span.created
+     = r.created_at.strftime("%B %d, %Y")
+    = link_to clinic_request_path(@clinic, r) do |l|
+     %span.view_button.icon   
+      E
+     
+         

@@ -1,0 +1,16 @@
+%span 
+ - require 'rss'
+%h1 Fertility News
+%span
+ - rss = RSS::Parser.parse('http://www.medicalnewstoday.com/rss/fertility.xml', false)
+ - rss.items.first(10).each do |r|
+  .rss_title
+   %h2
+    %a{ :href => "#{r.link}", :target => "_blank"}
+     = r.title	
+  .rss_byline
+   = r.pubDate   
+  %p.rss_feed
+   = r.description     
+	 
+

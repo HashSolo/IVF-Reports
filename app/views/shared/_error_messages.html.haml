@@ -1,0 +1,12 @@
+- if object.errors.any?
+ #error_explanation
+  %h2 
+   = pluraliaze(objects.errors.count, "error")
+   %span prohibited this
+   = object.class.to_s.underscore.humanize.downcase
+   %span from being saved:
+  %ul
+   - object.errors.full_messages.each do |msg| 
+    %li 
+     = msg
+         

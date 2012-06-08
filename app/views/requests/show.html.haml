@@ -1,0 +1,67 @@
+%h1 Contact Request: #{@request.created_at.strftime("%B %d, %Y") }
+.personal_info.user_info_section
+ %h2 Patient Information
+ %hr
+ %table.personal_info
+  %tr
+   %td Username
+   %td
+    = link_to @request_user.name, @request_user 
+  - if @request.visible?
+   %tr
+    %td Email
+    %td 
+     = link_to @request_user.email, @request_user.email
+  %tr
+   %td Gender
+   %td
+    =  @request_user.gender.capitalize unless @request_user.gender.nil?
+  %tr
+   %td Ethnicity
+   %td
+    = @request_user.ethnicity.capitalize unless @request_user.ethnicity.nil?  
+  %tr
+   %td Age
+   %td
+    - if @request_user.birthday.nil? 
+    - else
+     #{(Date.today - @request_user.birthday).to_i/365} Years Old   
+  %tr
+   %td Previous IVF Attempts
+   %td
+    = @request_user.previous_cycles unless @request_user.previous_cycles.nil?
+  %tr
+   %td Infertility Diagnosis
+   %td
+    = @request_user.infertility_diagnosis.gsub("_"," ").capitalize unless @request_user.infertility_diagnosis.nil?
+  %tr 
+   %td IVF Reports Member Since
+   %td 
+    = @request_user.created_at.strftime("%B %d, %Y")          
+
+.personal_info.user_info_section
+ %h2 Contact This Patient
+ %hr
+ - if @request.visible? || current_user.admin?
+  %table.personal_info
+   %tr
+    %td Email
+    %td
+     = @request_user.email
+   %tr
+    %td Phone
+    %td
+     - if @request_user.phone.nil?
+      %i Phone Number Not Provided
+     - else
+      = @request_user.phone
+ - else #This needs to be a button whereby a clinic can purchase access to the patient's contact information (we also need the purchase to trigger an email with the contact info)
+
+  .purchase_request
+   %span.purchase_button.round
+    = link_to 'Purchase Contact Information', @request.paypal_encrypted(clinic_request_url(@clinic, @request), payment_notifications_url)
+
+  .deny_request
+   %span.deny_button.round
+    = link_to 'Decline Info', decline_clinic_requests_path(@clinic,:user_id => @request.user_id, :clinic_id => @request.clinic_id), :confirm => "Are You Sure You Want to Decline this Request?"
+   

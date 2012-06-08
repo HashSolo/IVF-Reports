@@ -1,0 +1,98 @@
+%h1 Edit Your Clinic's Info
+
+.clinic_edit
+ = form_for @clinic do |clinic|
+
+  %h3 Clinic Name
+  %br
+  %table
+   %tr
+    %td.label
+     = clinic.label :clinic_name, "Clinic Name"
+    %td.value
+     = clinic.text_field :clinic_name 
+  %br
+
+  %h3 Address
+  %br
+  %table
+   %tr
+    %td.label 
+     = clinic.label :address
+    %td.value	
+     = clinic.text_field :address
+   %tr
+    %td.label 
+     = clinic.label :city
+    %td.value	
+     = clinic.text_field :city
+   %tr
+    %td.label 
+     = clinic.label :state
+    %td.value	
+     = clinic.text_field :state
+   %tr
+    %td.label 
+     = clinic.label :zip
+    %td.value	
+     = clinic.text_field :zip
+  %br
+	
+  %h3 Directors
+  %br
+  %table
+   %tr
+    %td.label 
+     = clinic.label :practice_director
+    %td.value	
+     = clinic.text_field :practice_director
+   %tr
+    %td.label 
+     = clinic.label :medical_director
+    %td.value	
+     = clinic.text_field :medical_director
+   %tr
+    %td.label 
+     = clinic.label :laboratory_director
+    %td.value	
+     = clinic.text_field :laboratory_director
+  %br
+
+  %h3 Contact
+  %br
+  %table
+   %tr
+    %td.label 
+     = clinic.label :phone
+    %td.value	
+     = clinic.text_field :phone
+   %tr
+    %td.label 
+     = clinic.label :website
+    %td.value	
+     = clinic.text_field :website
+   %tr
+    %td.label 
+     = clinic.label :email
+    %td.value	
+     = clinic.text_field :email
+  %br
+
+  %h3 Clinic Photo
+  %br
+  %table
+   %tr
+    %td.label 
+     %span To Edit Your Clinic's Photo, Visit
+     %span 
+      = link_to 'Gravatar.com', 'http://gravatar.com', :target => "_blank"
+  %br 
+
+  %h3 Additional Information
+  %br
+  .info
+   = clinic.text_area :info
+
+  .button
+   = clinic.submit :value => "Update Clinic Info"
+	

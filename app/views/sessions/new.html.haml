@@ -1,0 +1,16 @@
+%h1 Sign In
+.sign_in_form
+ = form_for(:session, :url => sessions_path) do |f|
+  %h3 
+   %span Don't Have an Account?
+   = link_to 'Register', register_path
+   %span to join in!
+  .field
+   = f.label :email
+   = f.text_field :email
+  .field
+   = f.label :password
+   = f.password_field :password
+  .update_button
+   = f.submit "Sign in", :class => "styled-button green-gradient sign-in-button"
+
